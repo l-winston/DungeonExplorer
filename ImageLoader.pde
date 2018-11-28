@@ -80,20 +80,30 @@ void loadImages() {
     while (scan.hasNextInt()) {
       coords[coordsc++] = scan.nextInt();
     }
+    
+    scan.close();
+
+    PImage tile = sheet.get(coords[0], coords[1], coords[2], coords[3]);
 
     for (int j = 0; j < coords[4]; j++) {
       switch(type) {
       case "wall":
+        walls[wallc++] = tile;
         break;
       case "column":
+        columns[columnsc++] = tile;
         break;
       case "floor":
+        floors[floorsc++] = tile;
         break;
       case "doors":
+        doors[doorsc++] = tile;
         break;
       case "chest":
+        chests[chestsc++] = tile;
         break;
       case "flask":
+        flasks[flasksc++] = tile;
         break;
       }
     }
