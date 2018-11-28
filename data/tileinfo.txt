@@ -171,10 +171,10 @@ knight_m_run_anim 192 100 16 28 4
 knight_m_hit_anim 256 100 16 28 1
 
 wizzard_f_idle_anim 128 132 16 28 4
-wizzart_f_run_anim 192 132 16 28 4
-wizzart_f_hit_anim 256 132 16 28 1
+wizzard_f_run_anim 192 132 16 28 4
+wizzard_f_hit_anim 256 132 16 28 1
 
 wizzard_m_idle_anim 128 164 16 28 4
-wizzart_m_run_anim 192 164 16 28 4
-wizzart_m_hit_anim 256 164 16 28 1
+wizzard_m_run_anim 192 164 16 28 4
+wizzard_m_hit_anim 256 164 16 28 1
 
