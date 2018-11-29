@@ -10,11 +10,11 @@ void setup() {
 
   loadImages();
 
-  start = new Room(20, 20);
-  tilew = width/start.cols;
-  tileh = height/start.rows;
+  start = new Room(30, 30);
+  tilew = width*1.0/start.cols;
+  tileh = height*1.0/start.rows;
   
-  main = new Player(start.cols/2, start.rows/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.WIZZARD_M);
+  main = new Player(start.cols/2, start.rows/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M);
 }
 
 void draw() {
@@ -38,39 +38,4 @@ void keyPressed() {
 
 void keyReleased() {
   main.keyReleaseUpdate();
-}
-void display(Room room) {
-  float x = 0;
-  float y = 0;
-  float w = width;
-  float h = height;
-  
-  float tilew = w*1.0/room.walls[0].length;
-  float tileh = h*1.0/room.walls.length;
-
-  for (int i = 0; i < room.floors.length; i++) {
-    for (int j = 0; j < room.floors[0].length; j++) {
-
-      if (room.floors[i][j] == -1)
-        continue;
-
-      float tilex = x + j * tilew;
-      float tiley = y + i * tileh;
-
-      image(floors[room.floors[i][j]], tilex, tiley, tilew, tileh);
-    }
-  }
-
-  for (int i = 0; i < room.walls.length; i++) {
-    for (int j = 0; j < room.walls[0].length; j++) {
-
-      if (room.walls[i][j] == -1)
-        continue;
-
-      float tilex = x + j * tilew;
-      float tiley = y + i * tileh;
-
-      image(walls[room.walls[i][j]], tilex, tiley, tilew, tileh);
-    }
-  }
 }

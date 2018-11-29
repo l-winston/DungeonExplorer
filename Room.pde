@@ -60,56 +60,58 @@ class Room {
   int rows;
   int cols;
 
-  int[][] walls;
-  int[][] floors;
-  boolean[][] obstacles;
+  int[][] wall;
+  int[][] floor;
+  boolean[][] obstacle;
 
   Room(int r, int c) {
+    r += 3;
+    c += 2;
     rows = r;
     cols = c;
 
-    walls = new int[r+3][c+2];
-    floors = new int[r+3][c+2];
-    obstacles = new boolean[r+3][c+2];
-    create(r+3, c+2);
+    wall = new int[r][c];
+    floor = new int[r][c];
+    obstacle = new boolean[r][c];
+    create(r, c);
   }
 
   void create(int r, int c) {
 
-    for (int[] i : walls) {
+    for (int[] i : wall) {
       Arrays.fill(i, -1);
     }
 
-    for (int[] i : floors) {
+    for (int[] i : floor) {
       Arrays.fill(i, -1);
     }
 
-    for (int j = 1; j < walls[0].length-1; j++) {
+    for (int j = 1; j < cols-1; j++) {
       // fill first and second row (excluding corners)
-      walls[0][j] = WALL_TOP_2;
-      obstacles[0][j] = true;
-      walls[1][j] = WALL_2;
-      obstacles[1][j] = true;
-      walls[r-2][j] = WALL_TOP_2;
-      walls[r-1][j] = WALL_2;
-      obstacles[r-1][j] = true;
+      wall[0][j] = WALL_TOP_2;
+      obstacle[0][j] = true;
+      wall[1][j] = WALL_2;
+      obstacle[1][j] = true;
+      wall[r-2][j] = WALL_TOP_2;
+      wall[r-1][j] = WALL_2;
+      obstacle[r-1][j] = true;
     }
+    
+    wall[r-1][0] = WALL_FRONT_LEFT;
+    wall[r-1][c-1] = WALL_FRONT_RIGHT;
+    wall[0][0] = WALL_TOP_LEFT;
+    wall[0][c-1] = WALL_TOP_RIGHT;
 
-    walls[r-1][0] = WALL_FRONT_LEFT;
-    walls[r-1][c-1] = WALL_FRONT_RIGHT;
-    walls[0][0] = WALL_TOP_LEFT;
-    walls[0][c-1] = WALL_TOP_RIGHT;
-
-    for (int i = 1; i < walls.length-1; i++) {
-      walls[i][0] = WALL_MID_LEFT;
-      obstacles[i][0] = true;
-      walls[i][c-1] = WALL_MID_RIGHT;
-      obstacles[i][c-1] = true;
+    for (int i = 1; i < rows-1; i++) {
+      wall[i][0] = WALL_MID_LEFT;
+      obstacle[i][0] = true;
+      wall[i][c-1] = WALL_MID_RIGHT;
+      obstacle[i][c-1] = true;
     }
 
     for (int i = 1; i < r-1; i++) {
       for (int j = 1; j < c-1; j++) {
-        floors[i][j] = FLOOR_1;
+        floor[i][j] = FLOOR_1;
       }
     }
   }
@@ -120,23 +122,35 @@ class Room {
   }
 
   boolean isObstacle (float x, float y) {
-    return obstacles[floor(y)][floor(x)];
+    return obstacle[floor(y)][floor(x)];
   }
 
   void display_walls() {
-  }
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
 
-  void display_floors() {
-    for (int i = 0; i < floors.length; i++) {
-      for (int j = 0; j < floors[0].length; j++) {
-
-        if (floors[i][j] == -1)
+        if (wall[i][j] == -1)
           continue;
 
         float tilex = j * tilew;
         float tiley = i * tileh;
 
-        image(this.floors[floors[i][j]], tilex, tiley, tilew, tileh);
+        image(walls[wall[i][j]], tilex, tiley, tilew, tileh);
+      }
+    }
+  }
+
+  void display_floors() {
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+
+        if (floor[i][j] == -1)
+          continue;
+
+        float tilex = j * tilew;
+        float tiley = i * tileh;
+
+        image(floors[floor[i][j]], tilex, tiley, tilew, tileh);
       }
     }
   }
