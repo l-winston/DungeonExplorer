@@ -2,7 +2,7 @@ Room start;
 
 void setup() {
   noSmooth();
-  size(500, 500);
+  size(750, 750);
 
 
   loadImages();
@@ -18,14 +18,14 @@ void draw() {
   int starty = 0;
   int endy = height;
 
-  display(start, 0, 0, width, height);
+  display(start, width/8, height/8, width*6f/8f, height*6f/8f);
   //image(big_zombie_run_anim[frameCount%32/8], width/4, height/4, width/2, height/2);
   //mage(walls[WALL_INNER_CORNER_T_TOP_LEFT], width/4, height/4, width/2, height/2);
 }
 
-void display(Room room, int x, int y, int w, int h) {
-  int tilew = round(w*1.0/room.walls[0].length);
-  int tileh = round(h*1.0/room.walls.length);
+void display(Room room, float x, float y, float w, float h) {
+  float tilew = w*1.0/room.walls[0].length;
+  float tileh = h*1.0/room.walls.length;
 
   for (int i = 0; i < room.floors.length; i++) {
     for (int j = 0; j < room.floors[0].length; j++) {
@@ -33,8 +33,8 @@ void display(Room room, int x, int y, int w, int h) {
       if (room.floors[i][j] == -1)
         continue;
 
-      int tilex = x + j * tilew;
-      int tiley = y + i * tileh;
+      float tilex = x + j * tilew;
+      float tiley = y + i * tileh;
 
       image(floors[room.floors[i][j]], tilex, tiley, tilew, tileh);
     }
@@ -46,9 +46,9 @@ void display(Room room, int x, int y, int w, int h) {
       if (room.walls[i][j] == -1)
         continue;
 
-      int tilex = x + j * tilew;
-      int tiley = y + i * tileh;
-
+      float tilex = x + j * tilew;
+      float tiley = y + i * tileh;
+      
       image(walls[room.walls[i][j]], tilex, tiley, tilew, tileh);
     }
   }

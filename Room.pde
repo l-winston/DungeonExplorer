@@ -67,15 +67,13 @@ class Room {
     rows = r;
     cols = c;
 
-    walls = new int[r][c];
-    floors = new int[r][c];
-    
-    create(r, c);
+    walls = new int[r+3][c+2];
+    floors = new int[r+3][c+2];
+
+    create(r+3, c+2);
   }
 
   void create(int r, int c) {
-    walls = new int[r][c];
-    floors = new int[r][c];
 
     for (int[] i : walls) {
       Arrays.fill(i, -1);
@@ -107,5 +105,10 @@ class Room {
         floors[i][j] = FLOOR_1;
       }
     }
+  }
+  
+  void access(int r, int c){
+    int actualr = r+2;
+    int actualc = c+1;
   }
 }
