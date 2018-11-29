@@ -5,6 +5,6 @@ void setup(){
 }
 
 void draw(){
-  background(0);
-  image(coin_anim[frameCount%4], width/4, height/4, width/2, height/2);
+  background(255);
+  image(chest_full_open_anim[frameCount%12/4], width/4, height/4, width/2, height/2);
 }

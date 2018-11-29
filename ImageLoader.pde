@@ -3,39 +3,6 @@ import java.util.Arrays;
 
 PImage sheet;
 
-PImage wall_fountain_top;
-PImage[] wall_fountain_mid_red_anim = new PImage[3];
-PImage[] wall_fountain_basin_red_anim = new PImage[3];
-
-PImage[] wall_fountain_mid_blue_anim = new PImage[3];
-PImage[] wall_fountain_basin_blue_anim = new PImage[3];
-
-PImage[] floor_spikes_anim = new PImage[4];
-
-PImage[] chest_empty_open_anim = new PImage[3];
-PImage[] chest_full_open_anim = new PImage[3];
-PImage[] chest_mimic_open_anim = new PImage[3];
-
-PImage[] coin_anim = new PImage[4];
-
-PImage[] walls = new PImage[38];
-int wallc = 0;
-PImage[] columns = new PImage[3];
-int columnc = 0;
-PImage[] floors = new PImage[9];
-int floorc = 0;
-//edge
-//hole
-PImage[] doors = new PImage[6];
-int doorc = 0;
-PImage[] chests = new PImage[9];
-int chestc = 0;
-PImage[] flasks = new PImage[8];
-int flaskc = 0;
-//skull
-//crate
-//coin_anim
-//ui_heart
 //weapon
 //tiny_zombie
 //goblin
