@@ -145,7 +145,7 @@ void loadImages() {
         elf_m_run_anim[j] = tile;
       } else if (startsWith(name, "elf_m_hit_anim")) {
         elf_m_hit_anim = tile;
-      }  else if (startsWith(name, "knight_f_idle_anim")) {
+      } else if (startsWith(name, "knight_f_idle_anim")) {
         knight_f_idle_anim[j] = tile;
       } else if (startsWith(name, "knight_f_run_anim")) {
         knight_f_run_anim[j] = tile;
@@ -169,6 +169,46 @@ void loadImages() {
         wizzard_m_run_anim[j] = tile;
       } else if (startsWith(name, "wizzard_m_hit_anim")) {
         wizzard_m_hit_anim = tile;
+      } else if (startsWith(name, "weapon_knife")) {
+        weapon_knife = tile;
+      } else if (startsWith(name, "weapon_rusty_sword")) {
+        weapon_rusty_sword = tile;
+      } else if (startsWith(name, "weapon_regular_sword")) {
+        weapon_regular_sword = tile;
+      } else if (startsWith(name, "weapon_red_gem_sword")) {
+        weapon_red_gem_sword = tile;
+      } else if (startsWith(name, "weapon_big_hammer")) {
+        weapon_big_hammer = tile;
+      } else if (startsWith(name, "weapon_hammer")) {
+        weapon_hammer = tile;
+      } else if (startsWith(name, "weapon_baton_with_spikes")) {
+        weapon_baton_with_spikes = tile;
+      } else if (startsWith(name, "weapon_mace")) {
+        weapon_mace = tile;
+      } else if (startsWith(name, "weapon_katana")) {
+        weapon_katana = tile;
+      } else if (startsWith(name, "weapon_saw_sword")) {
+        weapon_saw_sword = tile;
+      } else if (startsWith(name, "weapon_anime_sword")) {
+        weapon_anime_sword = tile;
+      } else if (startsWith(name, "weapon_axe")) {
+        weapon_axe = tile;
+      } else if (startsWith(name, "weapon_machete")) {
+        weapon_machete = tile;
+      } else if (startsWith(name, "weapon_cleaver")) {
+        weapon_cleaver = tile;
+      } else if (startsWith(name, "weapon_duel_sword")) {
+        weapon_duel_sword = tile;
+      } else if (startsWith(name, "weapon_knight_sword")) {
+        weapon_knight_sword = tile;
+      } else if (startsWith(name, "weapon_golden_sword")) {
+        weapon_golden_sword = tile;
+      } else if (startsWith(name, "weapon_lavish_sword")) {
+        weapon_lavish_sword = tile;
+      } else if (startsWith(name, "weapon_red_magic_staff")) {
+        weapon_red_magic_staff = tile;
+      } else if (startsWith(name, "weapon_green_magic_staff")) {
+        weapon_green_magic_staff = tile;
       }
 
       coords[0] += coords[2];
