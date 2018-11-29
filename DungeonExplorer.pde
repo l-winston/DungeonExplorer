@@ -1,4 +1,5 @@
 Room start;
+Player main;
 
 void setup() {
   noSmooth();
@@ -8,10 +9,13 @@ void setup() {
   loadImages();
 
   start = new Room(20, 20);
+  main = new Player(width/2, height/2);
 }
 
 void draw() {
   background(0);
+
+  main.step();
 
   int startx = 0;
   int endx = width;
@@ -19,10 +23,50 @@ void draw() {
   int endy = height;
 
   display(start, width/8, height/8, width*6f/8f, height*6f/8f);
-  //image(big_zombie_run_anim[frameCount%32/8], width/4, height/4, width/2, height/2);
+
+  image(big_zombie_idle_anim[frameCount%32/8], main.x, main.y, width/5, height/5);
   //mage(walls[WALL_INNER_CORNER_T_TOP_LEFT], width/4, height/4, width/2, height/2);
 }
 
+boolean[] wasd = new boolean[4];
+
+void keyPressed() {
+
+  if (key == 'w') {
+    wasd[0] = true;
+  }
+
+  if (key == 'a') {
+    wasd[1] = true;
+  }
+
+  if (key == 's') {
+    wasd[2] = true;
+  }
+
+  if (key == 'd') {
+    wasd[3] = true;
+  }
+}
+
+void keyReleased() {
+
+  if (key == 'w') {
+    wasd[0] = false;
+  }
+
+  if (key == 'a') {
+    wasd[1] = false;
+  }
+
+  if (key == 's') {
+    wasd[2] = false;
+  }
+
+  if (key == 'd') {
+    wasd[3] = false;
+  }
+}
 void display(Room room, float x, float y, float w, float h) {
   float tilew = w*1.0/room.walls[0].length;
   float tileh = h*1.0/room.walls.length;
@@ -48,7 +92,7 @@ void display(Room room, float x, float y, float w, float h) {
 
       float tilex = x + j * tilew;
       float tiley = y + i * tileh;
-      
+
       image(walls[room.walls[i][j]], tilex, tiley, tilew, tileh);
     }
   }
