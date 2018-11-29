@@ -6,5 +6,5 @@ void setup(){
 
 void draw(){
   background(255);
-  image(chest_full_open_anim[frameCount%12/4], width/4, height/4, width/2, height/2);
+  image(goblin_idle_anim[frameCount%32/8], width/4, height/4, width/2, height/2);
 }

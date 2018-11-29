@@ -103,6 +103,74 @@ void loadImages() {
         flasks[flaskc++] = tile;
       } else if (startsWith(name, "coin_anim")) {
         coin_anim[j] = tile;
+      } else if (startsWith(name, "tiny_zombie_idle_anim")) {
+        tiny_zombie_idle_anim[j] = tile;
+      } else if (startsWith(name, "tiny_zombie_run_anim")) {
+        tiny_zombie_run_anim[j] = tile;
+      } else if (startsWith(name, "goblin_idle_anim")) {
+        goblin_idle_anim[j] = tile;
+      } else if (startsWith(name, "goblin_run_anim")) {
+        goblin_run_anim[j] = tile;
+      } else if (startsWith(name, "imp_idle_anim")) {
+        imp_idle_anim[j] = tile;
+      } else if (startsWith(name, "imp_run_anim")) {
+        imp_run_anim[j] = tile;
+      } else if (startsWith(name, "skelet_idle_anim")) {
+        skelet_idle_anim[j] = tile;
+      } else if (startsWith(name, "skelet_run_anim")) {
+        skelet_run_anim[j] = tile;
+      } else if (startsWith(name, "muddy_idle_anim")) {
+        muddy_idle_anim[j] = tile;
+      } else if (startsWith(name, "muddy_run_anim")) {
+        muddy_run_anim[j] = tile;
+      } else if (startsWith(name, "swampy_idle_anim")) {
+        swampy_idle_anim[j] = tile;
+      } else if (startsWith(name, "swampy_run_anim")) {
+        swampy_run_anim[j] = tile;
+      } else if (startsWith(name, "zombie_idle_anim")) {
+        zombie_idle_anim[j] = tile;
+      } else if (startsWith(name, "zombie_run_anim")) {
+        zombie_run_anim[j] = tile;
+      } else if (startsWith(name, "ice_zombie_idle_anim")) {
+        ice_zombie_idle_anim[j] = tile;
+      } else if (startsWith(name, "ice_zombie_run_anim")) {
+        ice_zombie_run_anim[j] = tile;
+      } else if (startsWith(name, "masked_orc_idle_anim")) {
+        masked_orc_idle_anim[j] = tile;
+      } else if (startsWith(name, "masked_orc_run_anim")) {
+        masked_orc_run_anim[j] = tile;
+      } else if (startsWith(name, "orc_warrior_idle_anim")) {
+        orc_warrior_idle_anim[j] = tile;
+      } else if (startsWith(name, "orc_warrior_run_anim")) {
+        orc_warrior_run_anim[j] = tile;
+      } else if (startsWith(name, "orc_shaman_idle_anim")) {
+        orc_shaman_idle_anim[j] = tile;
+      } else if (startsWith(name, "orc_shaman_run_anim")) {
+        orc_shaman_run_anim[j] = tile;
+      } else if (startsWith(name, "necromancer_idle_anim")) {
+        necromancer_idle_anim[j] = tile;
+      } else if (startsWith(name, "necromancer_run_anim")) {
+        necromancer_run_anim[j] = tile;
+      } else if (startsWith(name, "wogol_idle_anim")) {
+        wogol_idle_anim[j] = tile;
+      } else if (startsWith(name, "wogol_run_anim")) {
+        wogol_run_anim[j] = tile;
+      } else if (startsWith(name, "chort_idle_anim")) {
+        chort_idle_anim[j] = tile;
+      } else if (startsWith(name, "chort_run_anim")) {
+        chort_run_anim[j] = tile;
+      } else if (startsWith(name, "big_zombie_idle_anim")) {
+        big_zombie_idle_anim[j] = tile;
+      } else if (startsWith(name, "big_zombie_run_anim")) {
+        big_zombie_run_anim[j] = tile;
+      } else if (startsWith(name, "ogre_idle_anim")) {
+        ogre_idle_anim[j] = tile;
+      } else if (startsWith(name, "ogre_run_anim")) {
+        ogre_run_anim[j] = tile;
+      } else if (startsWith(name, "big_demon_idle_anim")) {
+        big_demon_idle_anim[j] = tile;
+      } else if (startsWith(name, "big_demon_run_anim")) {
+        big_demon_run_anim[j] = tile;
       }
 
       coords[0] += coords[2];

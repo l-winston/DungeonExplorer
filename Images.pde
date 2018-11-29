@@ -1,3 +1,4 @@
+
 PImage wall_fountain_top;
 PImage[] wall_fountain_mid_red_anim = new PImage[3];
 PImage[] wall_fountain_basin_red_anim = new PImage[3];
@@ -31,3 +32,60 @@ PImage[] doors = new PImage[6];
 int doorc = 0;
 PImage[] flasks = new PImage[8];
 int flaskc = 0;
+
+PImage[] tiny_zombie_idle_anim = new PImage[4];
+PImage[] tiny_zombie_run_anim = new PImage[4];
+PImage[] goblin_idle_anim = new PImage[4];
+PImage[] goblin_run_anim = new PImage[4];
+PImage[] imp_idle_anim = new PImage[4];
+PImage[] imp_run_anim = new PImage[4];
+PImage[] skelet_idle_anim = new PImage[4];
+PImage[] skelet_run_anim = new PImage[4];
+PImage[] muddy_idle_anim = new PImage[4];
+PImage[] muddy_run_anim = new PImage[4];
+PImage[] swampy_idle_anim = new PImage[4];
+PImage[] swampy_run_anim = new PImage[4];
+PImage[] zombie_idle_anim = new PImage[4];
+PImage[] zombie_run_anim = new PImage[4];
+PImage[] ice_zombie_idle_anim = new PImage[4];
+PImage[] ice_zombie_run_anim = new PImage[4];
+PImage[] masked_orc_idle_anim = new PImage[4];
+PImage[] masked_orc_run_anim = new PImage[4];
+PImage[] orc_warrior_idle_anim = new PImage[4];
+PImage[] orc_warrior_run_anim = new PImage[4];
+PImage[] orc_shaman_idle_anim = new PImage[4];
+PImage[] orc_shaman_run_anim = new PImage[4];
+PImage[] necromancer_idle_anim = new PImage[4];
+PImage[] necromancer_run_anim = new PImage[4];
+PImage[] wogol_idle_anim = new PImage[4];
+PImage[] wogol_run_anim = new PImage[4];
+PImage[] chort_idle_anim = new PImage[4];
+PImage[] chort_run_anim = new PImage[4];
+PImage[] big_zombie_idle_anim = new PImage[4];
+PImage[] big_zombie_run_anim = new PImage[4];
+PImage[] ogre_idle_anim = new PImage[4];
+PImage[] ogre_run_anim = new PImage[4];
+PImage[] big_demon_idle_anim = new PImage[4];
+PImage[] big_demon_run_anim = new PImage[4];
+
+
+PImage[] elf_f_idle_anim = new PImage[4];
+PImage[] elf_f_run_anim = new PImage[4];
+PImage elf_f_hit_anim;
+PImage[] elf_m_idle_anim = new PImage[4];
+PImage[] elf_m_run_anim = new PImage[4];
+PImage elf_m_hit_anim;
+
+PImage[] knight_f_idle_anim = new PImage[4];
+PImage[] knight_f_run_anim = new PImage[4];
+PImage knight_f_hit_anim;
+PImage[] knight_m_idle_anim = new PImage[4];
+PImage[] knight_m_run_anim = new PImage[4];
+PImage knight_m_hit_anim;
+
+PImage[] wizzard_f_idle_anim = new PImage[4];
+PImage[] wizzard_f_run_anim = new PImage[4];
+PImage wizzard_f_hit_anim;
+PImage[] wizzard_m_idle_anim = new PImage[4];
+PImage[] wizzard_m_run_anim = new PImage[4];
+PImage wizzard_m_hit_anim;
