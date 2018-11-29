@@ -1,7 +1,10 @@
 final float PLAYER_SPEED = 0.1; // units of grid/frame
-final int PLAYER_WIDTH = 16; // original image dimensions
-final int PLAYER_HEIGHT = 28; // original image dimensions
+final float PLAYER_SPRITE_WIDTH = 16; // original image dimensions
+final float PLAYER_SPRITE_HEIGHT = 28; // original image dimensions
 final float ANIMATION_SPEED_SCALE = 0.1;
+
+float playerw;
+float playerh;
 
 enum PlayerType {
   ELF_F, ELF_M, KNIGHT_F, KNIGHT_M, WIZZARD_F, WIZZARD_M
@@ -63,9 +66,9 @@ class Player {
       scale(-1, 1);
     }
     if (vx==0 && vy== 0) {
-      image(idle_anim[round(frameCount*ANIMATION_SPEED_SCALE)%idle_anim.length], 0, 0, PLAYER_WIDTH*2, PLAYER_HEIGHT*2);
+      image(idle_anim[round(frameCount*ANIMATION_SPEED_SCALE)%idle_anim.length], 0, 0, playerw, playerh);
     } else {
-      image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%idle_anim.length], 0, 0, PLAYER_WIDTH*2, PLAYER_HEIGHT*2);
+      image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%idle_anim.length], 0, 0, playerw, playerh);
     }
 
     popStyle();

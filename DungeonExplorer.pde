@@ -10,9 +10,11 @@ void setup() {
 
   loadImages();
 
-  start = new Room(30, 30);
+  start = new Room(10, 10);
   tilew = width*1.0/start.cols;
   tileh = height*1.0/start.rows;
+  playerw = tilew;
+  playerh = tilew*PLAYER_SPRITE_HEIGHT/PLAYER_SPRITE_WIDTH;
   
   main = new Player(start.cols/2, start.rows/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M);
 }
