@@ -1,11 +1,13 @@
-
+enum PlayerType{
+   ELF_M, ELF_F, KNIGHT_M, KNIGHT_F, WIZZARD_M, WIZZARD_F
+}
 class Player {
   float x, y;
   float vx, vy;
   char[] controls;
   boolean[] keysdown;
 
-  public Player(float _x, float _y, char[] controls) {
+  public Player(float _x, float _y, char[] controls, PlayerType type) {
     x=_x;
     y=_y;
     this.controls = controls;

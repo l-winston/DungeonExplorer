@@ -9,7 +9,7 @@ void setup() {
   loadImages();
 
   start = new Room(20, 20);
-  main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'});
+  main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.ELF_M);
 }
 
 void draw() {
