@@ -1,4 +1,4 @@
-final int PLAYER_SPEED = 5; // units of px/frame
+final float PLAYER_SPEED = 0.1; // units of grid/frame
 final int PLAYER_WIDTH = 16; // original image dimensions
 final int PLAYER_HEIGHT = 28; // original image dimensions
 final float ANIMATION_SPEED_SCALE = 0.1;
@@ -57,7 +57,7 @@ class Player {
     pushMatrix();
     pushStyle();
 
-    translate(x, y);
+    translate(x*tilew, y*tileh);
     imageMode(CENTER);
     if (!facing_right) {
       scale(-1, 1);
@@ -118,12 +118,13 @@ class Player {
       vy+=PLAYER_SPEED;
     if (keysdown[3])
       vx+=PLAYER_SPEED;
+      
+    
     x+=vx;
     y+=vy;
 
     if (vx != 0) {
       facing_right = vx > 0;
-      println(facing_right);
     }
   }
 }

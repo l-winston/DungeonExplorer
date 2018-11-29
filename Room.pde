@@ -62,14 +62,15 @@ class Room {
 
   int[][] walls;
   int[][] floors;
-  
+  boolean[][] obstacles;
+
   Room(int r, int c) {
     rows = r;
     cols = c;
 
     walls = new int[r+3][c+2];
     floors = new int[r+3][c+2];
-
+    obstacles = new boolean[r+3][c+2];
     create(r+3, c+2);
   }
 
@@ -86,18 +87,24 @@ class Room {
     for (int j = 1; j < walls[0].length-1; j++) {
       // fill first and second row (excluding corners)
       walls[0][j] = WALL_TOP_2;
+      obstacles[0][j] = true;
       walls[1][j] = WALL_2;
+      obstacles[1][j] = true;
       walls[r-2][j] = WALL_TOP_2;
       walls[r-1][j] = WALL_2;
+      obstacles[r-1][j] = true;
     }
 
     walls[r-1][0] = WALL_FRONT_LEFT;
     walls[r-1][c-1] = WALL_FRONT_RIGHT;
     walls[0][0] = WALL_TOP_LEFT;
     walls[0][c-1] = WALL_TOP_RIGHT;
+
     for (int i = 1; i < walls.length-1; i++) {
       walls[i][0] = WALL_MID_LEFT;
+      obstacles[i][0] = true;
       walls[i][c-1] = WALL_MID_RIGHT;
+      obstacles[i][c-1] = true;
     }
 
     for (int i = 1; i < r-1; i++) {
@@ -106,10 +113,31 @@ class Room {
       }
     }
   }
-  
-  void access(int r, int c){
+
+  void access(int r, int c) {
     int actualr = r+2;
     int actualc = c+1;
-    
+  }
+
+  boolean isObstacle (float x, float y) {
+    return obstacles[floor(y)][floor(x)];
+  }
+
+  void display_walls() {
+  }
+
+  void display_floors() {
+    for (int i = 0; i < floors.length; i++) {
+      for (int j = 0; j < floors[0].length; j++) {
+
+        if (floors[i][j] == -1)
+          continue;
+
+        float tilex = j * tilew;
+        float tiley = i * tileh;
+
+        image(this.floors[floors[i][j]], tilex, tiley, tilew, tileh);
+      }
+    }
   }
 }
