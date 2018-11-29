@@ -62,6 +62,8 @@ class Room {
 
   int[][] walls;
   int[][] floors;
+  
+  
 
   Room(int r, int c) {
     rows = r;
@@ -110,5 +112,6 @@ class Room {
   void access(int r, int c){
     int actualr = r+2;
     int actualc = c+1;
+    
   }
 }

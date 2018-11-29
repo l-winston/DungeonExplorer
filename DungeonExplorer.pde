@@ -9,7 +9,7 @@ void setup() {
   loadImages();
 
   start = new Room(20, 20);
-  main = new Player(width/2, height/2);
+  main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'});
 }
 
 void draw() {
@@ -31,41 +31,11 @@ void draw() {
 boolean[] wasd = new boolean[4];
 
 void keyPressed() {
-
-  if (key == 'w') {
-    wasd[0] = true;
-  }
-
-  if (key == 'a') {
-    wasd[1] = true;
-  }
-
-  if (key == 's') {
-    wasd[2] = true;
-  }
-
-  if (key == 'd') {
-    wasd[3] = true;
-  }
+  main.keyPressUpdate();
 }
 
 void keyReleased() {
-
-  if (key == 'w') {
-    wasd[0] = false;
-  }
-
-  if (key == 'a') {
-    wasd[1] = false;
-  }
-
-  if (key == 's') {
-    wasd[2] = false;
-  }
-
-  if (key == 'd') {
-    wasd[3] = false;
-  }
+  main.keyReleaseUpdate();
 }
 void display(Room room, float x, float y, float w, float h) {
   float tilew = w*1.0/room.walls[0].length;
