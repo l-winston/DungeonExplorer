@@ -3,32 +3,6 @@ import java.util.Arrays;
 
 PImage sheet;
 
-//weapon
-//tiny_zombie
-//goblin
-//imp
-//skelet
-//muddy
-//swampy
-//zombie
-//ice_zombie
-//masked_orc
-//orc_warrior
-//orc_shaman
-//nercromancer
-//wogol
-//chort
-//big_zombie
-//ogre
-//big_demon
-//elf_f
-//elf_m
-//knight_f
-//knight_m
-//wizzard_f
-//wizzard_m
-
-
 void loadImages() {
   sheet = loadImage("tileset.png");
   String[] data = loadStrings("tileinfo.txt");
@@ -41,18 +15,6 @@ void loadImages() {
 
     // find the type picture the info represents by using the first word (seperated by an underscore character)
     String name = scan.next();
-
-    //nt underscore = data[i].indexOf("_");
-    // sometimes, the data doensn't contain "_"
-    // ex: edge 96 128 16 16
-    // in this case, just take first word
-    //if (underscore == -1) {
-    // type = scan.next();
-    // } else {
-    // type = data[i].substring(0, data[i].indexOf("_"));
-    // in the case that the string does contain "_", call scan.next(); so scanner's "cursor" goes to the anyways numbers
-    //scan.next();
-    // }
 
     // store all coordinate info of tile
     int[] coords = new int[5];
@@ -171,6 +133,42 @@ void loadImages() {
         big_demon_idle_anim[j] = tile;
       } else if (startsWith(name, "big_demon_run_anim")) {
         big_demon_run_anim[j] = tile;
+      } else if (startsWith(name, "elf_f_idle_anim")) {
+        elf_f_idle_anim[j] = tile;
+      } else if (startsWith(name, "elf_f_run_anim")) {
+        elf_f_run_anim[j] = tile;
+      } else if (startsWith(name, "elf_f_hit_anim")) {
+        elf_f_hit_anim = tile;
+      } else if (startsWith(name, "elf_m_idle_anim")) {
+        elf_m_idle_anim[j] = tile;
+      } else if (startsWith(name, "elf_m_run_anim")) {
+        elf_m_run_anim[j] = tile;
+      } else if (startsWith(name, "elf_m_hit_anim")) {
+        elf_m_hit_anim = tile;
+      }  else if (startsWith(name, "knight_f_idle_anim")) {
+        knight_f_idle_anim[j] = tile;
+      } else if (startsWith(name, "knight_f_run_anim")) {
+        knight_f_run_anim[j] = tile;
+      } else if (startsWith(name, "knight_f_hit_anim")) {
+        knight_f_hit_anim = tile;
+      } else if (startsWith(name, "knight_m_idle_anim")) {
+        knight_m_idle_anim[j] = tile;
+      } else if (startsWith(name, "knight_m_run_anim")) {
+        knight_m_run_anim[j] = tile;
+      } else if (startsWith(name, "knight_m_hit_anim")) {
+        knight_m_hit_anim = tile;
+      } else if (startsWith(name, "wizzard_f_idle_anim")) {
+        wizzard_f_idle_anim[j] = tile;
+      } else if (startsWith(name, "wizzard_f_run_anim")) {
+        wizzard_f_run_anim[j] = tile;
+      } else if (startsWith(name, "wizzard_f_hit_anim")) {
+        wizzard_f_hit_anim = tile;
+      } else if (startsWith(name, "wizzard_m_idle_anim")) {
+        wizzard_m_idle_anim[j] = tile;
+      } else if (startsWith(name, "wizzard_m_run_anim")) {
+        wizzard_m_run_anim[j] = tile;
+      } else if (startsWith(name, "wizzard_m_hit_anim")) {
+        wizzard_m_hit_anim = tile;
       }
 
       coords[0] += coords[2];
