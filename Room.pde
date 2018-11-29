@@ -63,8 +63,6 @@ class Room {
   int[][] walls;
   int[][] floors;
   
-  
-
   Room(int r, int c) {
     rows = r;
     cols = c;

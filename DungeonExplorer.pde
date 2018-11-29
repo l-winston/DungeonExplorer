@@ -9,22 +9,18 @@ void setup() {
   loadImages();
 
   start = new Room(20, 20);
-  main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.ELF_M);
+  main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_F);
 }
 
 void draw() {
   background(0);
 
   main.step();
-
-  int startx = 0;
-  int endx = width;
-  int starty = 0;
-  int endy = height;
-
+  
   display(start, width/8, height/8, width*6f/8f, height*6f/8f);
 
-  image(big_zombie_idle_anim[frameCount%32/8], main.x, main.y, width/5, height/5);
+  main.show();
+  //image(big_zombie_idle_anim[frameCount%32/8], main.x, main.y, width/5, height/5);
   //mage(walls[WALL_INNER_CORNER_T_TOP_LEFT], width/4, height/4, width/2, height/2);
 }
 
