@@ -1,3 +1,8 @@
+import shiffman.box2d.*;
+import org.jbox2d.collision.shapes.*;
+import org.jbox2d.common.*;
+import org.jbox2d.dynamics.*;
+
 import ddf.minim.*;
 import ddf.minim.analysis.*;
 import ddf.minim.effects.*;
@@ -9,6 +14,8 @@ import ddf.minim.ugens.*;
 Room start;
 Player main;
 
+Box2DProcessing box2d;
+
 
 float tilew, tileh;
 
@@ -18,6 +25,10 @@ void setup() {
 
   loadImages();
   loadSound();
+  
+  box2d = new Box2DProcessing(this);
+  box2d.createWorld();
+  box2d.setGravity(0, -10);
 
   start = new Room(10, 12);
   tilew = width*1.0/start.cols;

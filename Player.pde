@@ -9,23 +9,21 @@ float playerh;
 enum PlayerType {
   ELF_F, ELF_M, KNIGHT_F, KNIGHT_M, WIZZARD_F, WIZZARD_M
 }
-class Player {
+class Player extends Entity {
   PImage[] idle_anim;
   PImage[] run_anim;
   PImage hit;
 
-  Hitbox hitbox;
 
   boolean facing_right;
-  float vx, vy;
   char[] controls;
   boolean[] keysdown;
 
-  public Player(float _x, float _y, char[] controls, PlayerType type) {
+  public Player(float _i, float _j, char[] controls, PlayerType type) {
     this.controls = controls;
     keysdown = new boolean[4];
 
-    hitbox = new Hitbox(_x, _y, 1f, 0.5);
+    create(_i, _j);
 
     facing_right = true;
 
@@ -56,8 +54,12 @@ class Player {
     }
   }
 
+  public void create(float i, float j) {
+    float[] pixel = tileToPixel(i, j);
+    Vec2 center = box2d.coordPixelsToWorld(pixel[0]/2, pixel[1]/2));
+  }
+
   public void show() {
-    hitbox.show();
 
     pushMatrix();
     pushStyle();
@@ -128,8 +130,8 @@ class Player {
     float x1 = hitbox.x+hitbox.w/2;
     float y0 = hitbox.x-hitbox.h/2;
     float y1 = hitbox.x+hitbox.h/2;
-    
-    
+
+
 
     hitbox.x+=vx;
     hitbox.y+=vy;
