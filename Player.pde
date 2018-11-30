@@ -122,9 +122,6 @@ class Player {
     if (keysdown[3])
       vx+=PLAYER_SPEED;
 
-    float[] playerTileDimensions = pixelToTile(playerw, playerh);
-
-
     boolean[] corners = {
       start.isObstacle(x-0.5, y - 0.5), 
       start.isObstacle(x+0.5, y - 0.5), 

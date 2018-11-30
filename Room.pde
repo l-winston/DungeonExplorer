@@ -131,8 +131,23 @@ class Room {
     return obstacle[floor(y)][floor(x)];
   }
 
-  void display_walls() {
-    for (int i = 0; i < rows; i++) {
+  void display_top_walls() {
+    for (int i = 0; i < rows/2; i++) {
+      for (int j = 0; j < cols; j++) {
+
+        if (wall[i][j] == -1)
+          continue;
+
+        float tilex = j * tilew;
+        float tiley = i * tileh;
+
+        image(walls[wall[i][j]], tilex, tiley, tilew, tileh);
+      }
+    }
+  }
+  
+    void display_bot_walls() {
+    for (int i = rows/2; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
 
         if (wall[i][j] == -1)

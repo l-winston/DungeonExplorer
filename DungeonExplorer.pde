@@ -10,7 +10,7 @@ void setup() {
 
   loadImages();
 
-  start = new Room(10, );
+  start = new Room(10, 12);
   tilew = width*1.0/start.cols;
   tileh = height*1.0/start.rows;
   playerw = tilew;
@@ -25,9 +25,11 @@ void draw() {
   main.step();
 
   start.display_floors();
-  start.display_walls();
+  start.display_top_walls();
   //start.display_obstacles();
   main.show();
+  start.display_bot_walls();
+
   //image(big_zombie_idle_anim[frameCount%32/8], main.x, main.y, width/5, height/5);
   //mage(walls[WALL_INNER_CORNER_T_TOP_LEFT], width/4, height/4, width/2, height/2);
 }
