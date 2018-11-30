@@ -12,7 +12,7 @@ wall_fountain_basin_red_anim 64 32 16 16 3
 wall_fountain_mid_blue_anim 64 48 16 16 3
 wall_fountain_basin_blue_anim 64 64 16 16 3
 
-wall_hole_1 48 32 16 16
+wall_hole_1 48 32 16 16quiz
 wall_hole_2 48 48 16 16
 
 wall_banner_red 16 32 16 16

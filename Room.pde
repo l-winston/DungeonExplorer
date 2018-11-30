@@ -68,8 +68,6 @@ class Room {
   int[][] wall;
   int[][] floor;
   int[][] column;
-  boolean[][] obstacle;
-
   Room(int r, int c) {
     r += 4;
     c += 2;
@@ -79,7 +77,6 @@ class Room {
     wall = new int[r][c];
     floor = new int[r][c];
     column = new int[r][c];
-    obstacle = new boolean[r][c];
     create(r, c);
   }
 
@@ -120,26 +117,11 @@ class Room {
         floor[i][j] = FLOOR_1;
       }
     }
-
-    for (int i = 0; i < rows; i++) {
-      obstacle[i][0] = true;
-      obstacle[i][cols-1] = true;
-    }
-    for (int j = 0; j < cols; j++) {
-      obstacle[0][j] = true;
-      obstacle[rows-1][j] = true;
-    }
   }
 
   void access(int r, int c) {
     int actualr = r+2;
     int actualc = c+1;
-  }
-
-  boolean isObstacle (float x, float y) {
-    if (x < 0 || y < 0 || x >= cols || y >= rows)
-      return true;
-    return obstacle[floor(y)][floor(x)];
   }
 
   void display_top_walls() {
@@ -173,18 +155,7 @@ class Room {
   }
 
   void display_obstacles() {
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
 
-        if (!obstacle[i][j])
-          continue;
-
-        float tilex = j * tilew;
-        float tiley = i * tileh;
-
-        rect(tilex, tiley, tilew, tileh);
-      }
-    }
   }
 
   void display_floors() {

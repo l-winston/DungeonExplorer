@@ -14,18 +14,18 @@ class Player {
   PImage[] run_anim;
   PImage hit;
 
-  boolean facing_right;
+  Hitbox hitbox;
 
-  float x, y;
+  boolean facing_right;
   float vx, vy;
   char[] controls;
   boolean[] keysdown;
 
   public Player(float _x, float _y, char[] controls, PlayerType type) {
-    x=_x;
-    y=_y;
     this.controls = controls;
     keysdown = new boolean[4];
+
+    hitbox = new Hitbox(_x, _y, 1f, 0.5);
 
     facing_right = true;
 
@@ -57,10 +57,12 @@ class Player {
   }
 
   public void show() {
+    hitbox.show();
+
     pushMatrix();
     pushStyle();
 
-    translate(x*tilew, y*tileh);
+    translate(hitbox.x*tilew, hitbox.y*tileh - playerh/2);
     imageMode(CENTER);
     if (!facing_right) {
       scale(-1, 1);
@@ -122,44 +124,15 @@ class Player {
     if (keysdown[3])
       vx+=PLAYER_SPEED;
 
-    boolean[] corners = {
-      start.isObstacle(x-0.5, y - 0.5), 
-      start.isObstacle(x+0.5, y - 0.5), 
-      start.isObstacle(x+0.5, y + 1.5), 
-      start.isObstacle(x-0.5, y + 1.5), 
-    };
+    float x0 = hitbox.x-hitbox.w/2;
+    float x1 = hitbox.x+hitbox.w/2;
+    float y0 = hitbox.x-hitbox.h/2;
+    float y1 = hitbox.x+hitbox.h/2;
+    
+    
 
-    // top 2
-    if (corners[0] && corners[1]) {
-      if (vy < 0) {
-        vy= 0;
-      }
-    }
-
-    // bottom 2
-    if (corners[2] && corners[3]) {
-      if (vy > 0) {
-        vy= 0;
-      }
-    }
-
-    // right 2
-    if (corners[1] && corners[2]) {
-      if (vx > 0) {
-        vx= 0;
-      }
-    }
-
-    // left 2
-    if (corners[3] && corners[0]) {
-      if (vx < 0) {
-        vx= 0;
-      }
-    }
-
-
-    x+=vx;
-    y+=vy;
+    hitbox.x+=vx;
+    hitbox.y+=vy;
 
     if (vx != 0) {
       facing_right = vx > 0;

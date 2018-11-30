@@ -18,8 +18,6 @@ void setup() {
 
   loadImages();
   loadSound();
-  
-  song.loop();
 
   start = new Room(10, 12);
   tilew = width*1.0/start.cols;
@@ -27,7 +25,7 @@ void setup() {
   playerw = tilew;
   playerh = tilew*PLAYER_SPRITE_HEIGHT/PLAYER_SPRITE_WIDTH;
 
-  main = new Player(start.cols/2, start.rows/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M);
+  main = new Player(2, 2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M);
 }
 
 void draw() {
@@ -37,11 +35,11 @@ void draw() {
 
   start.display_floors();
   start.display_top_walls();
-  
+
   main.show();
   start.display_bot_walls();
   start.display_obstacles();
-start.display_columns();
+  start.display_columns();
 
 
   //image(big_zombie_idle_anim[frameCount%32/8], main.x, main.y, width/5, height/5);
