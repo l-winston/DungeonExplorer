@@ -56,12 +56,18 @@ final int FLOOR_7 = 6;
 final int FLOOR_8 = 7;
 final int FLOOR_LADDER = 8;
 
+
+final int COLUMN_TOP = 0;
+final int COLUMN_MID = 1;
+final int COLUMN_BASE = 2;
+
 class Room {
   int rows;
   int cols;
 
   int[][] wall;
   int[][] floor;
+  int[][] column;
   boolean[][] obstacle;
 
   Room(int r, int c) {
@@ -72,6 +78,7 @@ class Room {
 
     wall = new int[r][c];
     floor = new int[r][c];
+    column = new int[r][c];
     obstacle = new boolean[r][c];
     create(r, c);
   }
@@ -83,6 +90,10 @@ class Room {
     }
 
     for (int[] i : floor) {
+      Arrays.fill(i, -1);
+    }
+    
+    for (int[] i : column) {
       Arrays.fill(i, -1);
     }
 
@@ -145,8 +156,8 @@ class Room {
       }
     }
   }
-  
-    void display_bot_walls() {
+
+  void display_bot_walls() {
     for (int i = rows/2; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
 
@@ -167,10 +178,10 @@ class Room {
 
         if (!obstacle[i][j])
           continue;
-          
+
         float tilex = j * tilew;
         float tiley = i * tileh;
-        
+
         rect(tilex, tiley, tilew, tileh);
       }
     }
@@ -187,6 +198,20 @@ class Room {
         float tiley = i * tileh;
 
         image(floors[floor[i][j]], tilex, tiley, tilew, tileh);
+      }
+    }
+  }
+  
+    void display_columns() {
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+
+        if (column[i][j] == -1)
+          continue;
+
+        float tilex = j * tilew;
+        float tiley = i * tileh;
+        image(columns[column[i][j]], tilex, tiley, tilew, tileh);
       }
     }
   }

@@ -1,3 +1,11 @@
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
+
+
 Room start;
 Player main;
 
@@ -9,6 +17,9 @@ void setup() {
   size(750, 750);
 
   loadImages();
+  loadSound();
+  
+  song.loop();
 
   start = new Room(10, 12);
   tilew = width*1.0/start.cols;
@@ -26,9 +37,12 @@ void draw() {
 
   start.display_floors();
   start.display_top_walls();
-  //start.display_obstacles();
+  
   main.show();
   start.display_bot_walls();
+  start.display_obstacles();
+start.display_columns();
+
 
   //image(big_zombie_idle_anim[frameCount%32/8], main.x, main.y, width/5, height/5);
   //mage(walls[WALL_INNER_CORNER_T_TOP_LEFT], width/4, height/4, width/2, height/2);
