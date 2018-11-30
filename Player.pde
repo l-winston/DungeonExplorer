@@ -121,8 +121,46 @@ class Player {
       vy+=PLAYER_SPEED;
     if (keysdown[3])
       vx+=PLAYER_SPEED;
-      
-    
+
+    float[] playerTileDimensions = pixelToTile(playerw, playerh);
+
+
+    boolean[] corners = {
+      start.isObstacle(x-0.5, y - 0.5), 
+      start.isObstacle(x+0.5, y - 0.5), 
+      start.isObstacle(x+0.5, y + 1.5), 
+      start.isObstacle(x-0.5, y + 1.5), 
+    };
+
+    // top 2
+    if (corners[0] && corners[1]) {
+      if (vy < 0) {
+        vy= 0;
+      }
+    }
+
+    // bottom 2
+    if (corners[2] && corners[3]) {
+      if (vy > 0) {
+        vy= 0;
+      }
+    }
+
+    // right 2
+    if (corners[1] && corners[2]) {
+      if (vx > 0) {
+        vx= 0;
+      }
+    }
+
+    // left 2
+    if (corners[3] && corners[0]) {
+      if (vx < 0) {
+        vx= 0;
+      }
+    }
+
+
     x+=vx;
     y+=vy;
 

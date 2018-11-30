@@ -65,7 +65,7 @@ class Room {
   boolean[][] obstacle;
 
   Room(int r, int c) {
-    r += 3;
+    r += 4;
     c += 2;
     rows = r;
     cols = c;
@@ -89,30 +89,34 @@ class Room {
     for (int j = 1; j < cols-1; j++) {
       // fill first and second row (excluding corners)
       wall[0][j] = WALL_TOP_2;
-      obstacle[0][j] = true;
       wall[1][j] = WALL_2;
-      obstacle[1][j] = true;
-      wall[r-2][j] = WALL_TOP_2;
-      wall[r-1][j] = WALL_2;
-      obstacle[r-1][j] = true;
+      wall[r-3][j] = WALL_TOP_2;
+      wall[r-2][j] = WALL_2;
     }
-    
-    wall[r-1][0] = WALL_FRONT_LEFT;
-    wall[r-1][c-1] = WALL_FRONT_RIGHT;
+
+    wall[r-2][0] = WALL_FRONT_LEFT;
+    wall[r-2][c-1] = WALL_FRONT_RIGHT;
     wall[0][0] = WALL_TOP_LEFT;
     wall[0][c-1] = WALL_TOP_RIGHT;
 
-    for (int i = 1; i < rows-1; i++) {
+    for (int i = 1; i < rows-2; i++) {
       wall[i][0] = WALL_MID_LEFT;
-      obstacle[i][0] = true;
       wall[i][c-1] = WALL_MID_RIGHT;
-      obstacle[i][c-1] = true;
     }
 
-    for (int i = 1; i < r-1; i++) {
+    for (int i = 1; i < r-2; i++) {
       for (int j = 1; j < c-1; j++) {
         floor[i][j] = FLOOR_1;
       }
+    }
+
+    for (int i = 0; i < rows; i++) {
+      obstacle[i][0] = true;
+      obstacle[i][cols-1] = true;
+    }
+    for (int j = 0; j < cols; j++) {
+      obstacle[0][j] = true;
+      obstacle[rows-1][j] = true;
     }
   }
 
@@ -122,6 +126,8 @@ class Room {
   }
 
   boolean isObstacle (float x, float y) {
+    if (x < 0 || y < 0 || x >= cols || y >= rows)
+      return true;
     return obstacle[floor(y)][floor(x)];
   }
 
@@ -136,6 +142,21 @@ class Room {
         float tiley = i * tileh;
 
         image(walls[wall[i][j]], tilex, tiley, tilew, tileh);
+      }
+    }
+  }
+
+  void display_obstacles() {
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+
+        if (!obstacle[i][j])
+          continue;
+          
+        float tilex = j * tilew;
+        float tiley = i * tileh;
+        
+        rect(tilex, tiley, tilew, tileh);
       }
     }
   }
