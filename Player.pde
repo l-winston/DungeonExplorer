@@ -1,4 +1,4 @@
-final float PLAYER_SPEED = 0.1; // units of grid/frame
+final float PLAYER_SPEED = 20; // px/frame
 final float PLAYER_SPRITE_WIDTH = 16; // original image dimensions
 final float PLAYER_SPRITE_HEIGHT = 28; // original image dimensions
 final float ANIMATION_SPEED_SCALE = 0.1;
@@ -14,16 +14,15 @@ class Player extends Entity {
   PImage[] run_anim;
   PImage hit;
 
-
   boolean facing_right;
   char[] controls;
   boolean[] keysdown;
 
-  public Player(float _i, float _j, char[] controls, PlayerType type) {
+  public Player(float x, float y, char[] controls, PlayerType type) {
     this.controls = controls;
     keysdown = new boolean[4];
 
-    create(_i, _j);
+    create(x, y);
 
     facing_right = true;
 
@@ -54,9 +53,64 @@ class Player extends Entity {
     }
   }
 
-  public void create(float i, float j) {
-    float[] pixel = tileToPixel(i, j);
-    Vec2 center = box2d.coordPixelsToWorld(pixel[0]/2, pixel[1]/2));
+  public void create(float x, float y) {
+    BodyDef bd = new BodyDef();
+    Vec2 center = box2d.coordPixelsToWorld(x, y);
+    bd.position.set(center);
+    bd.type = BodyType.DYNAMIC;
+    bd.fixedRotation = true;
+
+    // set friction:
+    //   bd.linearDamping = ...;
+    //   bd.angularDamping = ...;
+
+    // if body is moving fast:
+    //   bd.bullet = ...;
+
+    body = box2d.createBody(bd);
+
+    // inital starting state:
+    //   body.setLinearVelocity(new Vec2(0, 3));
+    //   body.setAngularVelocity(1.2);
+
+    PolygonShape ps = new PolygonShape();
+    float box2Dw = box2d.scalarPixelsToWorld(playerw/2);
+    float box2Dh = box2d.scalarPixelsToWorld(playerh/8);
+    ps.setAsBox(box2Dw, box2Dh);
+
+    // make circular shape:
+    //   CircleShape cs = new CircleShape();
+    //   cs.m_radius = ...;
+
+
+    FixtureDef fd = new FixtureDef();
+    fd.shape = ps;
+
+    // set pararaters that affect physics of shape:
+    //   fd.friction = ...;
+    //   fd.restitution = ...;
+    //   fd.density = ...;
+
+    body.createFixture(fd);
+
+    // can directly create fixture w/ shape & density:
+    //   body.createFixture(ps, 1);
+  }
+
+  public void showHitbox() {
+    pushMatrix();
+    pushStyle();
+
+    rectMode(CENTER);
+    fill(0, 255, 0);
+    Vec2 pos = box2d.getBodyPixelCoord(body);
+    translate(pos.x, pos.y);
+
+    rect(0, 0, playerw, playerh/4);
+
+
+    popStyle();
+    popMatrix();
   }
 
   public void show() {
@@ -64,12 +118,16 @@ class Player extends Entity {
     pushMatrix();
     pushStyle();
 
-    translate(hitbox.x*tilew, hitbox.y*tileh - playerh/2);
+    Vec2 pos = box2d.getBodyPixelCoord(body);
+    Vec2 vel = body.getLinearVelocity();
+    // getting angle of rotation:
+    //   float a = body.getAngle();
+    translate(pos.x, pos.y - playerh/2);
     imageMode(CENTER);
     if (!facing_right) {
       scale(-1, 1);
     }
-    if (vx==0 && vy== 0) {
+    if (vel.x==0 && vel.y== 0) {
       image(idle_anim[round(frameCount*ANIMATION_SPEED_SCALE)%idle_anim.length], 0, 0, playerw, playerh);
     } else {
       image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%idle_anim.length], 0, 0, playerw, playerh);
@@ -116,28 +174,24 @@ class Player extends Entity {
   }
 
   public void step() {
-    vx=vy=0;
+    Vec2 vel = body.getLinearVelocity();
+
+    float vx = 0;
+    float vy = 0;
+
     if (keysdown[0])
-      vy-=PLAYER_SPEED;
+      vy += PLAYER_SPEED;
     if (keysdown[1])
-      vx-=PLAYER_SPEED;
+      vx -= PLAYER_SPEED;
     if (keysdown[2])
-      vy+=PLAYER_SPEED;
+      vy -= PLAYER_SPEED;
     if (keysdown[3])
-      vx+=PLAYER_SPEED;
+      vx += PLAYER_SPEED;
 
-    float x0 = hitbox.x-hitbox.w/2;
-    float x1 = hitbox.x+hitbox.w/2;
-    float y0 = hitbox.x-hitbox.h/2;
-    float y1 = hitbox.x+hitbox.h/2;
+    body.setLinearVelocity(new Vec2(vx, vy));
 
-
-
-    hitbox.x+=vx;
-    hitbox.y+=vy;
-
-    if (vx != 0) {
-      facing_right = vx > 0;
+    if (vel.x != 0) {
+      facing_right = vel.x > 0;
     }
   }
 }

@@ -1,7 +1,11 @@
 abstract class Entity{
   
-  BodyDef bd;
+  Body body;
   
   abstract void step();
   abstract void show();
+  
+  void killBody(){
+    box2d.destroyBody(body);
+  }
 }

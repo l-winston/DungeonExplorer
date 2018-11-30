@@ -89,7 +89,7 @@ class Room {
     for (int[] i : floor) {
       Arrays.fill(i, -1);
     }
-    
+
     for (int[] i : column) {
       Arrays.fill(i, -1);
     }
@@ -117,6 +117,13 @@ class Room {
         floor[i][j] = FLOOR_1;
       }
     }
+
+    /*
+    column[6][6] = COLUMN_MID;
+     column[6][7] = COLUMN_MID;
+     column[7][6] = COLUMN_BASE;
+     column[7][7] = COLUMN_BASE;
+     */
   }
 
   void access(int r, int c) {
@@ -154,10 +161,6 @@ class Room {
     }
   }
 
-  void display_obstacles() {
-
-  }
-
   void display_floors() {
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
@@ -172,8 +175,8 @@ class Room {
       }
     }
   }
-  
-    void display_columns() {
+
+  void display_columns() {
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
 
