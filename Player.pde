@@ -3,15 +3,13 @@ final float PLAYER_SPRITE_WIDTH = 16; // original image dimensions
 final float PLAYER_SPRITE_HEIGHT = 28; // original image dimensions
 final float ANIMATION_SPEED_SCALE = 0.1;
 
-float playerw;
-float playerh;
-float hitboxw;
-float hitboxh;
+
 
 enum PlayerType {
   ELF_F, ELF_M, KNIGHT_F, KNIGHT_M, WIZZARD_F, WIZZARD_M
 }
 class Player extends Entity {
+  
   PImage[] idle_anim;
   PImage[] run_anim;
   PImage hit;
@@ -20,10 +18,9 @@ class Player extends Entity {
   char[] controls;
   boolean[] keysdown;
 
-  public Player(float x, float y, char[] controls, PlayerType type) {
+  public Player(float x, float y, char[] controls, PlayerType type, Room room) {
     this.controls = controls;
     keysdown = new boolean[4];
-
     create(x, y);
 
     facing_right = true;
@@ -56,6 +53,7 @@ class Player extends Entity {
   }
 
   public void create(float x, float y) {
+
     BodyDef bd = new BodyDef();
     Vec2 center = box2d.coordPixelsToWorld(x, y);
     bd.position.set(center);

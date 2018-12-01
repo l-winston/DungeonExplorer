@@ -63,6 +63,7 @@ final int COLUMN_BASE = 2;
 
 class Room {
 
+  ArrayList<Boundary> boundaries;
   ArrayList<Entity> entities;
   int rows;
   int cols;
@@ -81,6 +82,7 @@ class Room {
     column = new boolean[r][c];
     create(r, c);
     entities = new ArrayList<Entity>();
+    boundaries = new ArrayList<Boundary>();
   }
 
   void addEntity(Entity e) {
@@ -154,7 +156,7 @@ class Room {
         float tiley = i * tileh;
 
         if (wall[i][j] != Wall.NONE) {
-          showWall(tilex, tiley, wall[i][j]);
+          showWall(tilex, tiley, wall[i][j], this);
         } 
         if (column[i][j]) {
           showColumn(tilex, tiley);
@@ -179,7 +181,9 @@ class Room {
   }
 
   void setColumn(int i, int j) {
+    if (column[i-1][j])
+      return;
     column[i-1][j] = true;
-    boundaries.add(new Boundary((j+0.5)*tilew, i * tileh, tilew / 5f));
+    this.boundaries.add(new Boundary((j+0.5)*tilew, i * tileh, tilew / 5f));
   }
 }

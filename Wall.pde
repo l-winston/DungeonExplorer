@@ -2,7 +2,7 @@ enum Wall {
   FRONT, LEFT, RIGHT, NONE, FRONT_LEFT, FRONT_RIGHT, TOP_LEFT, TOP_RIGHT
 }
 
-void showWall(float x, float y, Wall type) {
+void showWall(float x, float y, Wall type, Room room) {
   pushMatrix();
   pushStyle();
 
