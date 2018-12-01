@@ -66,7 +66,7 @@ void draw() {
 
   start.display_floors();
   
-  //main.showHitbox();
+  main.showHitbox();
 
   start.display();
 
