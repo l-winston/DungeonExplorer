@@ -23,7 +23,7 @@ float tilew, tileh;
 
 void setup() {
   noSmooth();
-  size(750, 750);
+  size(700, 700);
 
   loadImages();
   loadSound();
@@ -31,6 +31,7 @@ void setup() {
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
   box2d.setGravity(0, 0);
+  boundaries = new ArrayList<Boundary>();
 
   start = new Room(10, 12);
   tilew = width*1.0/start.cols;
@@ -38,37 +39,31 @@ void setup() {
   playerw = tilew;
   playerh = tilew*PLAYER_SPRITE_HEIGHT/PLAYER_SPRITE_WIDTH;
 
-  boundaries = new ArrayList<Boundary>();
-
-  boundaries.add(new Boundary(width/2, height/2, 100, 100));
-  test = boundaries.get(0);
   boundaries.add(new Boundary(0.5*tilew, 7*tileh, tilew, 14*tileh));
   boundaries.add(new Boundary(13.5*tilew, 7*tileh, tilew, 14*tileh));
   boundaries.add(new Boundary(7*tilew, 13*tileh, tilew*14, tileh));
   boundaries.add(new Boundary(7*tilew, 1.5*tileh, tilew*14, tileh));
+  
+  start.setColumn(4, 4);
 
   main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M);
+  start.addEntity(main);
 }
 
 void draw() {
   background(0);
 
-  main.step();
+  start.stepAll();
   box2d.step();
 
   start.display_floors();
-  start.display_top_walls();
-
   //main.showHitbox();
-  main.show();
-  start.display_bot_walls();
-  start.display_columns();
 
-  /*
-  for (Boundary b : boundaries)
-   b.show();
-   */
-   test.show();
+  start.display();
+
+  for (Boundary b : boundaries) {
+    //b.show();
+  }
 
 
   //image(big_zombie_idle_anim[frameCount%32/8], main.x, main.y, width/5, height/5);

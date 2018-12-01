@@ -62,54 +62,60 @@ final int COLUMN_MID = 1;
 final int COLUMN_BASE = 2;
 
 class Room {
+
+  ArrayList<Entity> entities;
   int rows;
   int cols;
 
-  int[][] wall;
+  Wall[][] wall;
   int[][] floor;
-  int[][] column;
+  boolean[][] column;
   Room(int r, int c) {
     r += 4;
     c += 2;
     rows = r;
     cols = c;
 
-    wall = new int[r][c];
+    wall = new Wall[r][c];
     floor = new int[r][c];
-    column = new int[r][c];
+    column = new boolean[r][c];
     create(r, c);
+    entities = new ArrayList<Entity>();
+  }
+
+  void addEntity(Entity e) {
+    entities.add(e);
+  }
+
+  void stepAll() {
+    for (Entity e : entities) {
+      e.step();
+    }
   }
 
   void create(int r, int c) {
 
-    for (int[] i : wall) {
-      Arrays.fill(i, -1);
+    for (Wall[] i : wall) {
+      Arrays.fill(i, Wall.NONE);
     }
 
     for (int[] i : floor) {
       Arrays.fill(i, -1);
     }
-
-    for (int[] i : column) {
-      Arrays.fill(i, -1);
-    }
-
     for (int j = 1; j < cols-1; j++) {
       // fill first and second row (excluding corners)
-      wall[0][j] = WALL_TOP_2;
-      wall[1][j] = WALL_2;
-      wall[r-3][j] = WALL_TOP_2;
-      wall[r-2][j] = WALL_2;
+      wall[1][j] = Wall.FRONT;
+      wall[r-2][j] = Wall.FRONT;
     }
 
-    wall[r-2][0] = WALL_FRONT_LEFT;
-    wall[r-2][c-1] = WALL_FRONT_RIGHT;
-    wall[0][0] = WALL_TOP_LEFT;
-    wall[0][c-1] = WALL_TOP_RIGHT;
+    wall[r-2][0] = Wall.FRONT_LEFT;
+    wall[r-2][c-1] = Wall.FRONT_RIGHT;
+    wall[0][0] = Wall.TOP_LEFT;
+    wall[0][c-1] = Wall.TOP_RIGHT;
 
     for (int i = 1; i < rows-2; i++) {
-      wall[i][0] = WALL_MID_LEFT;
-      wall[i][c-1] = WALL_MID_RIGHT;
+      wall[i][0] = Wall.LEFT;
+      wall[i][c-1] = Wall.RIGHT;
     }
 
     for (int i = 1; i < r-2; i++) {
@@ -117,13 +123,6 @@ class Room {
         floor[i][j] = FLOOR_1;
       }
     }
-
-    /*
-    column[6][6] = COLUMN_MID;
-     column[6][7] = COLUMN_MID;
-     column[7][6] = COLUMN_BASE;
-     column[7][7] = COLUMN_BASE;
-     */
   }
 
   void access(int r, int c) {
@@ -131,32 +130,35 @@ class Room {
     int actualc = c+1;
   }
 
-  void display_top_walls() {
-    for (int i = 0; i < rows/2; i++) {
+  void display() {
+    ArrayList<Entity> left = new ArrayList<Entity>();
+    left.addAll(entities);
+
+
+    for (int i = 0; i < rows-1; i++) {
       for (int j = 0; j < cols; j++) {
 
-        if (wall[i][j] == -1)
-          continue;
+        ArrayList<Entity> toRemove = new ArrayList<Entity>();
+        for (Entity e : left) {
+          Vec2 pos = box2d.coordWorldToPixels(e.body.getPosition());
+          if (pos.y < (i+1) * tileh) {
+            e.show();
+            toRemove.add(e);
+          }
+        }
+
+        left.removeAll(toRemove);
+
 
         float tilex = j * tilew;
         float tiley = i * tileh;
 
-        image(walls[wall[i][j]], tilex, tiley, tilew, tileh);
-      }
-    }
-  }
-
-  void display_bot_walls() {
-    for (int i = rows/2; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
-
-        if (wall[i][j] == -1)
-          continue;
-
-        float tilex = j * tilew;
-        float tiley = i * tileh;
-
-        image(walls[wall[i][j]], tilex, tiley, tilew, tileh);
+        if (wall[i][j] != Wall.NONE) {
+          showWall(tilex, tiley, wall[i][j]);
+        } 
+        if (column[i][j]) {
+          showColumn(tilex, tiley);
+        }
       }
     }
   }
@@ -176,17 +178,8 @@ class Room {
     }
   }
 
-  void display_columns() {
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
-
-        if (column[i][j] == -1)
-          continue;
-
-        float tilex = j * tilew;
-        float tiley = i * tileh;
-        image(columns[column[i][j]], tilex, tiley, tilew, tileh);
-      }
-    }
+  void setColumn(int i, int j) {
+    start.column[i-1][j] = true;
+    boundaries.add(new Boundary((j+0.5)*tilew, i * tileh, tilew, tileh/2));
   }
 }
