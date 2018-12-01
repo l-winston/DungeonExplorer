@@ -51,7 +51,6 @@ void setup() {
   start.setColumn(5, 6);
   start.setColumn(8, 2);
 
-
   main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M);
   start.addEntity(main);
 }
@@ -61,17 +60,19 @@ void draw() {
 
   start.stepAll();
   box2d.step();
+  
+  Vec2 pos = box2d.coordWorldToPixels(main.body.getPosition());
+  translate(width/2 - pos.x, height/2 - pos.y);
 
   start.display_floors();
   
-  main.showHitbox();
+  //main.showHitbox();
 
   start.display();
 
   for (Boundary b : boundaries) {
-    b.show();
+    //b.show();
   }
-
 
   //image(big_zombie_idle_anim[frameCount%32/8], main.x, main.y, width/5, height/5);
   //mage(walls[WALL_INNER_CORNER_T_TOP_LEFT], width/4, height/4, width/2, height/2);

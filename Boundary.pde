@@ -23,6 +23,7 @@ class Boundary {
     body.createFixture(ps, 1);
   }
 
+
   void show() {
     fill(255, 0, 0);
     stroke(0);
