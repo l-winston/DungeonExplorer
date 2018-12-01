@@ -5,6 +5,8 @@ final float ANIMATION_SPEED_SCALE = 0.1;
 
 float playerw;
 float playerh;
+float hitboxw;
+float hitboxh;
 
 enum PlayerType {
   ELF_F, ELF_M, KNIGHT_F, KNIGHT_M, WIZZARD_F, WIZZARD_M
@@ -74,8 +76,8 @@ class Player extends Entity {
     //   body.setAngularVelocity(1.2);
 
     PolygonShape ps = new PolygonShape();
-    float box2Dw = box2d.scalarPixelsToWorld(playerw/2);
-    float box2Dh = box2d.scalarPixelsToWorld(playerh/8);
+    float box2Dw = box2d.scalarPixelsToWorld(hitboxw/2);
+    float box2Dh = box2d.scalarPixelsToWorld(hitboxh/2);
     ps.setAsBox(box2Dw, box2Dh);
 
     // make circular shape:
@@ -106,7 +108,7 @@ class Player extends Entity {
     Vec2 pos = box2d.getBodyPixelCoord(body);
     translate(pos.x, pos.y);
 
-    rect(0, 0, playerw, playerh/4);
+    rect(0, 0, hitboxw, hitboxh);
 
 
     popStyle();

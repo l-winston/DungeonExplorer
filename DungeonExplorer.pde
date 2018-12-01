@@ -38,13 +38,19 @@ void setup() {
   tileh = height*1.0/start.rows;
   playerw = tilew;
   playerh = tilew*PLAYER_SPRITE_HEIGHT/PLAYER_SPRITE_WIDTH;
+  hitboxw = playerw - 1;
+  hitboxh = playerh / 3.4f;
 
   boundaries.add(new Boundary(0.5*tilew, 7*tileh, tilew, 14*tileh));
   boundaries.add(new Boundary(13.5*tilew, 7*tileh, tilew, 14*tileh));
   boundaries.add(new Boundary(7*tilew, 13*tileh, tilew*14, tileh));
   boundaries.add(new Boundary(7*tilew, 1.5*tileh, tilew*14, tileh));
-  
+
   start.setColumn(4, 4);
+  start.setColumn(6, 7);
+  start.setColumn(5, 6);
+  start.setColumn(8, 2);
+
 
   main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M);
   start.addEntity(main);
@@ -57,12 +63,13 @@ void draw() {
   box2d.step();
 
   start.display_floors();
-  //main.showHitbox();
+  
+  main.showHitbox();
 
   start.display();
 
   for (Boundary b : boundaries) {
-    //b.show();
+    b.show();
   }
 
 
