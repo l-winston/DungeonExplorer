@@ -21,7 +21,9 @@ float tilew, tileh;
 
 Room[] rooms;
 int current;
+
 Player main;
+Player second;
 
 Box2DProcessing box2d;
 
@@ -52,16 +54,22 @@ void draw() {
   rooms[current].stepAll();
   box2d.step();
 
-  Vec2 pos = box2d.coordWorldToPixels(main.body.getPosition());
-  translate(width/2 - pos.x, height/2 - pos.y);
+  Vec2 mainpos = box2d.coordWorldToPixels(main.body.getPosition());
+  Vec2 secondpos = box2d.coordWorldToPixels(second.body.getPosition());
+  
+  float avgx = (mainpos.x + secondpos.x)/2;
+  float avgy = (mainpos.y + secondpos.y)/2;
+
+  translate(width/2 - avgx, height/2 - avgy);
 
   rooms[current].display_floors();
 
   rooms[current].display();
   if (debug) {
-    main.showHitbox();
     for (Boundary b : rooms[current].boundaries) 
       b.show();
+    for (Entity e : rooms[current].entities) 
+      e.showHitbox();
   }
 
 
@@ -98,30 +106,36 @@ void createWorld() {
   rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
   rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
   rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
-  
-  for(int i = 0; i < 100; i++)
-  rooms[1].setColumn(int(random(2, 13)), int(random(1, 13)));
+
+  for (int i = 0; i < 200; i++)
+    rooms[1].setColumn(int(random(2, 13)), int(random(1, 13)));
 
 
 
-  main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M, rooms[0]);  
+  main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M, rooms[0]);    
+  second = new Player(width/2, height/2, new char[]{'i', 'j', 'k', 'l'}, PlayerType.KNIGHT_F, rooms[0]);  
+
   rooms[0].addEntity(main);
   rooms[1].addEntity(main);
+  rooms[0].addEntity(second);
+  rooms[1].addEntity(second);
 }
 
-  void calculateDistances() {
-    tilew = width*1.0/15;
-    tileh = height*1.0/15;
-    playerw = tilew;
-    playerh = tilew*PLAYER_SPRITE_HEIGHT/PLAYER_SPRITE_WIDTH;
-    hitboxw = playerw;
-    hitboxh = playerh / 3.4f;
-  }
+void calculateDistances() {
+  tilew = width*1.0/15;
+  tileh = height*1.0/15;
+  playerw = tilew;
+  playerh = tilew*PLAYER_SPRITE_HEIGHT/PLAYER_SPRITE_WIDTH;
+  hitboxw = playerw;
+  hitboxh = playerh / 3.4f;
+}
 
 boolean[] wasd = new boolean[4];
 
 void keyPressed() {
   main.keyPressUpdate();
+  second.keyPressUpdate();
+
   if (key == ' ') {
     for (Boundary b : rooms[current].boundaries) {
       b.destroyBody();
@@ -135,6 +149,7 @@ void keyPressed() {
 
 void keyReleased() {
   main.keyReleaseUpdate();
+  second.keyReleaseUpdate();
 }
 
 float[] pixelToTile(float x, float y, Room room) {

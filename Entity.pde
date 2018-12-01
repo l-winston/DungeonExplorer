@@ -4,6 +4,7 @@ abstract class Entity{
   
   abstract void step();
   abstract void show();
+  abstract void showHitbox();
   
   void killBody(){
     box2d.destroyBody(body);
