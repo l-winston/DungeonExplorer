@@ -1,7 +1,15 @@
 import shiffman.box2d.*;
+import org.jbox2d.common.*;
+import org.jbox2d.dynamics.joints.*;
 import org.jbox2d.collision.shapes.*;
+import org.jbox2d.collision.shapes.Shape;
+import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
+import org.jbox2d.dynamics.contacts.*;
+import org.jbox2d.collision.Manifold;
+import org.jbox2d.dynamics.contacts.Contact;
+import org.jbox2d.callbacks.ContactImpulse;
 
 import ddf.minim.*;
 import ddf.minim.analysis.*;
@@ -82,6 +90,7 @@ void createBox2dWorld() {
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
   box2d.setGravity(0, 0);
+  box2d.world.setContactListener(new CustomListener());
 }
 
 void createWorld() {
@@ -96,7 +105,7 @@ void createWorld() {
   rooms[0].boundaries.add(new Boundary(13.5*tilew, 7*tileh, tilew, 12*tileh));
   rooms[0].boundaries.add(new Boundary(7*tilew, 13*tileh, tilew*14, tileh));
   rooms[0].boundaries.add(new Boundary(7*tilew, 1.5*tileh, tilew*14, tileh));
-  
+
   rooms[1].boundaries.add(new Boundary(0.5*tilew, 12*tileh, tilew, 22*tileh));
   rooms[1].boundaries.add(new Boundary(23.5*tilew, 12*tileh, tilew, 22*tileh));
   rooms[1].boundaries.add(new Boundary(12*tilew, 23*tileh, tilew*24, tileh));
@@ -106,14 +115,14 @@ void createWorld() {
   //rooms[0].setColumn(12, 12);
   for (int i = 0; i < 10; i++)
     rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
-    
+
   for (int i = 0; i < 200; i++)
     rooms[1].setColumn(int(random(2, 23)), int(random(1, 23)));
 
 
 
   main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M, rooms[0]);    
-  second = new Player(width/2, height/2, new char[]{'i', 'j', 'k', 'l'}, PlayerType.KNIGHT_F, rooms[0]);  
+  second = new Player(width/2, height/2, new char[]{UP, LEFT, DOWN, RIGHT}, PlayerType.KNIGHT_F, rooms[0]);  
   //third = new Player(width/2, height/2, new char[]{UP, LEFT, DOWN, RIGHT}, PlayerType.ELF_M, rooms[0]);  
 
   rooms[0].addEntity(main);
@@ -125,8 +134,8 @@ void createWorld() {
 }
 
 void calculateDistances() {
-  tilew = width*1.0/30;
-  tileh = height*1.0/30;
+  tilew = width*1.0/15;
+  tileh = height*1.0/15;
   playerw = tilew;
   playerh = tilew*PLAYER_SPRITE_HEIGHT/PLAYER_SPRITE_WIDTH;
   hitboxw = playerw;
@@ -168,4 +177,44 @@ float[] tileToPixel(float i, float j, Room room) {
 
 void mousePressed() {
   debug ^= true;
+}
+
+class CustomListener implements ContactListener {
+  CustomListener() {
+  }
+
+  // This function is called when a new collision occurs
+  void beginContact(Contact cp) {
+    // Get both shapes
+    Fixture f1 = cp.getFixtureA();
+    Fixture f2 = cp.getFixtureB();
+    // Get both bodies
+    Body b1 = f1.getBody();
+    Body b2 = f2.getBody();
+
+    // Get our objects that reference these bodies
+    Object o1 = b1.getUserData();
+    Object o2 = b2.getUserData();
+    
+    println("asdas");
+
+    if (o1.getClass() == Player.class && o2.getClass() == Player.class) {
+      println("PLAYER-PLAYER Contact!");
+    }
+  }
+
+  void endContact(Contact contact) {
+    // TODO Auto-generated method stub
+  }
+
+  void preSolve(Contact contact, Manifold oldManifold) {
+    // TODO Auto-generated method stub
+  }
+
+  void postSolve(Contact contact, ContactImpulse impulse) {
+    // TODO Auto-generated method stub
+  }
+}
+
+void endContact(Contact cp) {
 }

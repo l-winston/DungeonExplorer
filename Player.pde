@@ -95,6 +95,8 @@ class Player extends Entity {
 
     // can directly create fixture w/ shape & density:
     //   body.createFixture(ps, 1);
+    
+    body.setUserData(this);
   }
 
   public void showHitbox() {
