@@ -24,6 +24,7 @@ int current;
 
 Player main;
 Player second;
+//Player third;
 
 Box2DProcessing box2d;
 
@@ -56,7 +57,7 @@ void draw() {
 
   Vec2 mainpos = box2d.coordWorldToPixels(main.body.getPosition());
   Vec2 secondpos = box2d.coordWorldToPixels(second.body.getPosition());
-  
+
   float avgx = (mainpos.x + secondpos.x)/2;
   float avgy = (mainpos.y + secondpos.y)/2;
 
@@ -91,39 +92,41 @@ void createWorld() {
 
   calculateDistances();
 
-  rooms[0].boundaries.add(new Boundary(0.5*tilew, 7*tileh, tilew, 14*tileh));
-  rooms[0].boundaries.add(new Boundary(13.5*tilew, 7*tileh, tilew, 14*tileh));
+  rooms[0].boundaries.add(new Boundary(0.5*tilew, 7*tileh, tilew, 12*tileh));
+  rooms[0].boundaries.add(new Boundary(13.5*tilew, 7*tileh, tilew, 12*tileh));
   rooms[0].boundaries.add(new Boundary(7*tilew, 13*tileh, tilew*14, tileh));
   rooms[0].boundaries.add(new Boundary(7*tilew, 1.5*tileh, tilew*14, tileh));
+  
+  rooms[1].boundaries.add(new Boundary(0.5*tilew, 12*tileh, tilew, 22*tileh));
+  rooms[1].boundaries.add(new Boundary(23.5*tilew, 12*tileh, tilew, 22*tileh));
+  rooms[1].boundaries.add(new Boundary(12*tilew, 23*tileh, tilew*24, tileh));
+  rooms[1].boundaries.add(new Boundary(12*tilew, 1.5*tileh, tilew*24, tileh));
 
   //rooms[0].setColumn(2, 1);
   //rooms[0].setColumn(12, 12);
-  rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
-  rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
-  rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
-  rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
-  rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
-  rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
-  rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
-  rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
-
+  for (int i = 0; i < 10; i++)
+    rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
+    
   for (int i = 0; i < 200; i++)
-    rooms[1].setColumn(int(random(2, 13)), int(random(1, 13)));
+    rooms[1].setColumn(int(random(2, 23)), int(random(1, 23)));
 
 
 
   main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M, rooms[0]);    
   second = new Player(width/2, height/2, new char[]{'i', 'j', 'k', 'l'}, PlayerType.KNIGHT_F, rooms[0]);  
+  //third = new Player(width/2, height/2, new char[]{UP, LEFT, DOWN, RIGHT}, PlayerType.ELF_M, rooms[0]);  
 
   rooms[0].addEntity(main);
   rooms[1].addEntity(main);
   rooms[0].addEntity(second);
   rooms[1].addEntity(second);
+  //rooms[0].addEntity(third);
+  //rooms[1].addEntity(third);
 }
 
 void calculateDistances() {
-  tilew = width*1.0/15;
-  tileh = height*1.0/15;
+  tilew = width*1.0/30;
+  tileh = height*1.0/30;
   playerw = tilew;
   playerh = tilew*PLAYER_SPRITE_HEIGHT/PLAYER_SPRITE_WIDTH;
   hitboxw = playerw;
@@ -135,6 +138,8 @@ boolean[] wasd = new boolean[4];
 void keyPressed() {
   main.keyPressUpdate();
   second.keyPressUpdate();
+  //third.keyPressUpdate();
+
 
   if (key == ' ') {
     for (Boundary b : rooms[current].boundaries) {
@@ -150,6 +155,7 @@ void keyPressed() {
 void keyReleased() {
   main.keyReleaseUpdate();
   second.keyReleaseUpdate();
+  //third.keyReleaseUpdate();
 }
 
 float[] pixelToTile(float x, float y, Room room) {

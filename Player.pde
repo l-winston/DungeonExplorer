@@ -9,7 +9,7 @@ enum PlayerType {
   ELF_F, ELF_M, KNIGHT_F, KNIGHT_M, WIZZARD_F, WIZZARD_M
 }
 class Player extends Entity {
-  
+
   PImage[] idle_anim;
   PImage[] run_anim;
   PImage hit;
@@ -138,37 +138,40 @@ class Player extends Entity {
   }
 
   public void keyPressUpdate() {
-    if (key == controls[0]) {
+    float k = key == CODED ? keyCode : key;
+    if (k == controls[0]) {
       keysdown[0] = true;
     }
 
-    if (key == controls[1]) {
+    if (k == controls[1]) {
       keysdown[1] = true;
     }
 
-    if (key == controls[2]) {
+    if (k == controls[2]) {
       keysdown[2] = true;
     }
 
-    if (key == controls[3]) {
+    if (k == controls[3]) {
       keysdown[3] = true;
     }
   }
 
   public void keyReleaseUpdate() {
-    if (key == controls[0]) {
+    float k = key == CODED ? keyCode : key;
+
+    if (k == controls[0]) {
       keysdown[0] = false;
     }
 
-    if (key == controls[1]) {
+    if (k == controls[1]) {
       keysdown[1] = false;
     }
 
-    if (key == controls[2]) {
+    if (k == controls[2]) {
       keysdown[2] = false;
     }
 
-    if (key == controls[3]) {
+    if (k == controls[3]) {
       keysdown[3] = false;
     }
   }
