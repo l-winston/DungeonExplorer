@@ -179,7 +179,7 @@ class Room {
   }
 
   void setColumn(int i, int j) {
-    start.column[i-1][j] = true;
+    column[i-1][j] = true;
     boundaries.add(new Boundary((j+0.5)*tilew, i * tileh, tilew / 5f));
   }
 }
