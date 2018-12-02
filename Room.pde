@@ -151,7 +151,6 @@ class Room {
 
         left.removeAll(toRemove);
 
-
         float tilex = j * tilew;
         float tiley = i * tileh;
 
@@ -162,6 +161,10 @@ class Room {
           showColumn(tilex, tiley);
         }
       }
+    }
+    
+    for(Entity e : left){
+      e.show();
     }
   }
 

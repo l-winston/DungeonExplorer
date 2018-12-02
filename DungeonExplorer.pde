@@ -196,7 +196,8 @@ class CustomListener implements ContactListener {
     Object o1 = b1.getUserData();
     Object o2 = b2.getUserData();
     
-    println("asdas");
+    if(o1 == null || o2 == null)
+      return;
 
     if (o1.getClass() == Player.class && o2.getClass() == Player.class) {
       println("PLAYER-PLAYER Contact!");
