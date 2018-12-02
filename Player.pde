@@ -1,4 +1,4 @@
-final float PLAYER_SPEED = 20; // px/frame
+final float PLAYER_SPEED = 100; // px/frame
 final float PLAYER_SPRITE_WIDTH = 16; // original image dimensions
 final float PLAYER_SPRITE_HEIGHT = 28; // original image dimensions
 final float ANIMATION_SPEED_SCALE = 0.1; // animation speed scale
