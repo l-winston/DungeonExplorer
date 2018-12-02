@@ -93,19 +93,20 @@ void setup() {
     }
   } 
   )
-  .setColorForeground(color(0, 0, 0))
-    .setColorBackground(color(0, 0, 0))
-    .setColorActive(color(0, 0, 0))
+  .setColorForeground(color(0, 0, 0, 0))
+    .setColorBackground(color(0, 0, 0, 0))
+    .setColorActive(color(0, 0, 0, 0))
     .getCaptionLabel()
     .align(CENTER, CENTER)
     ;
 }
 
 void draw() {
-  background(0);
 
   switch (phase) {
   case GAME:
+    background(0);
+
     rooms[current].stepAll();
     box2d.step();
 
@@ -133,6 +134,8 @@ void draw() {
     //mage(walls[WALL_INNER_CORNER_T_TOP_LEFT], width/4, height/4, width/2, height/2);
     break;
   case START:
+    background(70, 59, 58);
+
     fill(255);
     textSize(75);
     textAlign(CENTER, CENTER);

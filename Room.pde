@@ -1,3 +1,6 @@
+import java.util.Collections;
+import java.util.Comparator;
+
 final int WALL_TOP_1 = 0;
 final int WALL_TOP_2 = 1;
 final int WALL_TOP_3 = 2;
@@ -135,6 +138,19 @@ class Room {
   void display() {
     ArrayList<Entity> left = new ArrayList<Entity>();
     left.addAll(entities);
+    
+    
+    // sort entities by y value to make sure higher entities are drawn first
+    Collections.sort(left, new Comparator<Entity>() {
+      @Override
+        public int compare(Entity o1, Entity o2) {
+        return int(o2.body.getPosition().y - o1.body.getPosition().y);
+      }
+    }
+    );
+    
+    for(Entity e : entities)
+      println(e.body.getPosition().y);
 
 
     for (int i = 0; i < rows-1; i++) {
@@ -162,8 +178,8 @@ class Room {
         }
       }
     }
-    
-    for(Entity e : left){
+
+    for (Entity e : left) {
       e.show();
     }
   }
