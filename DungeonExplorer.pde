@@ -163,7 +163,8 @@ void draw() {
 }
 
 void drawTitleBackground() {   
-
+  imageMode(CORNER);
+  
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 10; j++) {
       image(walls[5], j*width/10f, i*height/10f, width/10f, height/10f);
