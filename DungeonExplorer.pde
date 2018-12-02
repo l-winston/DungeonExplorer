@@ -61,7 +61,7 @@ ArrayList<Boundary> currentFloorBoundaries;
 void setup() {
   debug = false;
   mute = true;
-  
+
   noSmooth();
   size(700, 700);
 
@@ -151,6 +151,7 @@ void draw() {
   case START:
     background(70, 59, 58);
 
+    drawTitleBackground();
     fill(255);
     textSize(75);
     textAlign(CENTER, CENTER);
@@ -159,6 +160,53 @@ void draw() {
     cp5.draw();
     break;
   }
+}
+
+void drawTitleBackground() {   
+
+  for (int i = 0; i < 10; i++) {
+    for (int j = 0; j < 10; j++) {
+      image(walls[5], j*width/10f, i*height/10f, width/10f, height/10f);
+    }
+  }
+  
+  imageMode(CENTER);
+  
+  pushMatrix();
+
+  translate(width/8, height/3);
+  scale(5);
+  image(big_demon_idle_anim[0], 0, 0);
+
+  popMatrix();
+  pushMatrix();
+
+  translate(width*7/8, height/3);
+  scale(5);
+  image(big_zombie_idle_anim[0], 0, 0);
+
+  popMatrix();
+  pushMatrix();
+
+  translate(width/4, height*5/6);
+  scale(5);
+  image(elf_m_idle_anim[0], 0, 0);
+
+  popMatrix();
+  pushMatrix();
+
+  translate(width/2, height*5/6);
+  scale(5);
+  image(knight_m_idle_anim[0], 0, 0);
+
+  popMatrix();
+  pushMatrix();
+
+  translate(width*3/4, height*5/6);
+  scale(5);
+  image(wizzard_m_idle_anim[0], 0, 0);
+
+  popMatrix();
 }
 
 void createBox2dWorld() {
@@ -219,14 +267,14 @@ void calculateDistances() {
 }
 
 void keyPressed() {
-  if(key == 'm'){
+  if (key == 'm') {
     mute ^= true;
-    if(mute)
+    if (mute)
       song.pause();
     else
       song.loop();
   }
-  
+
   if (phase == Phase.GAME) {
     main.keyPressUpdate();
     second.keyPressUpdate();
