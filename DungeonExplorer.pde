@@ -1,3 +1,5 @@
+import controlP5.*;
+
 import shiffman.box2d.*;
 import org.jbox2d.common.*;
 import org.jbox2d.dynamics.joints.*;
@@ -18,6 +20,12 @@ import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 
+enum Phase{
+  START, GAME
+}
+
+PFont font;
+
 boolean debug;
 
 float playerw;
@@ -29,6 +37,8 @@ float tilew, tileh;
 
 Room[] rooms;
 int current;
+
+Phase phase;
 
 Player main;
 Player second;
@@ -47,6 +57,7 @@ void setup() {
 
   loadImages();
   loadSound();
+  loadFont();
 
   createBox2dWorld();
   createWorld();
@@ -167,11 +178,11 @@ void keyReleased() {
   //third.keyReleaseUpdate();
 }
 
-float[] pixelToTile(float x, float y, Room room) {
+float[] pixelToTile(float x, float y) {
   return new float[]{y / tileh, x / tilew};
 }
 
-float[] tileToPixel(float i, float j, Room room) {
+float[] tileToPixel(float i, float j) {
   return new float[]{j * tilew, i * tileh};
 }
 
