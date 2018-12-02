@@ -103,6 +103,12 @@ void setup() {
     .getCaptionLabel()
     .align(CENTER, CENTER)
     ;
+
+  for (int i = 0; i < 10; i++) {
+    for (int j = 0; j < 10; j++) {
+      startPattern[i][j] =  int(random(3))+3;
+    }
+  }
 }
 
 void draw() {
@@ -162,17 +168,19 @@ void draw() {
   }
 }
 
+int[][] startPattern = new int[10][10];
+
 void drawTitleBackground() {   
   imageMode(CORNER);
-  
+
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 10; j++) {
-      image(walls[5], j*width/10f, i*height/10f, width/10f, height/10f);
+      image(walls[startPattern[i][j]], j*width/10f, i*height/10f, width/10f, height/10f);
     }
   }
-  
+
   imageMode(CENTER);
-  
+
   pushMatrix();
 
   translate(width/8, height/3);
