@@ -150,9 +150,6 @@ class Room {
       }
     }
     );
-    
-    for(Entity e : entities)
-      println(e.body.getPosition().y);
 
 
     for (int i = 0; i < rows-1; i++) {

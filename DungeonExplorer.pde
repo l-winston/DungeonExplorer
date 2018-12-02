@@ -171,10 +171,11 @@ void draw() {
 }
 
 int[][] startPattern = new int[10][10];
+float ax = 0;
 
 void drawTitleBackground() { 
   pushStyle();
-  
+
   imageMode(CORNER);
 
   for (int i = 0; i < 10; i++) {
@@ -184,44 +185,123 @@ void drawTitleBackground() {
   }
 
   imageMode(CENTER);
-
-  pushMatrix();
-
-  translate(width/8, height/3);
-  scale(5);
-  image(big_demon_idle_anim[0], 0, 0);
-
-  popMatrix();
-  pushMatrix();
-
-  translate(width*7/8, height/3);
-  scale(5);
-  image(big_zombie_idle_anim[0], 0, 0);
-
-  popMatrix();
-  pushMatrix();
-
-  translate(width/4, height*5/6);
-  scale(5);
-  image(elf_m_idle_anim[0], 0, 0);
-
-  popMatrix();
-  pushMatrix();
-
-  translate(width/2, height*5/6);
-  scale(5);
-  image(knight_m_idle_anim[0], 0, 0);
-
-  popMatrix();
-  pushMatrix();
-
-  translate(width*3/4, height*5/6);
-  scale(5);
-  image(wizzard_m_idle_anim[0], 0, 0);
-
-  popMatrix();
   
+  pushMatrix();
+
+  translate((ax - 790)%(1.5*width), height*5/6+15);
+  scale(3);
+  image(orc_warrior_run_anim[frameCount/8%4], 0, 0);
+
+  popMatrix(); 
+  pushMatrix();
+
+  translate((ax - 750)%(1.5*width), height*5/6+15);
+  scale(3);
+  image(masked_orc_run_anim[frameCount/8%4], 0, 0);
+
+  popMatrix(); 
+  pushMatrix();
+
+  translate((ax - 710)%(1.5*width), height*5/6+15);
+  scale(3);
+  image(muddy_run_anim[frameCount/8%4], 0, 0);
+
+  popMatrix(); 
+  pushMatrix();
+
+  translate((ax - 670)%(1.5*width), height*5/6+15);
+  scale(3);
+  image(wogol_run_anim[frameCount/8%4], 0, 0);
+
+  popMatrix();  
+  pushMatrix();
+
+  translate((ax - 630)%(1.5*width), height*5/6+15);
+  scale(3);
+  image(orc_shaman_run_anim[frameCount/8%4], 0, 0);
+
+  popMatrix();  
+  pushMatrix();
+
+  translate((ax - 590)%(1.5*width), height*5/6+15);
+  scale(3);
+  image(necromancer_run_anim[frameCount/8%4], 0, 0);
+
+  popMatrix();  
+  pushMatrix();
+
+  translate((ax - 550)%(1.5*width), height*5/6+15);
+  scale(3);
+  image(chort_run_anim[frameCount/8%4], 0, 0);
+
+  popMatrix();  
+  pushMatrix();
+
+  translate((ax - 510)%(1.5*width), height*5/6+15);
+  scale(3);
+  image(swampy_run_anim[frameCount/8%4], 0, 0);
+
+  popMatrix();  
+  pushMatrix();
+
+  translate((ax - 470)%(1.5*width), height*5/6+15);
+  scale(3);
+  image(skelet_run_anim[frameCount/8%4], 0, 0);
+
+  popMatrix();
+  pushMatrix();
+
+  translate((ax - 430)%(1.5*width), height*5/6+15);
+  scale(3);
+  image(ice_zombie_run_anim[frameCount/8%4], 0, 0);
+
+  popMatrix();
+  pushMatrix();
+
+  translate((ax - 370)%(1.5*width), height*5/6);
+  scale(3);
+  image(ogre_run_anim[frameCount/8%4], 0, 0);
+
+  popMatrix();
+  pushMatrix();
+
+  translate((ax - 310)%(1.5*width), height*5/6);
+  scale(3);
+  image(big_demon_run_anim[frameCount/8%4], 0, 0);
+
+  popMatrix();
+  pushMatrix();
+
+  translate((ax - 250)%(1.5*width), height*5/6);
+  scale(3);
+  image(big_zombie_run_anim[frameCount/8%4], 0, 0);
+
+  popMatrix();
+  pushMatrix();
+
+  translate((ax - 0)%(1.5*width), height*5/6-7);
+  scale(3);
+  image(wizzard_m_run_anim[frameCount/8%4], 0, 0);
+
+  popMatrix();
+  pushMatrix();
+
+  translate((ax + 30)%(1.5*width), height*5/6);
+  scale(3);
+  image(elf_m_run_anim[frameCount/8%4], 0, 0);
+
+  popMatrix();
+  pushMatrix();
+
+  translate((ax + 60)%(1.5*width), height*5/6);
+  scale(3);
+  image(knight_m_run_anim[frameCount/8%4], 0, 0);
+
+  popMatrix();
+
   popStyle();
+
+  ax =(ax+3);
 }
 
 void createBox2dWorld() {

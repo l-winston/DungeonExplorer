@@ -50,7 +50,6 @@ void loadImages() {
           walls[wallc++] = tile;
         }
       } else if (startsWith(name, "column")) {
-        println(name);
         columns[columnc++] = tile;
       } else if (startsWith(name, "floor")) {
         if (startsWith(name, "floor_spikes_anim")) {
