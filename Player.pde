@@ -1,30 +1,43 @@
 final float PLAYER_SPEED = 20; // px/frame
 final float PLAYER_SPRITE_WIDTH = 16; // original image dimensions
 final float PLAYER_SPRITE_HEIGHT = 28; // original image dimensions
-final float ANIMATION_SPEED_SCALE = 0.1;
+final float ANIMATION_SPEED_SCALE = 0.1; // animation speed scale
 
 
-
+// enum to represent the type of player
 enum PlayerType {
   ELF_F, ELF_M, KNIGHT_F, KNIGHT_M, WIZZARD_F, WIZZARD_M
 }
-class Player extends Entity {
 
+class Player extends Entity {
+  
+  // images/animations for drawing
   PImage[] idle_anim;
   PImage[] run_anim;
   PImage hit;
-
+  
+  // whether of not the player was last facing the right (matters for drawing the player)
   boolean facing_right;
+  
+  // the controls on the keyboard that map to this player's movement
   char[] controls;
+  
+  // which keys are currently held down
   boolean[] keysdown;
 
-  public Player(float x, float y, char[] controls, PlayerType type, Room room) {
+  public Player(float x, float y, char[] controls, PlayerType type) {
     this.controls = controls;
+    
+    // at creation, assume no keys are down
     keysdown = new boolean[4];
+    
+    // create the player's body
     create(x, y);
 
+    // players spawn facing right
     facing_right = true;
-
+    
+    // set the animations/images to the correct ones depending on the player's type
     if (type == PlayerType.ELF_F) {
       idle_anim = elf_f_idle_anim;
       run_anim = elf_f_run_anim;
@@ -99,12 +112,15 @@ class Player extends Entity {
     body.setUserData(this);
   }
 
+  // draws the player's movement hitbox as a green rectangle
   public void showHitbox() {
     pushMatrix();
     pushStyle();
 
     rectMode(CENTER);
-    fill(0, 255, 0);
+    stroke(0, 0, 255);
+    strokeWeight(5);
+    noFill();
     Vec2 pos = box2d.getBodyPixelCoord(body);
     translate(pos.x, pos.y);
 
@@ -115,6 +131,7 @@ class Player extends Entity {
     popMatrix();
   }
 
+  // draw's the player's body
   public void show() {
 
     pushMatrix();
@@ -138,7 +155,9 @@ class Player extends Entity {
     popStyle();
     popMatrix();
   }
-
+  
+  
+  // call this when keyPressed update the player's movement 
   public void keyPressUpdate() {
     float k = key == CODED ? keyCode : key;
     if (k == controls[0]) {
@@ -157,7 +176,8 @@ class Player extends Entity {
       keysdown[3] = true;
     }
   }
-
+  
+  // call this when keyReleased update the player's movement 
   public void keyReleaseUpdate() {
     float k = key == CODED ? keyCode : key;
 
@@ -178,6 +198,7 @@ class Player extends Entity {
     }
   }
 
+  // update the player's velocity depending on the keys inputted
   public void step() {
     Vec2 vel = body.getLinearVelocity();
 

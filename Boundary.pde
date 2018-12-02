@@ -1,12 +1,15 @@
 class Boundary {
-
+  
   float x, y;
   float w, h;
   float r;
   Body body;
+  
+  // whether or not the boundary's body is represented by a circle
   boolean circular;
 
   Boundary(float x_, float y_, float w_, float h_) {
+    // if there are 4 params, assume the Boundary will be a rectangle
     circular = false;
 
     x = x_;
@@ -16,6 +19,7 @@ class Boundary {
   }
 
   Boundary(float x_, float y_, float r_) {
+    // if there are 3 params, assume the Boundary will be a
     circular = true;
 
     x = x_;
@@ -24,6 +28,7 @@ class Boundary {
   }
 
   void createBody() {
+    // body defenition is different whether or not the boundary is a circle
     if (circular) {
       BodyDef bd = new BodyDef();
       bd.position.set(box2d.coordPixelsToWorld(x, y));
@@ -53,9 +58,10 @@ class Boundary {
     box2d.destroyBody(body);
   }
 
-  void show() {
-    fill(255, 0, 0);
-    stroke(0);
+  void showHitbox() {
+    stroke(255, 0, 0);
+    strokeWeight(5);
+    noFill();
     rectMode(CENTER);
     if (!circular)
       rect(x, y, w, h);

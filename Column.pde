@@ -1,3 +1,6 @@
+
+// show a column at coordinates (x, y)
+// NOTE: base will be drawn at (x, y+tileh)
 void showColumn(float x, float y) {
   pushMatrix();
   pushStyle();

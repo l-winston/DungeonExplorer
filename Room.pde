@@ -65,7 +65,9 @@ final int COLUMN_MID = 1;
 final int COLUMN_BASE = 2;
 
 class Room {
-
+  
+  
+  
   ArrayList<Boundary> boundaries;
   ArrayList<Entity> entities;
   int rows;

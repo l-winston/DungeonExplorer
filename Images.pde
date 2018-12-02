@@ -1,4 +1,6 @@
 
+// this file contains all the datastructures used to store the animations/images
+
 PImage wall_fountain_top;
 PImage[] wall_fountain_mid_red_anim = new PImage[3];
 PImage[] wall_fountain_basin_red_anim = new PImage[3];

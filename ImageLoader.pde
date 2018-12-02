@@ -4,13 +4,17 @@ import java.util.Arrays;
 PImage sheet;
 
 void loadImages() {
+  // load main spritesheet
   sheet = loadImage("tileset.png");
+  
+  // store all data in a String array
   String[] data = loadStrings("tileinfo.txt");
   for (int i = 0; i < data.length; i++) {
     //file includes some empty lines, check to skip them
     if (data[i].length() <= 0)
       continue;
-
+    
+    // create a scanner to parse the data
     Scanner scan = new Scanner(data[i]);
 
     // find the type picture the info represents by using the first word (seperated by an underscore character)
@@ -26,12 +30,14 @@ void loadImages() {
     }
 
     scan.close();
-
+   
+    // iterate for each frame in the animation (if it is an image, coords[4] = 1)
     for (int j = 0; j < coords[4]; j++) {
+      
+      // get the specified area
       PImage tile = sheet.get(coords[0], coords[1], coords[2], coords[3]);
 
       if (startsWith(name, "wall")) {
-
         if (startsWith(name, "wall_fountain_mid_red_anim")) {
           wall_fountain_mid_red_anim[j] = tile;
         } else if (startsWith(name, "wall_fountain_basin_red_anim")) {
@@ -212,12 +218,13 @@ void loadImages() {
         weapon_green_magic_staff = tile;
       }
 
+      // shift over the position
       coords[0] += coords[2];
     }
   }
 }
 
-//returns whether b starts with a
+//returns whether or not String a is a substring of String b
 boolean startsWith(String b, String a) {
   if (a.length() > b.length())
     return false;

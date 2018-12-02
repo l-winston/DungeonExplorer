@@ -1,3 +1,4 @@
+// all entities will inherit this class
 abstract class Entity{
   
   Body body;

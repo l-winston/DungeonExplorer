@@ -20,63 +20,66 @@ import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 
+// enum representing current phase of game
 enum Phase {
   START, GAME
 }
-
-float bx, by, bw, bh;
 
 PFont font;
 
 boolean debug;
 
+
+// global variables to aid with drawing characters
 float playerw;
 float playerh;
 float hitboxw;
 float hitboxh;
 
+// global variablles to aid with scaling
 float tilew, tileh;
 
+// every "floor" or "room" of the game
 Room[] rooms;
+// index of current floor
 int current;
 
+// current phase
 Phase phase;
 
+// initalize players
 Player main;
 Player second;
-//Player third;
 
+// library object
 Box2DProcessing box2d;
 ControlP5 cp5;
 
+// boundaries on current floor
 ArrayList<Boundary> currentFloorBoundaries;
-Boundary test;
 
 void setup() {
   debug = false;
 
   noSmooth();
   size(700, 700);
-  bx = width/2; 
-  by = height/2; 
-  bw = 100; 
-  bh = 20;
 
   cp5 = new ControlP5(this);
   cp5.setAutoDraw(false);
 
-
+  // set inital phase
   phase = Phase.START;
 
+  // load files
   loadImages();
   loadSound();
   loadFont();
 
-
+  // add start ui
   cp5.addButton("START")
     .setValue(0)
-    .setPosition(bx-bw/2, by-bh/2)
-    .setSize(int(bw), int(bh))
+    .setPosition(width/2-100/2, height/2-20/2)
+    .setSize(int(100), int(20))
     .setFont(font)
     .addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent event) {
@@ -107,23 +110,34 @@ void draw() {
   case GAME:
     background(0);
 
+    // step all entities on current floor through time
     rooms[current].stepAll();
+    // calculate physics on each entity (on the floor)
     box2d.step();
 
+
+    // find middle of characters
     Vec2 mainpos = box2d.coordWorldToPixels(main.body.getPosition());
     Vec2 secondpos = box2d.coordWorldToPixels(second.body.getPosition());
 
     float avgx = (mainpos.x + secondpos.x)/2;
     float avgy = (mainpos.y + secondpos.y)/2;
 
+
+    // move camera to follow players
     translate(width/2 - avgx, height/2 - avgy);
 
+
+    // show current floor
     rooms[current].display_floors();
 
+    // show all entities on current floor
     rooms[current].display();
+
+    // if in debug mode, show hitboxes of all entities
     if (debug) {
       for (Boundary b : rooms[current].boundaries) 
-        b.show();
+        b.showHitbox();
       for (Entity e : rooms[current].entities) 
         e.showHitbox();
       break;
@@ -149,16 +163,20 @@ void draw() {
 void createBox2dWorld() {
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
+  // default gravity setting is (-10, 0)
   box2d.setGravity(0, 0);
+  // add contact listener
   box2d.world.setContactListener(new CustomListener());
 }
 
 void createWorld() {
 
+  // create room array and set dimensions
   rooms = new Room[2];
   rooms[0] = new Room(10, 12);
   rooms[1] = new Room(20, 22);
 
+  // calculate scaling numbers
   calculateDistances();
 
   rooms[0].boundaries.add(new Boundary(0.5*tilew, 7*tileh, tilew, 12*tileh));
@@ -171,29 +189,26 @@ void createWorld() {
   rooms[1].boundaries.add(new Boundary(12*tilew, 23*tileh, tilew*24, tileh));
   rooms[1].boundaries.add(new Boundary(12*tilew, 1.5*tileh, tilew*24, tileh));
 
-  //rooms[0].setColumn(2, 1);
-  //rooms[0].setColumn(12, 12);
+  // randomly spawn columns
   for (int i = 0; i < 10; i++)
     rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
 
-  for (int i = 0; i < 200; i++)
+  for (int i = 0; i < 100; i++)
     rooms[1].setColumn(int(random(2, 23)), int(random(1, 23)));
 
+  // create players
+  main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M);    
+  second = new Player(width/2, height/2, new char[]{UP, LEFT, DOWN, RIGHT}, PlayerType.KNIGHT_F);  
 
-
-  main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M, rooms[0]);    
-  second = new Player(width/2, height/2, new char[]{UP, LEFT, DOWN, RIGHT}, PlayerType.KNIGHT_F, rooms[0]);  
-  //third = new Player(width/2, height/2, new char[]{UP, LEFT, DOWN, RIGHT}, PlayerType.ELF_M, rooms[0]);  
-
+  // add players to the rooms
   rooms[0].addEntity(main);
   rooms[1].addEntity(main);
   rooms[0].addEntity(second);
   rooms[1].addEntity(second);
-  //rooms[0].addEntity(third);
-  //rooms[1].addEntity(third);
 }
 
 void calculateDistances() {
+  // arbitrary way to choose how to scale tiles
   tilew = width*1.0/15;
   tileh = height*1.0/15;
   playerw = tilew;
@@ -202,13 +217,10 @@ void calculateDistances() {
   hitboxh = playerh / 3.4f;
 }
 
-boolean[] wasd = new boolean[4];
-
 void keyPressed() {
   if (phase == Phase.GAME) {
     main.keyPressUpdate();
     second.keyPressUpdate();
-
 
     if (key == ' ') {
       for (Boundary b : rooms[current].boundaries) {
@@ -224,24 +236,29 @@ void keyPressed() {
 
 void keyReleased() {
   if (phase == Phase.GAME) {
-
     main.keyReleaseUpdate();
     second.keyReleaseUpdate();
   }
 }
 
+// conversion method 
 float[] pixelToTile(float x, float y) {
   return new float[]{y / tileh, x / tilew};
 }
 
+// conversion method
 float[] tileToPixel(float i, float j) {
   return new float[]{j * tilew, i * tileh};
 }
 
+// click to turn on/off debug mode
 void mousePressed() {
-  debug ^= true;
+  if (phase == Phase.GAME) {
+    debug ^= true;
+  }
 }
 
+// contact listener to detect bullet hit (and more)
 class CustomListener implements ContactListener {
   CustomListener() {
   }
