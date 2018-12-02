@@ -20,9 +20,11 @@ import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 
-enum Phase{
+enum Phase {
   START, GAME
 }
+
+float bx, by, bw, bh;
 
 PFont font;
 
@@ -45,6 +47,7 @@ Player second;
 //Player third;
 
 Box2DProcessing box2d;
+ControlP5 cp5;
 
 ArrayList<Boundary> currentFloorBoundaries;
 Boundary test;
@@ -54,47 +57,90 @@ void setup() {
 
   noSmooth();
   size(700, 700);
+  bx = width/2; 
+  by = height/2; 
+  bw = 100; 
+  bh = 20;
+
+  cp5 = new ControlP5(this);
+  cp5.setAutoDraw(false);
+
+
+  phase = Phase.START;
 
   loadImages();
   loadSound();
   loadFont();
 
-  createBox2dWorld();
-  createWorld();
 
-  current = 0;
-  for (Boundary b : rooms[current].boundaries) {
-    b.createBody();
-  }
+  cp5.addButton("START")
+    .setValue(0)
+    .setPosition(bx-bw/2, by-bh/2)
+    .setSize(int(bw), int(bh))
+    .setFont(font)
+    .addCallback(new CallbackListener() {
+    public void controlEvent(CallbackEvent event) {
+      if (event.getAction() == ControlP5.ACTION_RELEASED) {
+        phase = Phase.GAME;
+        createBox2dWorld();
+        createWorld();
+
+        current = 0;
+        for (Boundary b : rooms[current].boundaries) {
+          b.createBody();
+        }
+      }
+    }
+  } 
+  )
+  .setColorForeground(color(0, 0, 0))
+    .setColorBackground(color(0, 0, 0))
+    .setColorActive(color(0, 0, 0))
+    .getCaptionLabel()
+    .align(CENTER, CENTER)
+    ;
 }
 
 void draw() {
   background(0);
 
-  rooms[current].stepAll();
-  box2d.step();
+  switch (phase) {
+  case GAME:
+    rooms[current].stepAll();
+    box2d.step();
 
-  Vec2 mainpos = box2d.coordWorldToPixels(main.body.getPosition());
-  Vec2 secondpos = box2d.coordWorldToPixels(second.body.getPosition());
+    Vec2 mainpos = box2d.coordWorldToPixels(main.body.getPosition());
+    Vec2 secondpos = box2d.coordWorldToPixels(second.body.getPosition());
 
-  float avgx = (mainpos.x + secondpos.x)/2;
-  float avgy = (mainpos.y + secondpos.y)/2;
+    float avgx = (mainpos.x + secondpos.x)/2;
+    float avgy = (mainpos.y + secondpos.y)/2;
 
-  translate(width/2 - avgx, height/2 - avgy);
+    translate(width/2 - avgx, height/2 - avgy);
 
-  rooms[current].display_floors();
+    rooms[current].display_floors();
 
-  rooms[current].display();
-  if (debug) {
-    for (Boundary b : rooms[current].boundaries) 
-      b.show();
-    for (Entity e : rooms[current].entities) 
-      e.showHitbox();
+    rooms[current].display();
+    if (debug) {
+      for (Boundary b : rooms[current].boundaries) 
+        b.show();
+      for (Entity e : rooms[current].entities) 
+        e.showHitbox();
+      break;
+    }
+
+
+    //image(big_zombie_idle_anim[frameCount%32/8], main.x, main.y, width/5, height/5);
+    //mage(walls[WALL_INNER_CORNER_T_TOP_LEFT], width/4, height/4, width/2, height/2);
+    break;
+  case START:
+    fill(255);
+    textSize(75);
+    textAlign(CENTER, CENTER);
+    rectMode(CENTER);
+    text("Dungeon Explorer", width/2, height/4, width/2, height/4);
+    cp5.draw();
+    break;
   }
-
-
-  //image(big_zombie_idle_anim[frameCount%32/8], main.x, main.y, width/5, height/5);
-  //mage(walls[WALL_INNER_CORNER_T_TOP_LEFT], width/4, height/4, width/2, height/2);
 }
 
 void createBox2dWorld() {
@@ -156,26 +202,29 @@ void calculateDistances() {
 boolean[] wasd = new boolean[4];
 
 void keyPressed() {
-  main.keyPressUpdate();
-  second.keyPressUpdate();
-  //third.keyPressUpdate();
+  if (phase == Phase.GAME) {
+    main.keyPressUpdate();
+    second.keyPressUpdate();
 
 
-  if (key == ' ') {
-    for (Boundary b : rooms[current].boundaries) {
-      b.destroyBody();
-    }
-    current = (current+1)%rooms.length;
-    for (Boundary b : rooms[current].boundaries) {
-      b.createBody();
+    if (key == ' ') {
+      for (Boundary b : rooms[current].boundaries) {
+        b.destroyBody();
+      }
+      current = (current+1)%rooms.length;
+      for (Boundary b : rooms[current].boundaries) {
+        b.createBody();
+      }
     }
   }
 }
 
 void keyReleased() {
-  main.keyReleaseUpdate();
-  second.keyReleaseUpdate();
-  //third.keyReleaseUpdate();
+  if (phase == Phase.GAME) {
+
+    main.keyReleaseUpdate();
+    second.keyReleaseUpdate();
+  }
 }
 
 float[] pixelToTile(float x, float y) {
@@ -206,8 +255,8 @@ class CustomListener implements ContactListener {
     // Get our objects that reference these bodies
     Object o1 = b1.getUserData();
     Object o2 = b2.getUserData();
-    
-    if(o1 == null || o2 == null)
+
+    if (o1 == null || o2 == null)
       return;
 
     if (o1.getClass() == Player.class && o2.getClass() == Player.class) {
@@ -226,7 +275,4 @@ class CustomListener implements ContactListener {
   void postSolve(Contact contact, ContactImpulse impulse) {
     // TODO Auto-generated method stub
   }
-}
-
-void endContact(Contact cp) {
 }
