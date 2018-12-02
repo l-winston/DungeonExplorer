@@ -106,10 +106,12 @@ void setup() {
 
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 10; j++) {
-      startPattern[i][j] =  int(random(3))+3;
+      startPattern[i][j] = 0;//poss[int(random(poss.length))];
     }
   }
 }
+
+int[] poss = {0, 1, 2, 3, 4, 5, 6, 7, 8};
 
 void draw() {
 
@@ -170,12 +172,14 @@ void draw() {
 
 int[][] startPattern = new int[10][10];
 
-void drawTitleBackground() {   
+void drawTitleBackground() { 
+  pushStyle();
+  
   imageMode(CORNER);
 
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 10; j++) {
-      image(walls[startPattern[i][j]], j*width/10f, i*height/10f, width/10f, height/10f);
+      image(floors[startPattern[i][j]], j*width/10f, i*height/10f, width/10f, height/10f);
     }
   }
 
@@ -216,6 +220,8 @@ void drawTitleBackground() {
   image(wizzard_m_idle_anim[0], 0, 0);
 
   popMatrix();
+  
+  popStyle();
 }
 
 void createBox2dWorld() {
