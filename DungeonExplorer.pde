@@ -28,7 +28,7 @@ enum Phase {
 PFont font;
 
 boolean debug;
-
+boolean mute;
 
 // global variables to aid with drawing characters
 float playerw;
@@ -60,7 +60,8 @@ ArrayList<Boundary> currentFloorBoundaries;
 
 void setup() {
   debug = false;
-
+  mute = true;
+  
   noSmooth();
   size(700, 700);
 
@@ -218,6 +219,14 @@ void calculateDistances() {
 }
 
 void keyPressed() {
+  if(key == 'm'){
+    mute ^= true;
+    if(mute)
+      song.pause();
+    else
+      song.loop();
+  }
+  
   if (phase == Phase.GAME) {
     main.keyPressUpdate();
     second.keyPressUpdate();
