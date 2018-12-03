@@ -29,6 +29,8 @@ PImage[][] sprites = {
 
 class Train {
 
+  boolean isRight;
+
   float x, y;
   float vx;
   float sx, sy;
@@ -42,11 +44,12 @@ class Train {
     this.sx = sx;
     this.sy = sy;
     this.fx = fx;
-    
+    isRight = vx > 0;
+
     locations = new float[offsets.length];
     locations[0] = x;
     for (int i = 1; i < offsets.length; i++) {
-      locations[i] = locations[i-1] - offsets[i];
+      locations[i] = locations[i-1] + (isRight ? -offsets[i] : offsets[i]);
     }
   }
 
@@ -60,19 +63,17 @@ class Train {
     pushStyle();
     imageMode(CORNERS);
     for (int i = 0; i < offsets.length; i++) {
-      float w = sx*sprites[i][0].width;
+      pushMatrix();
       float h = sy*sprites[i][0].height;
-      image(sprites[i][(frameCount/8)%sprites[i].length], locations[i], y - h, locations[i] + w, y);
+      translate(locations[i], y - h);
+      scale(sx, sy);
+      image(sprites[i][(frameCount/8)%sprites[i].length], 0, 0);
+      popMatrix();
     }
     popStyle();
   }
-  
-  boolean isDone(){
-    float last = x;
-    for(float i : offsets){
-      last -= i;
-    }
-    
-    return last >= fx;
+
+  boolean isDone() {
+    return isRight ? locations[locations.length-1] > fx : locations[locations.length-1] < fx;
   }
 }

@@ -190,8 +190,10 @@ void drawTitleBackground() {
   
   train.step();
   train.show();
-  
   println(train.isDone());
+  if(train.isDone()){
+    train = new Train((train.isRight ? width : 0), random(height/2) + height/4, 3 * (train.isRight ? -1 : 1), 3 * (train.isRight ? -1 : 1), 3, (train.isRight ? 0 : width));
+  }
 }
 
 void createBox2dWorld() {
