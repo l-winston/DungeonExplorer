@@ -25,6 +25,8 @@ enum Phase {
   START, GAME
 }
 
+Train train;
+
 PFont font;
 
 boolean debug;
@@ -106,9 +108,11 @@ void setup() {
 
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 10; j++) {
-      startPattern[i][j] = 0;//poss[int(random(poss.length))];
+      startPattern[i][j] = 0;
     }
   }
+  
+  train = new Train(0, width*3f/4f, 3, 3, 3, width);
 }
 
 int[] poss = {0, 1, 2, 3, 4, 5, 6, 7, 8};
@@ -183,125 +187,11 @@ void drawTitleBackground() {
       image(floors[startPattern[i][j]], j*width/10f, i*height/10f, width/10f, height/10f);
     }
   }
-
-  imageMode(CENTER);
   
-  pushMatrix();
-
-  translate((ax - 790)%(1.5*width), height*5/6+15);
-  scale(3);
-  image(orc_warrior_run_anim[frameCount/8%4], 0, 0);
-
-  popMatrix(); 
-  pushMatrix();
-
-  translate((ax - 750)%(1.5*width), height*5/6+15);
-  scale(3);
-  image(masked_orc_run_anim[frameCount/8%4], 0, 0);
-
-  popMatrix(); 
-  pushMatrix();
-
-  translate((ax - 710)%(1.5*width), height*5/6+15);
-  scale(3);
-  image(muddy_run_anim[frameCount/8%4], 0, 0);
-
-  popMatrix(); 
-  pushMatrix();
-
-  translate((ax - 670)%(1.5*width), height*5/6+15);
-  scale(3);
-  image(wogol_run_anim[frameCount/8%4], 0, 0);
-
-  popMatrix();  
-  pushMatrix();
-
-  translate((ax - 630)%(1.5*width), height*5/6+15);
-  scale(3);
-  image(orc_shaman_run_anim[frameCount/8%4], 0, 0);
-
-  popMatrix();  
-  pushMatrix();
-
-  translate((ax - 590)%(1.5*width), height*5/6+15);
-  scale(3);
-  image(necromancer_run_anim[frameCount/8%4], 0, 0);
-
-  popMatrix();  
-  pushMatrix();
-
-  translate((ax - 550)%(1.5*width), height*5/6+15);
-  scale(3);
-  image(chort_run_anim[frameCount/8%4], 0, 0);
-
-  popMatrix();  
-  pushMatrix();
-
-  translate((ax - 510)%(1.5*width), height*5/6+15);
-  scale(3);
-  image(swampy_run_anim[frameCount/8%4], 0, 0);
-
-  popMatrix();  
-  pushMatrix();
-
-  translate((ax - 470)%(1.5*width), height*5/6+15);
-  scale(3);
-  image(skelet_run_anim[frameCount/8%4], 0, 0);
-
-  popMatrix();
-  pushMatrix();
-
-  translate((ax - 430)%(1.5*width), height*5/6+15);
-  scale(3);
-  image(ice_zombie_run_anim[frameCount/8%4], 0, 0);
-
-  popMatrix();
-  pushMatrix();
-
-  translate((ax - 370)%(1.5*width), height*5/6);
-  scale(3);
-  image(ogre_run_anim[frameCount/8%4], 0, 0);
-
-  popMatrix();
-  pushMatrix();
-
-  translate((ax - 310)%(1.5*width), height*5/6);
-  scale(3);
-  image(big_demon_run_anim[frameCount/8%4], 0, 0);
-
-  popMatrix();
-  pushMatrix();
-
-  translate((ax - 250)%(1.5*width), height*5/6);
-  scale(3);
-  image(big_zombie_run_anim[frameCount/8%4], 0, 0);
-
-  popMatrix();
-  pushMatrix();
-
-  translate((ax - 0)%(1.5*width), height*5/6-7);
-  scale(3);
-  image(wizzard_m_run_anim[frameCount/8%4], 0, 0);
-
-  popMatrix();
-  pushMatrix();
-
-  translate((ax + 30)%(1.5*width), height*5/6);
-  scale(3);
-  image(elf_m_run_anim[frameCount/8%4], 0, 0);
-
-  popMatrix();
-  pushMatrix();
-
-  translate((ax + 60)%(1.5*width), height*5/6);
-  scale(3);
-  image(knight_m_run_anim[frameCount/8%4], 0, 0);
-
-  popMatrix();
-
-  popStyle();
-
-  ax =(ax+3);
+  train.step();
+  train.show();
+  
+  println(train.isDone());
 }
 
 void createBox2dWorld() {
