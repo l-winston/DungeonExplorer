@@ -25,6 +25,9 @@ enum Phase {
   START, GAME
 }
 
+float animxi;
+float animxf;
+
 Train train;
 
 PFont font;
@@ -72,6 +75,9 @@ void setup() {
 
   // set inital phase
   phase = Phase.START;
+  
+  animxi = -width/4f;
+  animxf = width + width/4f;
 
   // load files
   loadImages();
@@ -112,7 +118,7 @@ void setup() {
     }
   }
   
-  train = new Train(0, width*3f/4f, 3, 3, 3, width);
+  train = new Train(animxi, height*3f/4f, 3, 3, 3, animxf);
 }
 
 int[] poss = {0, 1, 2, 3, 4, 5, 6, 7, 8};
@@ -190,9 +196,9 @@ void drawTitleBackground() {
   
   train.step();
   train.show();
-  println(train.isDone());
+  train.isDone();
   if(train.isDone()){
-    train = new Train((train.isRight ? width : 0), random(height/2) + height/4, 3 * (train.isRight ? -1 : 1), 3 * (train.isRight ? -1 : 1), 3, (train.isRight ? 0 : width));
+    train = new Train((train.isRight ? animxf : animxi), random(height/2) + height/4, 3 * (train.isRight ? -1 : 1), 3 * (train.isRight ? -1 : 1), 3, (train.isRight ? animxi : animxf));
   }
 }
 
