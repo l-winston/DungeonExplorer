@@ -66,12 +66,13 @@ class Player extends Entity {
   }
 
   public void create(float x, float y) {
-
-    BodyDef bd = new BodyDef();
     Vec2 center = box2d.coordPixelsToWorld(x, y);
-    bd.position.set(center);
-    bd.type = BodyType.DYNAMIC;
-    bd.fixedRotation = true;
+
+
+    BodyDef walkboxbd = new BodyDef();
+    walkboxbd.position.set(center);
+    walkboxbd.type = BodyType.DYNAMIC;
+    walkboxbd.fixedRotation = true;
 
     // set friction:
     //   bd.linearDamping = ...;
@@ -80,37 +81,39 @@ class Player extends Entity {
     // if body is moving fast:
     //   bd.bullet = ...;
 
-    walkbox = box2d.createBody(bd);
+    walkbox = box2d.createBody(walkboxbd);
 
     // inital starting state:
     //   body.setLinearVelocity(new Vec2(0, 3));
     //   body.setAngularVelocity(1.2);
 
-    PolygonShape ps = new PolygonShape();
+    PolygonShape walkboxps = new PolygonShape();
     float box2Dw = box2d.scalarPixelsToWorld(hitboxw/2);
     float box2Dh = box2d.scalarPixelsToWorld(hitboxh/2);
-    ps.setAsBox(box2Dw, box2Dh);
+    walkboxps.setAsBox(box2Dw, box2Dh);
 
     // make circular shape:
     //   CircleShape cs = new CircleShape();
     //   cs.m_radius = ...;
 
 
-    FixtureDef fd = new FixtureDef();
-    fd.shape = ps;
+    FixtureDef walkboxfd = new FixtureDef();
+    walkboxfd.shape = walkboxps;
 
     // set pararaters that affect physics of shape:
     //   fd.friction = ...;
     //   fd.restitution = ...;
     //   fd.density = ...;
 
-    walkbox.createFixture(fd);
+    walkbox.createFixture(walkboxfd);
 
     // can directly create fixture w/ shape & density:
     //   body.createFixture(ps, 1);
 
     walkbox.setUserData(this);
 
+
+    // --------------------------------------------
 
     BodyDef hitboxbd = new BodyDef();
     hitboxbd.position.set(center);
@@ -132,7 +135,7 @@ class Player extends Entity {
 
     PolygonShape hitboxps = new PolygonShape();
     float hitboxbox2Dw = box2d.scalarPixelsToWorld(playerw/2);
-    float hitboxbox2Dh = box2d.scalarPixelsToWorld(playerh/2);
+    float hitboxbox2Dh = box2d.scalarPixelsToWorld(playerh/4);
     hitboxps.setAsBox(hitboxbox2Dw, hitboxbox2Dh);
 
     // make circular shape:
@@ -177,7 +180,7 @@ class Player extends Entity {
     strokeWeight(5);
     noFill();
     stroke(0, 255, 0);
-    rect(hitboxpos.x, hitboxpos.y, playerw, playerh);
+    rect(hitboxpos.x, hitboxpos.y, playerw, playerh/2);
 
     popStyle();
     popMatrix();
@@ -271,7 +274,9 @@ class Player extends Entity {
     if (vel.x != 0) {
       facing_right = vel.x > 0;
     }
-
-    hitbox.setTransform(walkbox.getPosition(), 0);
+    
+    Vec2 pos = walkbox.getPosition();
+    Vec2 newPos = new Vec2(pos.x, pos.y + box2d.scalarPixelsToWorld(playerh/4));
+    hitbox.setTransform(newPos, 0);
   }
 }
