@@ -65,9 +65,9 @@ final int COLUMN_MID = 1;
 final int COLUMN_BASE = 2;
 
 class Room {
-  
-  
-  
+
+
+
   ArrayList<Boundary> boundaries;
   ArrayList<Entity> entities;
   int rows;
@@ -85,7 +85,6 @@ class Room {
     wall = new Wall[r][c];
     floor = new int[r][c];
     column = new boolean[r][c];
-    create(r, c);
     entities = new ArrayList<Entity>();
     boundaries = new ArrayList<Boundary>();
   }
@@ -100,7 +99,7 @@ class Room {
     }
   }
 
-  void create(int r, int c) {
+  void createBox() {
 
     for (Wall[] i : wall) {
       Arrays.fill(i, Wall.NONE);
@@ -112,24 +111,29 @@ class Room {
     for (int j = 1; j < cols-1; j++) {
       // fill first and second row (excluding corners)
       wall[1][j] = Wall.FRONT;
-      wall[r-2][j] = Wall.FRONT;
+      wall[rows-2][j] = Wall.FRONT;
     }
 
-    wall[r-2][0] = Wall.FRONT_LEFT;
-    wall[r-2][c-1] = Wall.FRONT_RIGHT;
+    wall[rows-2][0] = Wall.FRONT_LEFT;
+    wall[rows-2][cols-1] = Wall.FRONT_RIGHT;
     wall[0][0] = Wall.TOP_LEFT;
-    wall[0][c-1] = Wall.TOP_RIGHT;
+    wall[0][cols-1] = Wall.TOP_RIGHT;
 
     for (int i = 1; i < rows-2; i++) {
       wall[i][0] = Wall.LEFT;
-      wall[i][c-1] = Wall.RIGHT;
+      wall[i][cols-1] = Wall.RIGHT;
     }
 
-    for (int i = 1; i < r-2; i++) {
-      for (int j = 1; j < c-1; j++) {
+    for (int i = 1; i < rows-2; i++) {
+      for (int j = 1; j < cols-1; j++) {
         floor[i][j] = FLOOR_1;
       }
     }
+
+    boundaries.add(new Boundary(0.5*tilew, rows/2*tileh, tilew, (cols-2)*tileh));
+    boundaries.add(new Boundary((cols-0.5)*tilew, rows/2*tileh, tilew, (cols-2)*tileh));
+    boundaries.add(new Boundary((cols/2)*tilew, (rows-1)*tileh, tilew*cols, tileh));
+    boundaries.add(new Boundary((cols/2)*tilew, 1.5*tileh, tilew*cols, tileh));
   }
 
   void access(int r, int c) {
@@ -140,8 +144,8 @@ class Room {
   void display() {
     ArrayList<Entity> left = new ArrayList<Entity>();
     left.addAll(entities);
-    
-    
+
+
     // sort entities by y value to make sure higher entities are drawn first
     Collections.sort(left, new Comparator<Entity>() {
       @Override

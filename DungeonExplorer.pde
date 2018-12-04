@@ -75,7 +75,7 @@ void setup() {
 
   // set inital phase
   phase = Phase.START;
-  
+
   animxi = -width/4f;
   animxf = width + width/4f;
 
@@ -117,7 +117,7 @@ void setup() {
       startPattern[i][j] = 0;
     }
   }
-  
+
   train = new Train(animxi, height*3f/4f, 3, 3, 3, animxf);
 }
 
@@ -193,11 +193,11 @@ void drawTitleBackground() {
       image(floors[startPattern[i][j]], j*width/10f, i*height/10f, width/10f, height/10f);
     }
   }
-  
+
   train.step();
   train.show();
   train.isDone();
-  if(train.isDone()){
+  if (train.isDone()) {
     train = new Train((train.isRight ? animxf : animxi), random(height/2) + height/4, 3 * (train.isRight ? -1 : 1), 3 * (train.isRight ? -1 : 1), 3, (train.isRight ? animxi : animxf));
   }
 }
@@ -221,19 +221,30 @@ void createWorld() {
   // calculate scaling numbers
   calculateDistances();
 
-  rooms[0].boundaries.add(new Boundary(0.5*tilew, 7*tileh, tilew, 12*tileh));
-  rooms[0].boundaries.add(new Boundary(13.5*tilew, 7*tileh, tilew, 12*tileh));
-  rooms[0].boundaries.add(new Boundary(7*tilew, 13*tileh, tilew*14, tileh));
-  rooms[0].boundaries.add(new Boundary(7*tilew, 1.5*tileh, tilew*14, tileh));
+  rooms[0].createBox();
 
-  rooms[1].boundaries.add(new Boundary(0.5*tilew, 12*tileh, tilew, 22*tileh));
-  rooms[1].boundaries.add(new Boundary(23.5*tilew, 12*tileh, tilew, 22*tileh));
-  rooms[1].boundaries.add(new Boundary(12*tilew, 23*tileh, tilew*24, tileh));
-  rooms[1].boundaries.add(new Boundary(12*tilew, 1.5*tileh, tilew*24, tileh));
 
   // randomly spawn columns
-  for (int i = 0; i < 10; i++)
+  for (int i = 0; i < 20; i++)
     rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
+  
+  rooms[1].createBox();
+
+  rooms[0].wall[rooms[0].rows-2][0] = Wall.FRONT_LEFT;
+  rooms[0].wall[rooms[0].rows-2][rooms[0].cols-1] = Wall.FRONT_RIGHT;
+  rooms[0].wall[0][0] = Wall.TOP_LEFT;
+  rooms[0].wall[0][rooms[0].cols-1] = Wall.TOP_RIGHT;
+
+  for (int i = 1; i < rooms[0].rows-2; i++) {
+    rooms[0].wall[i][0] = Wall.LEFT;
+    rooms[0].wall[i][rooms[0].cols-1] = Wall.RIGHT;
+  }
+
+  for (int i = 1; i < rooms[0].rows-2; i++) {
+    for (int j = 1; j < rooms[0].cols-1; j++) {
+      rooms[0].floor[i][j] = FLOOR_1;
+    }
+  }
 
   for (int i = 0; i < 100; i++)
     rooms[1].setColumn(int(random(2, 23)), int(random(1, 23)));
