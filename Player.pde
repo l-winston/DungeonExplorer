@@ -10,33 +10,33 @@ enum PlayerType {
 }
 
 class Player extends Entity {
-  
+
   // images/animations for drawing
   PImage[] idle_anim;
   PImage[] run_anim;
   PImage hit;
-  
+
   // whether of not the player was last facing the right (matters for drawing the player)
   boolean facing_right;
-  
+
   // the controls on the keyboard that map to this player's movement
   char[] controls;
-  
+
   // which keys are currently held down
   boolean[] keysdown;
 
   public Player(float x, float y, char[] controls, PlayerType type) {
     this.controls = controls;
-    
+
     // at creation, assume no keys are down
     keysdown = new boolean[4];
-    
+
     // create the player's body
     create(x, y);
 
     // players spawn facing right
     facing_right = true;
-    
+
     // set the animations/images to the correct ones depending on the player's type
     if (type == PlayerType.ELF_F) {
       idle_anim = elf_f_idle_anim;
@@ -80,7 +80,7 @@ class Player extends Entity {
     // if body is moving fast:
     //   bd.bullet = ...;
 
-    body = box2d.createBody(bd);
+    walkbox = box2d.createBody(bd);
 
     // inital starting state:
     //   body.setLinearVelocity(new Vec2(0, 3));
@@ -104,12 +104,60 @@ class Player extends Entity {
     //   fd.restitution = ...;
     //   fd.density = ...;
 
-    body.createFixture(fd);
+    walkbox.createFixture(fd);
 
     // can directly create fixture w/ shape & density:
     //   body.createFixture(ps, 1);
+
+    walkbox.setUserData(this);
+
+
+    BodyDef hitboxbd = new BodyDef();
+    hitboxbd.position.set(center);
+    hitboxbd.type = BodyType.DYNAMIC;
+    hitboxbd.fixedRotation = true;
+
+    // set friction:
+    //   bd.linearDamping = ...;
+    //   bd.angularDamping = ...;
+
+    // if body is moving fast:
+    //   bd.bullet = ...;
+
+    hitbox = box2d.createBody(hitboxbd);
+
+    // inital starting state:
+    //   body.setLinearVelocity(new Vec2(0, 3));
+    //   body.setAngularVelocity(1.2);
+
+    PolygonShape hitboxps = new PolygonShape();
+    float hitboxbox2Dw = box2d.scalarPixelsToWorld(playerw/2);
+    float hitboxbox2Dh = box2d.scalarPixelsToWorld(playerh/2);
+    hitboxps.setAsBox(hitboxbox2Dw, hitboxbox2Dh);
+
+    // make circular shape:
+    //   CircleShape cs = new CircleShape();
+    //   cs.m_radius = ...;
+
+
+    FixtureDef hitboxfd = new FixtureDef();
+    hitboxfd.shape = hitboxps;  
+    hitboxfd.isSensor = true;
+    //hitboxfd.filter.maskBits = 0x0000;
+
+    // set pararaters that affect physics of shape:
+    //   fd.friction = ...;
+    //   fd.restitution = ...;
+    //   fd.density = ...;
+
+    hitbox.createFixture(hitboxfd);
+
+    // can directly create fixture w/ shape & density:
+    //   body.createFixture(ps, 1);
+
+    hitbox.setUserData(this);
     
-    body.setUserData(this);
+    hitbox.setSleepingAllowed(false);
   }
 
   // draws the player's movement hitbox as a green rectangle
@@ -121,11 +169,15 @@ class Player extends Entity {
     stroke(0, 0, 255);
     strokeWeight(5);
     noFill();
-    Vec2 pos = box2d.getBodyPixelCoord(body);
-    translate(pos.x, pos.y);
+    Vec2 pos = box2d.getBodyPixelCoord(walkbox);
 
-    rect(0, 0, hitboxw, hitboxh);
-
+    rect(pos.x, pos.y, hitboxw, hitboxh);
+    
+    Vec2 hitboxpos = box2d.getBodyPixelCoord(hitbox);
+    strokeWeight(5);
+    noFill();
+    stroke(0, 255, 0);
+    rect(hitboxpos.x, hitboxpos.y, playerw, playerh);
 
     popStyle();
     popMatrix();
@@ -137,8 +189,8 @@ class Player extends Entity {
     pushMatrix();
     pushStyle();
 
-    Vec2 pos = box2d.getBodyPixelCoord(body);
-    Vec2 vel = body.getLinearVelocity();
+    Vec2 pos = box2d.getBodyPixelCoord(walkbox);
+    Vec2 vel = walkbox.getLinearVelocity();
     // getting angle of rotation:
     //   float a = body.getAngle();
     translate(pos.x, pos.y - playerh/2);
@@ -151,12 +203,12 @@ class Player extends Entity {
     } else {
       image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%idle_anim.length], 0, 0, playerw, playerh);
     }
-
-    popStyle();
+    
     popMatrix();
+    popStyle();
   }
-  
-  
+
+
   // call this when keyPressed update the player's movement 
   public void keyPressUpdate() {
     float k = key == CODED ? keyCode : key;
@@ -176,7 +228,7 @@ class Player extends Entity {
       keysdown[3] = true;
     }
   }
-  
+
   // call this when keyReleased update the player's movement 
   public void keyReleaseUpdate() {
     float k = key == CODED ? keyCode : key;
@@ -200,7 +252,7 @@ class Player extends Entity {
 
   // update the player's velocity depending on the keys inputted
   public void step() {
-    Vec2 vel = body.getLinearVelocity();
+    Vec2 vel = walkbox.getLinearVelocity();
 
     float vx = 0;
     float vy = 0;
@@ -214,10 +266,12 @@ class Player extends Entity {
     if (keysdown[3])
       vx += PLAYER_SPEED;
 
-    body.setLinearVelocity(new Vec2(vx, vy));
+    walkbox.setLinearVelocity(new Vec2(vx, vy));
 
     if (vel.x != 0) {
       facing_right = vel.x > 0;
     }
+
+    hitbox.setTransform(walkbox.getPosition(), 0);
   }
 }

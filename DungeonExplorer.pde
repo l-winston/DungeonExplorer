@@ -54,7 +54,6 @@ Phase phase;
 
 // initalize players
 Player main;
-Player second;
 
 // library object
 Box2DProcessing box2d;
@@ -76,8 +75,8 @@ void setup() {
   // set inital phase
   phase = Phase.START;
 
-  animxi = -width/4f;
-  animxf = width + width/4f;
+  animxi = -width/8f;
+  animxf = width + width/8f;
 
   // load files
   loadImages();
@@ -105,9 +104,9 @@ void setup() {
     }
   } 
   )
-  .setColorForeground(color(0, 0, 0, 0))
-    .setColorBackground(color(0, 0, 0, 0))
-    .setColorActive(color(0, 0, 0, 0))
+  .setColorBackground(color(72, 59, 58))
+    .setColorForeground(color(96, 64, 32))
+    .setColorActive(color(217, 179, 140))
     .getCaptionLabel()
     .align(CENTER, CENTER)
     ;
@@ -136,15 +135,11 @@ void draw() {
 
 
     // find middle of characters
-    Vec2 mainpos = box2d.coordWorldToPixels(main.body.getPosition());
-    Vec2 secondpos = box2d.coordWorldToPixels(second.body.getPosition());
-
-    float avgx = (mainpos.x + secondpos.x)/2;
-    float avgy = (mainpos.y + secondpos.y)/2;
+    Vec2 mainpos = box2d.coordWorldToPixels(main.walkbox.getPosition());
 
 
     // move camera to follow players
-    translate(width/2 - avgx, height/2 - avgy);
+    translate(width/2 - mainpos.x, height/2 - mainpos.y);
 
 
     // show current floor
@@ -161,10 +156,7 @@ void draw() {
         e.showHitbox();
       break;
     }
-
-
-    //image(big_zombie_idle_anim[frameCount%32/8], main.x, main.y, width/5, height/5);
-    //mage(walls[WALL_INNER_CORNER_T_TOP_LEFT], width/4, height/4, width/2, height/2);
+    
     break;
   case START:
     background(70, 59, 58);
@@ -198,7 +190,7 @@ void drawTitleBackground() {
   train.show();
   train.isDone();
   if (train.isDone()) {
-    train = new Train((train.isRight ? animxf : animxi), random(height/2) + height/4, 3 * (train.isRight ? -1 : 1), 3 * (train.isRight ? -1 : 1), 3, (train.isRight ? animxi : animxf));
+    train = new Train((train.isRight ? animxf : animxi), random(height*6f/8f) + height*1f/8f, 3 * (train.isRight ? -1 : 1), 3 * (train.isRight ? -1 : 1), 3, (train.isRight ? animxi : animxf));
   }
 }
 
@@ -227,7 +219,7 @@ void createWorld() {
   // randomly spawn columns
   for (int i = 0; i < 20; i++)
     rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
-  
+
   rooms[1].createBox();
 
   rooms[0].wall[rooms[0].rows-2][0] = Wall.FRONT_LEFT;
@@ -251,13 +243,10 @@ void createWorld() {
 
   // create players
   main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M);    
-  second = new Player(width/2, height/2, new char[]{UP, LEFT, DOWN, RIGHT}, PlayerType.KNIGHT_F);  
 
   // add players to the rooms
   rooms[0].addEntity(main);
   rooms[1].addEntity(main);
-  rooms[0].addEntity(second);
-  rooms[1].addEntity(second);
 }
 
 void calculateDistances() {
@@ -281,7 +270,6 @@ void keyPressed() {
 
   if (phase == Phase.GAME) {
     main.keyPressUpdate();
-    second.keyPressUpdate();
 
     if (key == ' ') {
       for (Boundary b : rooms[current].boundaries) {
@@ -298,7 +286,6 @@ void keyPressed() {
 void keyReleased() {
   if (phase == Phase.GAME) {
     main.keyReleaseUpdate();
-    second.keyReleaseUpdate();
   }
 }
 
@@ -329,6 +316,7 @@ class CustomListener implements ContactListener {
     // Get both shapes
     Fixture f1 = cp.getFixtureA();
     Fixture f2 = cp.getFixtureB();
+    
     // Get both bodies
     Body b1 = f1.getBody();
     Body b2 = f2.getBody();
@@ -340,8 +328,12 @@ class CustomListener implements ContactListener {
     if (o1 == null || o2 == null)
       return;
 
-    if (o1.getClass() == Player.class && o2.getClass() == Player.class) {
-      println("PLAYER-PLAYER Contact!");
+    if (o1.getClass() == Boundary.class && o2.getClass() == Player.class) {
+      println("Boundary-Player Contact at frame=" + frameCount);
+    }
+    
+    if (o2.getClass() == Boundary.class && o1.getClass() == Player.class) {
+      println("Boundary-Player Contact at frame=" + frameCount);
     }
   }
 

@@ -66,8 +66,6 @@ final int COLUMN_BASE = 2;
 
 class Room {
 
-
-
   ArrayList<Boundary> boundaries;
   ArrayList<Entity> entities;
   int rows;
@@ -150,7 +148,7 @@ class Room {
     Collections.sort(left, new Comparator<Entity>() {
       @Override
         public int compare(Entity o1, Entity o2) {
-        return int(o2.body.getPosition().y - o1.body.getPosition().y);
+        return int(o2.walkbox.getPosition().y - o1.walkbox.getPosition().y);
       }
     }
     );
@@ -161,7 +159,7 @@ class Room {
 
         ArrayList<Entity> toRemove = new ArrayList<Entity>();
         for (Entity e : left) {
-          Vec2 pos = box2d.coordWorldToPixels(e.body.getPosition());
+          Vec2 pos = box2d.coordWorldToPixels(e.walkbox.getPosition());
           if (pos.y < (i+1) * tileh) {
             e.show();
             toRemove.add(e);

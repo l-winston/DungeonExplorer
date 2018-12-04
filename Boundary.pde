@@ -52,6 +52,8 @@ class Boundary {
 
       body.createFixture(ps, 1);
     }
+    
+    body.setUserData(this);
   }
   
   void destroyBody(){
