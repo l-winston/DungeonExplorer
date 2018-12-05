@@ -41,9 +41,9 @@ class BigDemon extends Entity {
     
     Vec2 dpos = target.add(current);
     
-    dpos.normalize();
+    //dpos.normalize();
     
-    dpos.mulLocal(10);
+    dpos.mulLocal(1);
     
     walkbox.setLinearVelocity(dpos);
   }
