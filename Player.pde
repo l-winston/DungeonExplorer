@@ -134,7 +134,7 @@ class Player extends Entity {
     //   body.setAngularVelocity(1.2);
 
     PolygonShape hitboxps = new PolygonShape();
-    float hitboxbox2Dw = box2d.scalarPixelsToWorld(playerw/2);
+    float hitboxbox2Dw = box2d.scalarPixelsToWorld(playerw/3);
     float hitboxbox2Dh = box2d.scalarPixelsToWorld(playerh/4);
     hitboxps.setAsBox(hitboxbox2Dw, hitboxbox2Dh);
 
@@ -170,17 +170,16 @@ class Player extends Entity {
 
     rectMode(CENTER);
     stroke(0, 0, 255);
-    strokeWeight(5);
+    strokeWeight(2);
     noFill();
+    
     Vec2 pos = box2d.getBodyPixelCoord(walkbox);
 
     rect(pos.x, pos.y, hitboxw, hitboxh);
     
     Vec2 hitboxpos = box2d.getBodyPixelCoord(hitbox);
-    strokeWeight(5);
-    noFill();
     stroke(0, 255, 0);
-    rect(hitboxpos.x, hitboxpos.y, playerw, playerh/2);
+    rect(hitboxpos.x, hitboxpos.y, playerw*2f/3f, playerh/2);
 
     popStyle();
     popMatrix();

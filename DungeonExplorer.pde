@@ -128,12 +128,12 @@ void draw() {
   case GAME:
     background(0);
 
-    // step all entities on current floor through time
-    rooms[current].stepAll();
     // calculate physics on each entity (on the floor)
     box2d.step();
 
-
+    // step all entities on current floor through time
+    rooms[current].stepAll();
+    
     // find middle of characters
     Vec2 mainpos = box2d.coordWorldToPixels(main.walkbox.getPosition());
 
@@ -156,7 +156,7 @@ void draw() {
         e.showHitbox();
       break;
     }
-    
+
     break;
   case START:
     background(70, 59, 58);
@@ -251,8 +251,8 @@ void createWorld() {
 
 void calculateDistances() {
   // arbitrary way to choose how to scale tiles
-  tilew = width*1.0/15;
-  tileh = height*1.0/15;
+  tilew = width/15f;
+  tileh = height/15f;
   playerw = tilew;
   playerh = tilew*PLAYER_SPRITE_HEIGHT/PLAYER_SPRITE_WIDTH;
   hitboxw = playerw;
@@ -316,7 +316,7 @@ class CustomListener implements ContactListener {
     // Get both shapes
     Fixture f1 = cp.getFixtureA();
     Fixture f2 = cp.getFixtureB();
-    
+
     // Get both bodies
     Body b1 = f1.getBody();
     Body b2 = f2.getBody();
@@ -331,7 +331,7 @@ class CustomListener implements ContactListener {
     if (o1.getClass() == Boundary.class && o2.getClass() == Player.class) {
       println("Boundary-Player Contact at frame=" + frameCount);
     }
-    
+
     if (o2.getClass() == Boundary.class && o1.getClass() == Player.class) {
       println("Boundary-Player Contact at frame=" + frameCount);
     }
