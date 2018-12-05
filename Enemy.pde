@@ -27,5 +27,15 @@ class BigDemon extends Entity {
   void step() {
     super.step();
     
+    Vec2 target = main.walkbox.getPosition();
+    Vec2 current = walkbox.getPosition().mul(-1);
+    
+    Vec2 dpos = target.add(current);
+    
+    dpos.normalize();
+    
+    dpos.mulLocal(10);
+    
+    walkbox.setLinearVelocity(dpos);
   }
 }
