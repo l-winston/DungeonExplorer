@@ -1,17 +1,23 @@
 
 // all entities will inherit this class
 abstract class Entity {
+  // images/animations for drawing
+  PImage[] idle_anim;
+  PImage[] run_anim;
+  PImage hit;
 
   Body walkbox;
   Body hitbox;
-  
+
+  // whether of not the player was last facing the right (matters for drawing the player)
+  boolean facing_right;
+
   float walkboxw;
   float walkboxh;
   float hitboxw;
   float hitboxh;
-
-  abstract void step();
-  abstract void show();
+  float imgw;
+  float imgh;
 
   void killBody() {
     box2d.destroyBody(walkbox);
@@ -40,7 +46,7 @@ abstract class Entity {
     popStyle();
     popMatrix();
   }
-  
+
   public void create(float x, float y) {
     Vec2 center = box2d.coordPixelsToWorld(x, y);
 
@@ -137,5 +143,42 @@ abstract class Entity {
     hitbox.setUserData(new UserData(this, DataType.HITBOX));
 
     hitbox.setSleepingAllowed(false);
+  }
+
+  // draw's the player's body
+  public void show() {
+
+    pushMatrix();
+    pushStyle();
+
+    Vec2 pos = box2d.getBodyPixelCoord(walkbox);
+    Vec2 vel = walkbox.getLinearVelocity();
+
+    translate(pos.x, pos.y - imgh/2);
+    imageMode(CENTER);
+
+    if (!facing_right) {
+      scale(-1, 1);
+    }
+
+    if (vel.x==0 && vel.y== 0) {
+      image(idle_anim[round(frameCount*ANIMATION_SPEED_SCALE)%idle_anim.length], 0, 0, imgw, imgh);
+    } else {
+      image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%idle_anim.length], 0, 0, imgw, imgh);
+    }
+
+    popMatrix();
+    popStyle();
+  }
+
+  void step() {
+    Vec2 vel = walkbox.getLinearVelocity();
+    if (vel.x != 0) {
+      facing_right = vel.x > 0;
+    }
+
+    Vec2 pos = walkbox.getPosition();
+    Vec2 newPos = new Vec2(pos.x, pos.y + box2d.scalarPixelsToWorld(hitboxh/2));
+    hitbox.setTransform(newPos, 0);
   }
 }

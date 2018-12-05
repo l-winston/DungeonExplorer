@@ -11,14 +11,6 @@ enum PlayerType {
 
 class Player extends Entity {
 
-  // images/animations for drawing
-  PImage[] idle_anim;
-  PImage[] run_anim;
-  PImage hit;
-
-  // whether of not the player was last facing the right (matters for drawing the player)
-  boolean facing_right;
-
   // the controls on the keyboard that map to this player's movement
   char[] controls;
 
@@ -36,6 +28,8 @@ class Player extends Entity {
     walkboxh = playerh * 1f / 4f;
     hitboxw = playerw * 2f / 3f;
     hitboxh = playerh / 2f;
+    imgw = playerw;
+    imgh = playerh;
 
     // create the player's body
     create(x, y);
@@ -70,34 +64,6 @@ class Player extends Entity {
       hit = wizzard_m_hit_anim;
     }
   }
-
-  // draw's the player's body
-  public void show() {
-
-    pushMatrix();
-    pushStyle();
-
-    Vec2 pos = box2d.getBodyPixelCoord(walkbox);
-    Vec2 vel = walkbox.getLinearVelocity();
-    // getting angle of rotation:
-    //   float a = body.getAngle();
-    translate(pos.x, pos.y - playerh/2);
-    imageMode(CENTER);
-
-    if (!facing_right) {
-      scale(-1, 1);
-    }
-
-    if (vel.x==0 && vel.y== 0) {
-      image(idle_anim[round(frameCount*ANIMATION_SPEED_SCALE)%idle_anim.length], 0, 0, playerw, playerh);
-    } else {
-      image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%idle_anim.length], 0, 0, playerw, playerh);
-    }
-
-    popMatrix();
-    popStyle();
-  }
-
 
   // call this when keyPressed update the player's movement 
   public void keyPressUpdate() {

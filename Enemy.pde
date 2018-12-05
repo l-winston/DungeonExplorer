@@ -1,7 +1,7 @@
-final int SMALL_SPRITE_WIDTH = 16;
-final int SMALL_SPRITE_HEIGHT = 20;
-final int MEDIUM_SPRITE_WIDTH = 32;
-final int MEDIUM_SPRITE_HEIGHT = 34;
+final float SMALL_SPRITE_WIDTH = 16;
+final float SMALL_SPRITE_HEIGHT = 20;
+final float MEDIUM_SPRITE_WIDTH = 32;
+final float MEDIUM_SPRITE_HEIGHT = 34;
 
 class BigDemon extends Entity {
   boolean facing_right;
@@ -9,18 +9,23 @@ class BigDemon extends Entity {
   public BigDemon(float x, float y) {
     facing_right = true;
 
-    walkboxw = playerw * 4f/5f;
-    walkboxh = playerh * 1f / 4f;
-    hitboxw = playerw * 2f / 3f;
-    hitboxh = playerh / 2f;
+    walkboxw = tilew;
+    walkboxh = tileh/2f;
+    hitboxw = tilew;
+    hitboxh = hitboxw * 1.5;
+
+    imgw = 2*tilew;
+    imgh = imgw * MEDIUM_SPRITE_HEIGHT/MEDIUM_SPRITE_WIDTH;
+
+    idle_anim = big_demon_idle_anim;
+    run_anim = big_demon_run_anim;
 
     create(x, y);
   }
 
 
   void step() {
-  }
-
-  void show() {
+    super.step();
+    
   }
 }

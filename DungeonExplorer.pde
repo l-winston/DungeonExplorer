@@ -215,7 +215,7 @@ void createWorld() {
 
 
   // randomly spawn columns
-  for (int i = 0; i < 20; i++)
+  for (int i = 0; i < 10; i++)
     rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
 
   rooms[1].createBox();
@@ -236,7 +236,7 @@ void createWorld() {
     }
   }
 
-  for (int i = 0; i < 100; i++)
+  for (int i = 0; i < 50; i++)
     rooms[1].setColumn(int(random(2, 23)), int(random(1, 23)));
 
   // create players
@@ -246,7 +246,7 @@ void createWorld() {
   // add players to the rooms
   rooms[0].addEntity(main);
   rooms[1].addEntity(main);
-  rooms[0].addEntity(demon);
+  rooms[1].addEntity(demon);
 }
 
 void calculateDistances() {
@@ -326,7 +326,7 @@ class CustomListener implements ContactListener {
     if (o1 == null || o2 == null)
       return;
     
-    
+    println("snaked");
     if (o1.getClass() == Boundary.class && o2.getClass() == Player.class) {
       println("Boundary-Player Contact at frame=" + frameCount);
     }
