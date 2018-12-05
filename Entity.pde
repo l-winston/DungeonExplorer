@@ -13,8 +13,3 @@ abstract class Entity {
     box2d.destroyBody(hitbox);
   }
 }
-
-
-class BigDemon{
-  
-}
