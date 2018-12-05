@@ -16,6 +16,15 @@ class BigDemon extends Entity {
 
     imgw = 2*tilew;
     imgh = imgw * MEDIUM_SPRITE_HEIGHT/MEDIUM_SPRITE_WIDTH;
+    
+    
+    float s = 1.5;
+    walkboxw *= s;
+    walkboxh *= s;
+    hitboxw *= s;
+    hitboxh *= s;
+    imgw *= s;
+    imgh *= s;
 
     idle_anim = big_demon_idle_anim;
     run_anim = big_demon_run_anim;

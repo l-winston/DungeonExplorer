@@ -81,12 +81,16 @@ void setup() {
   loadImages();
   loadSound();
   loadFont();
-
+  
+  PImage start = loadImage("start2.png");
+  //start.resize(180, 80);
+  
   // add start ui
   cp5.addButton("START")
+    .setImage(start)
     .setValue(0)
-    .setPosition(width/2-100/2, height/2-20/2)
-    .setSize(int(100), int(20))
+    .setPosition(width/2-start.width/2, height/2-start.height/2)
+    .setSize(start.width, start.height)
     .setFont(font)
     .addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent event) {
@@ -103,9 +107,9 @@ void setup() {
     }
   } 
   )
-  .setColorBackground(color(72, 59, 58))
-    .setColorForeground(color(96, 64, 32))
-    .setColorActive(color(217, 179, 140))
+  //.setColorBackground(color(72, 59, 58))
+  //  .setColorForeground(color(96, 64, 32))
+  //  .setColorActive(color(217, 179, 140))
     .getCaptionLabel()
     .align(CENTER, CENTER)
     ;
