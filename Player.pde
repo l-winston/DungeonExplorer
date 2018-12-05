@@ -88,8 +88,8 @@ class Player extends Entity {
     //   body.setAngularVelocity(1.2);
 
     PolygonShape walkboxps = new PolygonShape();
-    float box2Dw = box2d.scalarPixelsToWorld(hitboxw/2);
-    float box2Dh = box2d.scalarPixelsToWorld(hitboxh/2);
+    float box2Dw = box2d.scalarPixelsToWorld(walkboxw/2);
+    float box2Dh = box2d.scalarPixelsToWorld(walkboxh/2);
     walkboxps.setAsBox(box2Dw, box2Dh);
 
     // make circular shape:
@@ -134,8 +134,8 @@ class Player extends Entity {
     //   body.setAngularVelocity(1.2);
 
     PolygonShape hitboxps = new PolygonShape();
-    float hitboxbox2Dw = box2d.scalarPixelsToWorld(playerw/3);
-    float hitboxbox2Dh = box2d.scalarPixelsToWorld(playerh/4);
+    float hitboxbox2Dw = box2d.scalarPixelsToWorld(hitboxw / 2f);
+    float hitboxbox2Dh = box2d.scalarPixelsToWorld(hitboxh / 2f);
     hitboxps.setAsBox(hitboxbox2Dw, hitboxbox2Dh);
 
     // make circular shape:
@@ -175,11 +175,11 @@ class Player extends Entity {
     
     Vec2 pos = box2d.getBodyPixelCoord(walkbox);
 
-    rect(pos.x, pos.y, hitboxw, hitboxh);
+    rect(pos.x, pos.y, walkboxw, walkboxh);
     
     Vec2 hitboxpos = box2d.getBodyPixelCoord(hitbox);
     stroke(0, 255, 0);
-    rect(hitboxpos.x, hitboxpos.y, playerw*2f/3f, playerh/2);
+    rect(hitboxpos.x, hitboxpos.y, hitboxw, hitboxh);
 
     popStyle();
     popMatrix();
@@ -197,9 +197,11 @@ class Player extends Entity {
     //   float a = body.getAngle();
     translate(pos.x, pos.y - playerh/2);
     imageMode(CENTER);
+    
     if (!facing_right) {
       scale(-1, 1);
     }
+    
     if (vel.x==0 && vel.y== 0) {
       image(idle_anim[round(frameCount*ANIMATION_SPEED_SCALE)%idle_anim.length], 0, 0, playerw, playerh);
     } else {

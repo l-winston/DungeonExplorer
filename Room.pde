@@ -172,7 +172,7 @@ class Room {
         float tiley = i * tileh;
 
         if (wall[i][j] != Wall.NONE) {
-          showWall(tilex, tiley, wall[i][j], this);
+          showWall(tilex, tiley, wall[i][j]);
         } 
         if (column[i][j]) {
           showColumn(tilex, tiley);

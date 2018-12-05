@@ -38,8 +38,10 @@ boolean mute;
 // global variables to aid with drawing characters
 float playerw;
 float playerh;
-float hitboxw;
+float walkboxw;
+float walkboxh;
 float hitboxh;
+float hitboxw;
 
 // global variablles to aid with scaling
 float tilew, tileh;
@@ -136,7 +138,6 @@ void draw() {
     
     // find middle of characters
     Vec2 mainpos = box2d.coordWorldToPixels(main.walkbox.getPosition());
-
 
     // move camera to follow players
     translate(width/2 - mainpos.x, height/2 - mainpos.y);
@@ -251,12 +252,14 @@ void createWorld() {
 
 void calculateDistances() {
   // arbitrary way to choose how to scale tiles
-  tilew = width/15f;
-  tileh = height/15f;
+  tilew = width / 15f;
+  tileh = height / 15f;
   playerw = tilew;
-  playerh = tilew*PLAYER_SPRITE_HEIGHT/PLAYER_SPRITE_WIDTH;
-  hitboxw = playerw;
-  hitboxh = playerh / 3.4f;
+  playerh = tilew * PLAYER_SPRITE_HEIGHT/PLAYER_SPRITE_WIDTH;
+  walkboxw = playerw * 4f/5f;
+  walkboxh = playerh * 1f / 4f;
+  hitboxw = playerw * 2f / 3f;
+  hitboxh = playerh / 2f;
 }
 
 void keyPressed() {
