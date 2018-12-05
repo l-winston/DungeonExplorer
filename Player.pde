@@ -110,7 +110,7 @@ class Player extends Entity {
     // can directly create fixture w/ shape & density:
     //   body.createFixture(ps, 1);
 
-    walkbox.setUserData(this);
+    walkbox.setUserData(new UserData(this, DataType.WALKBOX));
 
 
     // --------------------------------------------
@@ -158,7 +158,7 @@ class Player extends Entity {
     // can directly create fixture w/ shape & density:
     //   body.createFixture(ps, 1);
 
-    hitbox.setUserData(this);
+    hitbox.setUserData(new UserData(this, DataType.HITBOX));
     
     hitbox.setSleepingAllowed(false);
   }

@@ -330,14 +330,16 @@ class CustomListener implements ContactListener {
 
     if (o1 == null || o2 == null)
       return;
-
+    
+    /*
     if (o1.getClass() == Boundary.class && o2.getClass() == Player.class) {
       println("Boundary-Player Contact at frame=" + frameCount);
     }
-
+s
     if (o2.getClass() == Boundary.class && o1.getClass() == Player.class) {
       println("Boundary-Player Contact at frame=" + frameCount);
     }
+    */
   }
 
   void endContact(Contact contact) {
