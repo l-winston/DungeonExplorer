@@ -132,7 +132,7 @@ void draw() {
 
     // step all entities on current floor through time
     rooms[current].stepAll();
-    
+
     // find middle of characters
     Vec2 mainpos = box2d.coordWorldToPixels(main.walkbox.getPosition());
 
@@ -240,13 +240,15 @@ void createWorld() {
     rooms[1].setColumn(int(random(2, 23)), int(random(1, 23)));
 
   // create players
-  main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M);   
-  BigDemon demon = new BigDemon(width/2, height/2);
+  main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M);  
 
   // add players to the rooms
   rooms[0].addEntity(main);
   rooms[1].addEntity(main);
-  rooms[1].addEntity(demon);
+  rooms[1].addEntity(new BigDemon(random(width), random(height)));
+  rooms[1].addEntity(new BigDemon(random(width), random(height)));
+  rooms[1].addEntity(new BigDemon(random(width), random(height)));
+  rooms[1].addEntity(new BigDemon(random(width), random(height)));
 }
 
 void calculateDistances() {
@@ -325,7 +327,7 @@ class CustomListener implements ContactListener {
 
     if (o1 == null || o2 == null)
       return;
-    
+
     println("snaked");
     if (o1.getClass() == Boundary.class && o2.getClass() == Player.class) {
       println("Boundary-Player Contact at frame=" + frameCount);
@@ -334,7 +336,6 @@ class CustomListener implements ContactListener {
     if (o2.getClass() == Boundary.class && o1.getClass() == Player.class) {
       println("Boundary-Player Contact at frame=" + frameCount);
     }
-    
   }
 
   void endContact(Contact contact) {
