@@ -38,10 +38,7 @@ boolean mute;
 // global variables to aid with drawing characters
 float playerw;
 float playerh;
-float walkboxw;
-float walkboxh;
-float hitboxh;
-float hitboxw;
+
 
 // global variablles to aid with scaling
 float tilew, tileh;
@@ -243,11 +240,13 @@ void createWorld() {
     rooms[1].setColumn(int(random(2, 23)), int(random(1, 23)));
 
   // create players
-  main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M);    
+  main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M);   
+  BigDemon demon = new BigDemon(width/2, height/2);
 
   // add players to the rooms
   rooms[0].addEntity(main);
   rooms[1].addEntity(main);
+  rooms[0].addEntity(demon);
 }
 
 void calculateDistances() {
@@ -256,10 +255,6 @@ void calculateDistances() {
   tileh = height / 15f;
   playerw = tilew;
   playerh = tilew * PLAYER_SPRITE_HEIGHT/PLAYER_SPRITE_WIDTH;
-  walkboxw = playerw * 4f/5f;
-  walkboxh = playerh * 1f / 4f;
-  hitboxw = playerw * 2f / 3f;
-  hitboxh = playerh / 2f;
 }
 
 void keyPressed() {
@@ -331,15 +326,15 @@ class CustomListener implements ContactListener {
     if (o1 == null || o2 == null)
       return;
     
-    /*
+    
     if (o1.getClass() == Boundary.class && o2.getClass() == Player.class) {
       println("Boundary-Player Contact at frame=" + frameCount);
     }
-s
+
     if (o2.getClass() == Boundary.class && o1.getClass() == Player.class) {
       println("Boundary-Player Contact at frame=" + frameCount);
     }
-    */
+    
   }
 
   void endContact(Contact contact) {
