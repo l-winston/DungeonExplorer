@@ -16,10 +16,9 @@ class Player extends Entity {
 
   // which keys are currently held down
   boolean[] keysdown;
-
+  
   public Player(float x, float y, char[] controls, PlayerType type) {
     this.controls = controls;
-
     // at creation, assume no keys are down
     keysdown = new boolean[4];
 
@@ -31,8 +30,11 @@ class Player extends Entity {
     imgw = playerw;
     imgh = playerh;
 
+    this.x = x;
+    this.y = y;
+
     // create the player's body
-    create(x, y);
+    //create();
 
     // players spawn facing right
     facing_right = true;

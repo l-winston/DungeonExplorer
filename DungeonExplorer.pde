@@ -58,9 +58,6 @@ Player main;
 Box2DProcessing box2d;
 ControlP5 cp5;
 
-// boundaries on current floor
-ArrayList<Boundary> currentFloorBoundaries;
-
 void setup() {
   debug = false;
   mute = true;
@@ -81,10 +78,10 @@ void setup() {
   loadImages();
   loadSound();
   loadFont();
-  
-  PImage start = loadImage("start2.png");
+
+  PImage start = loadImage("blue.png");
   //start.resize(180, 80);
-  
+
   // add start ui
   cp5.addButton("START")
     .setImage(start)
@@ -103,6 +100,10 @@ void setup() {
         for (Boundary b : rooms[current].boundaries) {
           b.createBody();
         }
+
+        for (Entity e : rooms[current].entities) {
+          e.create();
+        }
       }
     }
   } 
@@ -110,7 +111,7 @@ void setup() {
   //.setColorBackground(color(72, 59, 58))
   //  .setColorForeground(color(96, 64, 32))
   //  .setColorActive(color(217, 179, 140))
-    .getCaptionLabel()
+  .getCaptionLabel()
     .align(CENTER, CENTER)
     ;
 
@@ -138,7 +139,7 @@ void draw() {
     rooms[current].stepAll();
 
     // find middle of characters
-    Vec2 mainpos = box2d.coordWorldToPixels(main.walkbox.getPosition());
+    Vec2 mainpos = main.getPixelPosition();
 
     // move camera to follow players
     translate(width/2 - mainpos.x, height/2 - mainpos.y);
@@ -279,10 +280,36 @@ void keyPressed() {
       for (Boundary b : rooms[current].boundaries) {
         b.destroyBody();
       }
+
+      for (Entity e : rooms[current].entities) {
+        e.destroyBody();
+      }
+
       current = (current+1)%rooms.length;
+
       for (Boundary b : rooms[current].boundaries) {
         b.createBody();
       }
+      for (Entity e : rooms[current].entities) {
+        e.create();
+      }
+    }
+
+    if (key == 'b') {
+      Vec2 mainpos = main.getPixelPosition();
+      Vec2 current = main.walkbox.getPosition();
+      Vec2 target = box2d.coordPixelsToWorld(new Vec2(mouseX - (width/2 - mainpos.x), mouseY - ( height/2 - mainpos.y)));
+      println(new Vec2(mouseX + width/2 - mainpos.x, mouseY + height/2 - mainpos.y));
+      Bullet newBullet = new Bullet(mainpos.x, mainpos.y, 0, 0, 10);
+      newBullet.create();
+
+      Vec2 dpos = target.add(current.mul(-1));
+      dpos.normalize();
+      dpos.mulLocal(20);
+
+      newBullet.walkbox.setLinearVelocity(dpos);
+
+      rooms[0].addEntity(newBullet);
     }
   }
 }

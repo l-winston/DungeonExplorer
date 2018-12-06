@@ -27,6 +27,11 @@ class Boundary {
     r = r_;
   }
 
+  void setAwake(boolean awake) {
+    if(body == null)
+      return;
+    body.setAwake(awake);
+  }
   void createBody() {
     // body defenition is different whether or not the boundary is a circle
     if (circular) {

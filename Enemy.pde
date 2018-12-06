@@ -17,6 +17,8 @@ class BigDemon extends Entity {
     imgw = 2*tilew;
     imgh = imgw * MEDIUM_SPRITE_HEIGHT/MEDIUM_SPRITE_WIDTH;
     
+    this.x = x;
+    this.y = y;
     
     float s = 1.5;
     walkboxw *= s;
@@ -29,7 +31,7 @@ class BigDemon extends Entity {
     idle_anim = big_demon_idle_anim;
     run_anim = big_demon_run_anim;
 
-    create(x, y);
+    //create();
   }
 
 
@@ -41,9 +43,9 @@ class BigDemon extends Entity {
     
     Vec2 dpos = target.add(current);
     
-    //dpos.normalize();
+    dpos.normalize();
     
-    dpos.mulLocal(1);
+    dpos.mulLocal(5);
     
     walkbox.setLinearVelocity(dpos);
   }

@@ -19,9 +19,30 @@ abstract class Entity {
   float imgw;
   float imgh;
 
-  void killBody() {
+  float x;
+  float y;
+
+  void destroyBody() {
     box2d.destroyBody(walkbox);
-    box2d.destroyBody(hitbox);
+    if (hitbox != null)
+      box2d.destroyBody(hitbox);
+      
+    Vec2 pos = box2d.getBodyPixelCoord(walkbox);
+    x = pos.x;
+    y = pos.y;
+  }
+
+  void setAwake(boolean awake) {
+    walkbox.setAwake(awake);
+    hitbox.setAwake(awake);
+  }
+  
+  Vec2 getPixelPosition(){
+    return box2d.getBodyPixelCoord(walkbox);
+  }
+  
+  Vec2 getWorldPosition(){
+    return box2d.getBodyPixelCoord(walkbox);
   }
 
   // draws the player's movement hitbox as a green rectangle
@@ -33,7 +54,8 @@ abstract class Entity {
     stroke(0, 0, 255);
     strokeWeight(2);
     noFill();
-
+    
+    println(walkbox==null);
     Vec2 pos = box2d.getBodyPixelCoord(walkbox);
 
 
@@ -47,7 +69,7 @@ abstract class Entity {
     popMatrix();
   }
 
-  public void create(float x, float y) {
+  public void create() {
     Vec2 center = box2d.coordPixelsToWorld(x, y);
 
 
