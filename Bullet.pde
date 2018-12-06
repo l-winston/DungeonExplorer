@@ -1,10 +1,10 @@
 class Bullet extends Entity {
   float radius;
-  
+
   float vx;
   float vy;
-  
-  
+
+
   // x/y pixel coords
   // vx/vy world scalars
   // r pixel scalar
@@ -76,7 +76,11 @@ class Bullet extends Entity {
     translate(pos.x, pos.y);
     imageMode(CENTER);
 
-    image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%run_anim.length], 0, 0, radius*2, radius*2);
+    //image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%run_anim.length], 0, 0, radius*2, radius*2);
+    strokeWeight(1);
+    stroke(255, 255, 255);
+    fill(100, 100, 100);
+    ellipse(0, 0, radius*2, radius*2);
 
 
     popMatrix();

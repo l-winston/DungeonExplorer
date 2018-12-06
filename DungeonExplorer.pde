@@ -296,20 +296,9 @@ void keyPressed() {
     }
 
     if (key == 'b') {
-      Vec2 pixelpos = main.getPixelPosition();
-      Vec2 worldpos = main.walkbox.getPosition();
-      Vec2 target = box2d.coordPixelsToWorld(new Vec2(mouseX - (width/2 - pixelpos.x), mouseY - ( height/2 - pixelpos.y)));
-      println(new Vec2(mouseX + width/2 - pixelpos.x, mouseY + height/2 - pixelpos.y));
-      Bullet newBullet = new Bullet(pixelpos.x, pixelpos.y, 0, 0, 10);
-
-      newBullet.create();
-
-      Vec2 dpos = target.add(worldpos.mul(-1));
-      dpos.normalize();
-      dpos.mulLocal(20);
-      newBullet.walkbox.setLinearVelocity(dpos);
-
-      rooms[current].addEntity(newBullet);
+      if (phase == Phase.GAME) {
+        debug ^= true;
+      }
     }
   }
 }
@@ -332,9 +321,24 @@ float[] tileToPixel(float i, float j) {
 
 // click to turn on/off debug mode
 void mousePressed() {
-  if (phase == Phase.GAME) {
-    debug ^= true;
-  }
+  Vec2 pixelpos = main.getPixelPosition();
+  Vec2 worldpos = main.walkbox.getPosition();
+  Vec2 target = box2d.coordPixelsToWorld(new Vec2(mouseX - (width/2 - pixelpos.x), mouseY - ( height/2 - pixelpos.y)));
+
+  float a = atan2 (target.y - worldpos.y, target.x - worldpos.x);
+
+  a = -a;
+
+  Bullet newBullet = new Bullet(pixelpos.x + 10*cos(a), pixelpos.y + 10*sin(a), 0, 0, 10);
+
+  newBullet.create();
+
+  Vec2 dpos = target.add(worldpos.mul(-1));
+  dpos.normalize();
+  dpos.mulLocal(20);
+  newBullet.walkbox.setLinearVelocity(dpos);
+
+  rooms[current].addEntity(newBullet);
 }
 
 // contact listener to detect bullet hit (and more)
