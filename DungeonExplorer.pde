@@ -296,20 +296,20 @@ void keyPressed() {
     }
 
     if (key == 'b') {
-      Vec2 mainpos = main.getPixelPosition();
-      Vec2 current = main.walkbox.getPosition();
-      Vec2 target = box2d.coordPixelsToWorld(new Vec2(mouseX - (width/2 - mainpos.x), mouseY - ( height/2 - mainpos.y)));
-      println(new Vec2(mouseX + width/2 - mainpos.x, mouseY + height/2 - mainpos.y));
-      Bullet newBullet = new Bullet(mainpos.x, mainpos.y, 0, 0, 10);
+      Vec2 pixelpos = main.getPixelPosition();
+      Vec2 worldpos = main.walkbox.getPosition();
+      Vec2 target = box2d.coordPixelsToWorld(new Vec2(mouseX - (width/2 - pixelpos.x), mouseY - ( height/2 - pixelpos.y)));
+      println(new Vec2(mouseX + width/2 - pixelpos.x, mouseY + height/2 - pixelpos.y));
+      Bullet newBullet = new Bullet(pixelpos.x, pixelpos.y, 0, 0, 10);
+
       newBullet.create();
 
-      Vec2 dpos = target.add(current.mul(-1));
+      Vec2 dpos = target.add(worldpos.mul(-1));
       dpos.normalize();
       dpos.mulLocal(20);
-
       newBullet.walkbox.setLinearVelocity(dpos);
 
-      rooms[0].addEntity(newBullet);
+      rooms[current].addEntity(newBullet);
     }
   }
 }
