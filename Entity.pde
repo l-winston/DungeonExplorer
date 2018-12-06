@@ -1,6 +1,7 @@
 
 // all entities will inherit this class
 abstract class Entity {
+  
   // images/animations for drawing
   PImage[] idle_anim;
   PImage[] run_anim;

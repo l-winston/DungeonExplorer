@@ -25,6 +25,8 @@ enum Phase {
   START, GAME
 }
 
+ArrayList<Entity> toDestroy;
+
 float animxi;
 float animxf;
 
@@ -130,6 +132,13 @@ void draw() {
 
   switch (phase) {
   case GAME:
+    
+    for (Entity e : toDestroy) {
+      e.destroyBody();
+      rooms[current].entities.remove(e);
+    }
+    toDestroy = new ArrayList<Entity>();
+    
     background(0);
 
     // calculate physics on each entity (on the floor)
@@ -157,9 +166,8 @@ void draw() {
         b.showHitbox();
       for (Entity e : rooms[current].entities) 
         e.showHitbox();
-      break;
     }
-
+    
     break;
   case START:
     background(70, 59, 58);
@@ -254,6 +262,8 @@ void createWorld() {
   rooms[1].addEntity(new BigDemon(random(width), random(height)));
   rooms[1].addEntity(new BigDemon(random(width), random(height)));
   rooms[1].addEntity(new BigDemon(random(width), random(height)));
+
+  toDestroy = new ArrayList<Entity>();
 }
 
 void calculateDistances() {
@@ -274,6 +284,7 @@ void keyPressed() {
   }
 
   if (phase == Phase.GAME) {
+
     main.keyPressUpdate();
 
     if (key == ' ') {
@@ -321,24 +332,26 @@ float[] tileToPixel(float i, float j) {
 
 // click to turn on/off debug mode
 void mousePressed() {
-  Vec2 pixelpos = main.getPixelPosition();
-  Vec2 worldpos = main.walkbox.getPosition();
-  Vec2 target = box2d.coordPixelsToWorld(new Vec2(mouseX - (width/2 - pixelpos.x), mouseY - ( height/2 - pixelpos.y)));
+  if (phase == Phase.GAME) {
+    Vec2 pixelpos = main.getPixelPosition();
+    Vec2 worldpos = main.walkbox.getPosition();
+    Vec2 target = box2d.coordPixelsToWorld(new Vec2(mouseX - (width/2 - pixelpos.x), mouseY - ( height/2 - pixelpos.y)));
 
-  float a = atan2 (target.y - worldpos.y, target.x - worldpos.x);
+    float a = atan2 (target.y - worldpos.y, target.x - worldpos.x);
 
-  a = -a;
+    a = -a;
 
-  Bullet newBullet = new Bullet(pixelpos.x + 10*cos(a), pixelpos.y + 10*sin(a), 0, 0, 10);
+    Bullet newBullet = new Bullet(pixelpos.x + 75*cos(a), pixelpos.y + 75*sin(a), 0, 0, 10);
 
-  newBullet.create();
+    newBullet.create();
 
-  Vec2 dpos = target.add(worldpos.mul(-1));
-  dpos.normalize();
-  dpos.mulLocal(20);
-  newBullet.walkbox.setLinearVelocity(dpos);
+    Vec2 dpos = target.add(worldpos.mul(-1));
+    dpos.normalize();
+    dpos.mulLocal(20);
+    newBullet.walkbox.setLinearVelocity(dpos);
 
-  rooms[current].addEntity(newBullet);
+    rooms[current].addEntity(newBullet);
+  }
 }
 
 // contact listener to detect bullet hit (and more)
@@ -357,19 +370,25 @@ class CustomListener implements ContactListener {
     Body b2 = f2.getBody();
 
     // Get our objects that reference these bodies
-    Object o1 = b1.getUserData();
-    Object o2 = b2.getUserData();
 
-    if (o1 == null || o2 == null)
+    if (!(b1.getUserData() instanceof UserData) || !(b2.getUserData() instanceof UserData)) {
+      return;
+    }
+
+    UserData data1 = (UserData)b1.getUserData();
+    UserData data2 = (UserData)b2.getUserData();
+
+    if (data1 == null || data2 == null)
       return;
 
     println("snaked");
-    if (o1.getClass() == Boundary.class && o2.getClass() == Player.class) {
-      println("Boundary-Player Contact at frame=" + frameCount);
+
+    if (data1.o.getClass() == Bullet.class) {
+      toDestroy.add((Bullet)data1.o);
     }
 
-    if (o2.getClass() == Boundary.class && o1.getClass() == Player.class) {
-      println("Boundary-Player Contact at frame=" + frameCount);
+    if (data2.o.getClass() == Bullet.class) {
+      toDestroy.add((Bullet)data2.o);
     }
   }
 
