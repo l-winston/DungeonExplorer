@@ -221,6 +221,8 @@ void loadImages() {
       coords[0] += coords[2];
     }
   }
+  
+  bullet_blue = loadImage("bluebullet.png");
 }
 
 //returns whether or not String a is a substring of String b

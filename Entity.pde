@@ -24,7 +24,8 @@ abstract class Entity {
   float y;
 
   void destroyBody() {
-    box2d.destroyBody(walkbox);
+    if(walkbox != null)
+      box2d.destroyBody(walkbox);
     if (hitbox != null)
       box2d.destroyBody(hitbox);
       
@@ -38,14 +39,6 @@ abstract class Entity {
     hitbox.setAwake(awake);
   }
   
-  Vec2 getPixelPosition(){
-    return box2d.getBodyPixelCoord(walkbox);
-  }
-  
-  Vec2 getWorldPosition(){
-    return box2d.getBodyPixelCoord(walkbox);
-  }
-
   // draws the player's movement hitbox as a green rectangle
   public void showHitbox() {
     pushMatrix();

@@ -132,13 +132,13 @@ void draw() {
 
   switch (phase) {
   case GAME:
-    
+
     for (Entity e : toDestroy) {
       e.destroyBody();
       rooms[current].entities.remove(e);
     }
     toDestroy = new ArrayList<Entity>();
-    
+
     background(0);
 
     // calculate physics on each entity (on the floor)
@@ -148,7 +148,7 @@ void draw() {
     rooms[current].stepAll();
 
     // find middle of characters
-    Vec2 mainpos = main.getPixelPosition();
+    Vec2 mainpos = box2d.getBodyPixelCoord(main.walkbox);
 
     // move camera to follow players
     translate(width/2 - mainpos.x, height/2 - mainpos.y);
@@ -167,7 +167,12 @@ void draw() {
       for (Entity e : rooms[current].entities) 
         e.showHitbox();
     }
-    
+
+    Vec2 target = new Vec2(mouseX - (width/2),  mouseY - height/2);
+    ellipse(target.x, target.y, 10, 10);
+    fill(255, 0, 0);
+    ellipse(0, 0, 10, 10);
+
     break;
   case START:
     background(70, 59, 58);
@@ -333,21 +338,21 @@ float[] tileToPixel(float i, float j) {
 // click to turn on/off debug mode
 void mousePressed() {
   if (phase == Phase.GAME) {
-    Vec2 pixelpos = main.getPixelPosition();
-    Vec2 worldpos = main.walkbox.getPosition();
-    Vec2 target = box2d.coordPixelsToWorld(new Vec2(mouseX - (width/2 - pixelpos.x), mouseY - ( height/2 - pixelpos.y)));
+    Vec2 pixelpos = box2d.getBodyPixelCoord(main.walkbox);
+    
+    Vec2 pixelrelative = new Vec2(mouseX - (width/2), mouseY - (height/2));
+    
+    
+    float a = atan2 (pixelrelative.y, pixelrelative.x);
 
-    float a = atan2 (target.y - worldpos.y, target.x - worldpos.x);
 
-    a = -a;
-
-    Bullet newBullet = new Bullet(pixelpos.x + 75*cos(a), pixelpos.y + 75*sin(a), 0, 0, 10);
-
+    Bullet newBullet = new Bullet(pixelpos.x + 50*cos(a), pixelpos.y + 50*sin(a) - 5, 0, 0, 10);
     newBullet.create();
 
-    Vec2 dpos = target.add(worldpos.mul(-1));
+    Vec2 dpos = new Vec2(box2d.scalarPixelsToWorld(pixelrelative.x), box2d.scalarPixelsToWorld(-pixelrelative.y));
     dpos.normalize();
     dpos.mulLocal(20);
+
     newBullet.walkbox.setLinearVelocity(dpos);
 
     rooms[current].addEntity(newBullet);
@@ -380,8 +385,6 @@ class CustomListener implements ContactListener {
 
     if (data1 == null || data2 == null)
       return;
-
-    println("snaked");
 
     if (data1.o.getClass() == Bullet.class) {
       toDestroy.add((Bullet)data1.o);

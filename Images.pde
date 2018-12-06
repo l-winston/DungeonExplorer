@@ -112,3 +112,6 @@ PImage weapon_golden_sword;
 PImage weapon_lavish_sword;
 PImage weapon_red_magic_staff;
 PImage weapon_green_magic_staff;
+
+
+PImage bullet_blue;

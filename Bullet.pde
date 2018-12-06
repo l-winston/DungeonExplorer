@@ -52,6 +52,7 @@ class Bullet extends Entity {
     //   fd.friction = ...;
     //   fd.restitution = ...;
     //   fd.density = ...;
+    walkboxfd.isSensor = true;
 
     walkbox.createFixture(walkboxfd);
 
@@ -59,6 +60,8 @@ class Bullet extends Entity {
     //   body.createFixture(ps, 1);
 
     walkbox.setUserData(new UserData(this, DataType.WALKBOX));
+
+    walkbox.setSleepingAllowed(false);
   }
 
 
@@ -77,8 +80,7 @@ class Bullet extends Entity {
     imageMode(CENTER);
 
     //image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%run_anim.length], 0, 0, radius*2, radius*2);
-    fill(100, 100, 100);
-    ellipse(0, 0, radius*2, radius*2);
+    image(bullet_blue, 0, 0, radius*2, radius*2);
 
 
     popMatrix();
