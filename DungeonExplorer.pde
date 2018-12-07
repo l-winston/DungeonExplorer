@@ -82,12 +82,13 @@ void setup() {
   loadSound();
   loadFont();
 
-  PImage start = loadImage("blue.png");
+  PImage start = loadImage("ui/blue.png");
+  PImage hover = loadImage("ui/dark.png");
   //start.resize(180, 80);
 
   // add start ui
   cp5.addButton("START")
-    .setImage(start)
+    .setImages(start, hover, hover)
     .setValue(0)
     .setPosition(width/2-start.width/2, height/2-start.height/2)
     .setSize(start.width, start.height)
@@ -259,10 +260,10 @@ void createWorld() {
   // add players to the rooms
   rooms[0].addEntity(main);
   rooms[1].addEntity(main);
-  rooms[1].addEntity(new BigDemon(random(width), random(height)));
-  rooms[1].addEntity(new BigDemon(random(width), random(height)));
-  rooms[1].addEntity(new BigDemon(random(width), random(height)));
-  rooms[1].addEntity(new BigDemon(random(width), random(height)));
+  rooms[1].addEntity(new BigDemon(random(width)+100, random(height)+100));
+  rooms[1].addEntity(new BigDemon(random(width)+100, random(height)+100));
+  rooms[1].addEntity(new BigDemon(random(width)+100, random(height)+100));
+  rooms[1].addEntity(new BigDemon(random(width)+100, random(height)+100));
 
   toDestroy = new ArrayList<Entity>();
 }

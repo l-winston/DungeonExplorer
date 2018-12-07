@@ -28,12 +28,16 @@ class CustomListener implements ContactListener {
     if (data1.o.getClass() == Bullet.class) {
       if (((Bullet)data1.o).source != data2.o) {
         toDestroy.add((Bullet)data1.o);
+        if (data2.o instanceof Entity)
+          toDestroy.add((Entity)data2.o);
       }
     }
 
     if (data2.o.getClass() == Bullet.class) {
       if (((Bullet)data2.o).source != data1.o) {
         toDestroy.add((Bullet)data2.o);
+        if (data1.o instanceof Entity)
+          toDestroy.add((Entity)data1.o);
       }
     }
   }

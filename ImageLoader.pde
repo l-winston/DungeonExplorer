@@ -5,10 +5,10 @@ PImage sheet;
 
 void loadImages() {
   // load main spritesheet
-  sheet = loadImage("tileset.png");
+  sheet = loadImage("game/tileset.png");
   
   // store all data in a String array
-  String[] data = loadStrings("tileinfo.txt");
+  String[] data = loadStrings("game/tileinfo.txt");
   for (int i = 0; i < data.length; i++) {
     //file includes some empty lines, check to skip them
     if (data[i].length() <= 0)
@@ -222,7 +222,7 @@ void loadImages() {
     }
   }
   
-  bullet_blue = loadImage("bluebullet.png");
+  bullet_blue = loadImage("game/bluebullet.png");
 }
 
 //returns whether or not String a is a substring of String b
