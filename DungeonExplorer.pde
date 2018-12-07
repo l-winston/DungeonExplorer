@@ -254,7 +254,7 @@ void createWorld() {
     rooms[1].setColumn(int(random(2, 23)), int(random(1, 23)));
 
   // create players
-  main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.KNIGHT_M);  
+  main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.WIZZARD_M);  
 
   // add players to the rooms
   rooms[0].addEntity(main);
