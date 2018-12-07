@@ -1,4 +1,6 @@
 class Bullet extends Entity {
+  Entity source;
+  
   float radius;
 
   float vx;
@@ -8,13 +10,14 @@ class Bullet extends Entity {
   // x/y pixel coords
   // vx/vy world scalars
   // r pixel scalar
-  public Bullet(float x, float y, float vx, float vy, float r) {
+  public Bullet(float x, float y, float vx, float vy, float r, Entity s) {
     radius = r;
     run_anim = big_demon_run_anim;
     this.vx = vx;
     this.vy = vy;
     this.x = x;
     this.y = y;
+    this.source = s;
     //create();
   }
 

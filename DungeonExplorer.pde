@@ -168,11 +168,6 @@ void draw() {
         e.showHitbox();
     }
 
-    Vec2 target = new Vec2(mouseX - (width/2),  mouseY - height/2);
-    ellipse(target.x, target.y, 10, 10);
-    fill(255, 0, 0);
-    ellipse(0, 0, 10, 10);
-
     break;
   case START:
     background(70, 59, 58);
@@ -339,14 +334,14 @@ float[] tileToPixel(float i, float j) {
 void mousePressed() {
   if (phase == Phase.GAME) {
     Vec2 pixelpos = box2d.getBodyPixelCoord(main.walkbox);
-    
+
     Vec2 pixelrelative = new Vec2(mouseX - (width/2), mouseY - (height/2));
-    
-    
+
+
     float a = atan2 (pixelrelative.y, pixelrelative.x);
 
 
-    Bullet newBullet = new Bullet(pixelpos.x + 50*cos(a), pixelpos.y + 50*sin(a) - 5, 0, 0, 10);
+    Bullet newBullet = new Bullet(pixelpos.x + 10*cos(a), pixelpos.y + 10*sin(a) - 5, 0, 0, 10, main);
     newBullet.create();
 
     Vec2 dpos = new Vec2(box2d.scalarPixelsToWorld(pixelrelative.x), box2d.scalarPixelsToWorld(-pixelrelative.y));
@@ -387,11 +382,15 @@ class CustomListener implements ContactListener {
       return;
 
     if (data1.o.getClass() == Bullet.class) {
-      toDestroy.add((Bullet)data1.o);
+      if (((Bullet)data1.o).source != data2.o) {
+        toDestroy.add((Bullet)data1.o);
+      }
     }
 
     if (data2.o.getClass() == Bullet.class) {
-      toDestroy.add((Bullet)data2.o);
+      if (((Bullet)data2.o).source != data1.o) {
+        toDestroy.add((Bullet)data2.o);
+      }
     }
   }
 
