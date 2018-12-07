@@ -141,7 +141,7 @@ class Player extends Entity {
     newBullet.create();
 
     Vec2 dpos = new Vec2(box2d.scalarPixelsToWorld(cos(angle)), box2d.scalarPixelsToWorld(-sin(angle)));
-    dpos.mulLocal(500);
+    dpos.mulLocal(50);
 
     newBullet.walkbox.setLinearVelocity(dpos);
 

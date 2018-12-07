@@ -27,6 +27,7 @@ enum Phase {
 
 ArrayList<Entity> toDestroy;
 
+// starting and final x-values of starting screen animation
 float animxi;
 float animxf;
 
@@ -333,13 +334,9 @@ float[] tileToPixel(float i, float j) {
 // click to turn on/off debug mode
 void mousePressed() {
   if (phase == Phase.GAME) {
-
     Vec2 pixelrelative = new Vec2(mouseX - (width/2), mouseY - (height/2));
-
 
     float a = atan2 (pixelrelative.y, pixelrelative.x);
     main.shoot(a);
-
-   
   }
 }
