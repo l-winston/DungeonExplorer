@@ -1,6 +1,6 @@
 class Bullet extends Entity {
   Entity source;
-  
+
   float radius;
 
   float vx;
@@ -19,6 +19,14 @@ class Bullet extends Entity {
     this.y = y;
     this.source = s;
     //create();
+  }
+
+  void destroyBody() {
+    super.destroyBody();
+
+    Vec2 vel = walkbox.getLinearVelocity();
+    vx = vel.x;
+    vy = vel.y;
   }
 
   void create() {

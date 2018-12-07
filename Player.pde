@@ -137,7 +137,7 @@ class Player extends Entity {
 
   void shoot(float angle) {
     Vec2 pixelpos = box2d.getBodyPixelCoord(main.walkbox);
-    Bullet newBullet = new Bullet(pixelpos.x + 10*cos(angle), pixelpos.y + 10*sin(angle) - 5, 0, 0, 10, main);
+    Bullet newBullet = new Bullet(pixelpos.x + 20*cos(angle), pixelpos.y + 20*sin(angle) - 5, 0, 0, 20, main);
     newBullet.create();
 
     Vec2 dpos = new Vec2(box2d.scalarPixelsToWorld(cos(angle)), box2d.scalarPixelsToWorld(-sin(angle)));

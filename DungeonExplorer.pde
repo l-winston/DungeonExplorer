@@ -20,12 +20,14 @@ import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 
+import java.util.HashSet;
+
 // enum representing current phase of game
 enum Phase {
   START, GAME
 }
 
-ArrayList<Entity> toDestroy;
+HashSet<Entity> toDestroy;
 
 // starting and final x-values of starting screen animation
 float animxi;
@@ -139,7 +141,8 @@ void draw() {
       e.destroyBody();
       rooms[current].entities.remove(e);
     }
-    toDestroy = new ArrayList<Entity>();
+    
+    toDestroy = new HashSet<Entity>();
 
     background(0);
 
@@ -265,7 +268,7 @@ void createWorld() {
   rooms[1].addEntity(new BigDemon(random(width)+100, random(height)+100));
   rooms[1].addEntity(new BigDemon(random(width)+100, random(height)+100));
 
-  toDestroy = new ArrayList<Entity>();
+  toDestroy = new HashSet<Entity>();
 }
 
 void calculateDistances() {
