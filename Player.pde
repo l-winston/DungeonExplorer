@@ -16,7 +16,7 @@ class Player extends Entity {
 
   // which keys are currently held down
   boolean[] keysdown;
-  
+
   public Player(float x, float y, char[] controls, PlayerType type) {
     this.controls = controls;
     // at creation, assume no keys are down
@@ -133,5 +133,18 @@ class Player extends Entity {
     Vec2 pos = walkbox.getPosition();
     Vec2 newPos = new Vec2(pos.x, pos.y + box2d.scalarPixelsToWorld(playerh/4));
     hitbox.setTransform(newPos, 0);
+  }
+
+  void shoot(float angle) {
+    Vec2 pixelpos = box2d.getBodyPixelCoord(main.walkbox);
+    Bullet newBullet = new Bullet(pixelpos.x + 10*cos(angle), pixelpos.y + 10*sin(angle) - 5, 0, 0, 10, main);
+    newBullet.create();
+
+    Vec2 dpos = new Vec2(box2d.scalarPixelsToWorld(cos(angle)), box2d.scalarPixelsToWorld(-sin(angle)));
+    dpos.mulLocal(500);
+
+    newBullet.walkbox.setLinearVelocity(dpos);
+
+    rooms[current].addEntity(newBullet);
   }
 }

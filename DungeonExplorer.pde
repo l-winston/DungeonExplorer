@@ -333,76 +333,13 @@ float[] tileToPixel(float i, float j) {
 // click to turn on/off debug mode
 void mousePressed() {
   if (phase == Phase.GAME) {
-    Vec2 pixelpos = box2d.getBodyPixelCoord(main.walkbox);
 
     Vec2 pixelrelative = new Vec2(mouseX - (width/2), mouseY - (height/2));
 
 
     float a = atan2 (pixelrelative.y, pixelrelative.x);
+    main.shoot(a);
 
-
-    Bullet newBullet = new Bullet(pixelpos.x + 10*cos(a), pixelpos.y + 10*sin(a) - 5, 0, 0, 10, main);
-    newBullet.create();
-
-    Vec2 dpos = new Vec2(box2d.scalarPixelsToWorld(pixelrelative.x), box2d.scalarPixelsToWorld(-pixelrelative.y));
-    dpos.normalize();
-    dpos.mulLocal(20);
-
-    newBullet.walkbox.setLinearVelocity(dpos);
-
-    rooms[current].addEntity(newBullet);
-  }
-}
-
-// contact listener to detect bullet hit (and more)
-class CustomListener implements ContactListener {
-  CustomListener() {
-  }
-
-  // This function is called when a new collision occurs
-  void beginContact(Contact cp) {
-    // Get both shapes
-    Fixture f1 = cp.getFixtureA();
-    Fixture f2 = cp.getFixtureB();
-
-    // Get both bodies
-    Body b1 = f1.getBody();
-    Body b2 = f2.getBody();
-
-    // Get our objects that reference these bodies
-
-    if (!(b1.getUserData() instanceof UserData) || !(b2.getUserData() instanceof UserData)) {
-      return;
-    }
-
-    UserData data1 = (UserData)b1.getUserData();
-    UserData data2 = (UserData)b2.getUserData();
-
-    if (data1 == null || data2 == null)
-      return;
-
-    if (data1.o.getClass() == Bullet.class) {
-      if (((Bullet)data1.o).source != data2.o) {
-        toDestroy.add((Bullet)data1.o);
-      }
-    }
-
-    if (data2.o.getClass() == Bullet.class) {
-      if (((Bullet)data2.o).source != data1.o) {
-        toDestroy.add((Bullet)data2.o);
-      }
-    }
-  }
-
-  void endContact(Contact contact) {
-    // TODO Auto-generated method stub
-  }
-
-  void preSolve(Contact contact, Manifold oldManifold) {
-    // TODO Auto-generated method stub
-  }
-
-  void postSolve(Contact contact, ContactImpulse impulse) {
-    // TODO Auto-generated method stub
+   
   }
 }
