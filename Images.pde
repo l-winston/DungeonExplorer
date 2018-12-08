@@ -126,6 +126,8 @@ PImage weapon_green_magic_staff;
 
 PImage circle_bullet_blue;
 
+PImage[] pixel_effects_fire = new PImage[61];
+
 // ui elements
 PImage startdefault;
 PImage starthover;

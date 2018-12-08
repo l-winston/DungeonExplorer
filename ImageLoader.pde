@@ -220,17 +220,26 @@ void loadImages() {
       // shift over the position
       coords[0] += coords[2];
     }
-    circle_bullet_blue = loadImage("game/circle_bullets/red.png");
-
-    startdefault = loadImage("ui/startdefault.png");
-    starthover = loadImage("ui/starthover.png");
-    optionsdefault = loadImage("ui/optionsdefault.png");
-    optionshover = loadImage("ui/optionshover.png");
-    helpdefault = loadImage("ui/helpdefault.png");
-    helphover = loadImage("ui/helphover.png");
-    backdefault = loadImage("ui/backdefault.png");
-    backhover = loadImage("ui/backhover.png");
   }
+  
+  
+  sheet = loadImage("game/pixel_effects/11_fire_spritesheet.png");
+  int frame_dimensions = sheet.width/8;
+  for(int c = 0; c < pixel_effects_fire.length; c++){
+    int i = c/8;
+    int j = c%8;
+    pixel_effects_fire[c] = sheet.get(j*frame_dimensions, i*frame_dimensions, frame_dimensions, frame_dimensions);
+  }
+
+  circle_bullet_blue = loadImage("game/circle_bullets/blue.png");
+  startdefault = loadImage("ui/startdefault.png");
+  starthover = loadImage("ui/starthover.png");
+  optionsdefault = loadImage("ui/optionsdefault.png");
+  optionshover = loadImage("ui/optionshover.png");
+  helpdefault = loadImage("ui/helpdefault.png");
+  helphover = loadImage("ui/helphover.png");
+  backdefault = loadImage("ui/backdefault.png");
+  backhover = loadImage("ui/backhover.png");
 }
 
 
