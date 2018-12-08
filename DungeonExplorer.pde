@@ -24,14 +24,10 @@ import java.util.HashSet;
 
 // enum representing current phase of game
 enum Phase {
-  START, GAME
+  START, GAME, HELP, OPTIONS
 }
 
 HashSet<Entity> toDestroy;
-
-// starting and final x-values of starting screen animation
-float animxi;
-float animxf;
 
 Train train;
 
@@ -61,7 +57,10 @@ Player main;
 
 // library object
 Box2DProcessing box2d;
-ControlP5 cp5;
+
+ControlP5 startSession;
+ControlP5 optionsSession;
+ControlP5 helpSession;
 
 void setup() {
   debug = false;
@@ -70,21 +69,23 @@ void setup() {
   noSmooth();
   size(700, 700);
 
-  cp5 = new ControlP5(this);
-  cp5.setAutoDraw(false);
+  startSession = new ControlP5(this);
+  optionsSession = new ControlP5(this);
+  helpSession = new ControlP5(this);
+
+  startSession.setAutoDraw(false);
+  optionsSession.setAutoDraw(false);
+  helpSession.setAutoDraw(false);
 
   // set inital phase
   phase = Phase.START;
-
-  animxi = -width/8f;
-  animxf = width + width/8f;
 
   // load files
   loadImages();
   loadSound();
   loadFont();
 
-  addButtons();
+  addUi();
 
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 10; j++) {
@@ -92,7 +93,7 @@ void setup() {
     }
   }
 
-  train = new Train(animxi, height*3f/4f, 3, 3, 3, animxf);
+  train = new Train(-width/8f, height*3f/4f, 3, 3, 3, -width/8f, width + width/8f);
 }
 
 int[] poss = {0, 1, 2, 3, 4, 5, 6, 7, 8};
@@ -140,7 +141,6 @@ void draw() {
 
     break;
   case START:
-    background(70, 59, 58);
 
     drawTitleBackground();
     fill(255);
@@ -148,7 +148,25 @@ void draw() {
     textAlign(CENTER, CENTER);
     rectMode(CENTER);
     text("Dungeon Explorer", width/2, height/4, width/2, height/4);
-    cp5.draw();
+    startSession.draw();
+    break;
+  case HELP:
+    drawTitleBackground();
+    fill(255);
+    textSize(75);
+    textAlign(CENTER, CENTER);
+    rectMode(CENTER);
+    text("Help", width/2, height/8, width/2, height/4);
+    helpSession.draw();
+    break;
+  case OPTIONS:
+    drawTitleBackground();
+    fill(255);
+    textSize(75);
+    textAlign(CENTER, CENTER);
+    rectMode(CENTER);
+    text("Options", width/2, height/8, width/2, height/4);
+    optionsSession.draw();
     break;
   }
 }
@@ -169,9 +187,13 @@ void drawTitleBackground() {
 
   train.step();
   train.show();
-  train.isDone();
   if (train.isDone()) {
-    train = new Train((train.isRight ? animxf : animxi), random(height*6f/8f) + height*1f/8f, 3 * (train.isRight ? -1 : 1), 3 * (train.isRight ? -1 : 1), 3, (train.isRight ? animxi : animxf));
+    float x = (train.xf);
+    float y = random(height*6f/8f) + height*1f/8f;
+    float vx = 3 * (train.isRight ? -1 : 1);
+    float sx = 3 * (train.isRight ? -1 : 1);
+    float xf = (train.xi);
+    train = new Train(x, y, vx, sx, 3, x, xf);
   }
 }
 
@@ -300,9 +322,15 @@ float[] tileToPixel(float i, float j) {
   return new float[]{j * tilew, i * tileh};
 }
 
-void addButtons() {
+void addUi() {
+  addStartUi();
+  addHelpUi();
+  addOptionsUi();
+}
+
+void addStartUi() {
   // add start ui
-  cp5.addButton("START")
+  startSession.addButton("START")
     .setImages(startdefault, starthover, starthover)
     .setValue(0)
     .setPosition(width/2-startdefault.width/2, height/2-startdefault.height/2)
@@ -332,7 +360,7 @@ void addButtons() {
     ;
 
   // add options ui
-  cp5.addButton("OPTIONS")
+  startSession.addButton("OPTIONS")
     .setImages(optionsdefault, optionshover, optionshover)
     .setValue(0)
     .setPosition(width/2+startdefault.width/2, height/2-startdefault.height/2)
@@ -341,7 +369,7 @@ void addButtons() {
     .addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent event) {
       if (event.getAction() == ControlP5.ACTION_RELEASED) {
-        
+        phase = Phase.OPTIONS;
       }
     }
   } 
@@ -351,7 +379,7 @@ void addButtons() {
     ;
 
   // add options ui
-  cp5.addButton("HELP")
+  startSession.addButton("HELP")
     .setImages(helpdefault, helphover, helphover)
     .setValue(0)
     .setPosition(width/2-startdefault.width, height/2-startdefault.height/2)
@@ -360,7 +388,47 @@ void addButtons() {
     .addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent event) {
       if (event.getAction() == ControlP5.ACTION_RELEASED) {
-        
+        phase = Phase.HELP;
+      }
+    }
+  } 
+  )
+  .getCaptionLabel()
+    .align(CENTER, CENTER)
+    ;
+}
+
+void addHelpUi() {
+    helpSession.addButton("BACK")
+    .setImages(backdefault, backhover, backhover)
+    .setValue(0)
+    .setPosition(0, height - backdefault.height)
+    .setSize(backdefault.width, backdefault.height)
+    .setFont(font)
+    .addCallback(new CallbackListener() {
+    public void controlEvent(CallbackEvent event) {
+      if (event.getAction() == ControlP5.ACTION_RELEASED) {
+        phase = Phase.START;
+      }
+    }
+  } 
+  )
+  .getCaptionLabel()
+    .align(CENTER, CENTER)
+    ;
+}
+
+void addOptionsUi() {
+    optionsSession.addButton("BACK")
+    .setImages(backdefault, backhover, backhover)
+    .setValue(0)
+    .setPosition(0, height - backdefault.height)
+    .setSize(backdefault.width, backdefault.height)
+    .setFont(font)
+    .addCallback(new CallbackListener() {
+    public void controlEvent(CallbackEvent event) {
+      if (event.getAction() == ControlP5.ACTION_RELEASED) {
+        phase = Phase.START;
       }
     }
   } 

@@ -34,16 +34,17 @@ class Train {
   float x, y;
   float vx;
   float sx, sy;
-  float fx;
+  float xi,  xf;
 
   float[] locations;
-  public Train(float x, float y, float vx, float sx, float sy, float fx) {
+  public Train(float x, float y, float vx, float sx, float sy, float xi, float xf) {
     this.x = x;
     this.y = y;
     this.vx = vx;
     this.sx = sx;
     this.sy = sy;
-    this.fx = fx;
+    this.xi = xi;
+    this.xf = xf;
     isRight = vx > 0;
 
     locations = new float[offsets.length];
@@ -74,6 +75,6 @@ class Train {
   }
 
   boolean isDone() {
-    return isRight ? locations[locations.length-1] > fx : locations[locations.length-1] < fx;
+    return isRight ? locations[locations.length-1] > xf : locations[locations.length-1] < xf;
   }
 }
