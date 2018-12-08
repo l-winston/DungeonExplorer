@@ -116,11 +116,11 @@ class FireBullet extends Bullet {
 
     rotate(atan2(-vel.y, vel.x) - PI/2);
 
-    translate(0, -radius*20/4);
+    translate(-radius/2, -radius*20/4);
 
     //image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%run_anim.length], 0, 0, radius*2, radius*2);
     //image(circle_bullet_red, 0, 0, radius*2, radius*2);
-    image(run_anim[frameCount%run_anim.length], 0, 0, radius*20, radius*20);
+    image(run_anim[frameCount%run_anim.length], 0, 0, radius*22, radius*22);
 
     popMatrix();
     popStyle();
