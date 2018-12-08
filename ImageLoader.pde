@@ -6,14 +6,14 @@ PImage sheet;
 void loadImages() {
   // load main spritesheet
   sheet = loadImage("game/tileset.png");
-  
+
   // store all data in a String array
   String[] data = loadStrings("game/tileinfo.txt");
   for (int i = 0; i < data.length; i++) {
     //file includes some empty lines, check to skip them
     if (data[i].length() <= 0)
       continue;
-    
+
     // create a scanner to parse the data
     Scanner scan = new Scanner(data[i]);
 
@@ -30,10 +30,10 @@ void loadImages() {
     }
 
     scan.close();
-   
+
     // iterate for each frame in the animation (if it is an image, coords[4] = 1)
     for (int j = 0; j < coords[4]; j++) {
-      
+
       // get the specified area
       PImage tile = sheet.get(coords[0], coords[1], coords[2], coords[3]);
 
@@ -220,10 +220,15 @@ void loadImages() {
       // shift over the position
       coords[0] += coords[2];
     }
+    bullet_blue = loadImage("game/bluebullet.png");
+
+    startdefault = loadImage("ui/startdefault.png");
+    starthover = loadImage("ui/starthover.png");
+    optionsdefault = loadImage("ui/optionsdefault.png");
+    optionshover = loadImage("ui/optionshover.png");
   }
-  
-  bullet_blue = loadImage("game/bluebullet.png");
 }
+
 
 //returns whether or not String a is a substring of String b
 boolean startsWith(String b, String a) {

@@ -1,6 +1,10 @@
 
 // this file contains all the datastructures used to store the animations/images
 
+
+
+
+// room elements
 PImage wall_fountain_top;
 PImage[] wall_fountain_mid_red_anim = new PImage[3];
 PImage[] wall_fountain_basin_red_anim = new PImage[3];
@@ -14,18 +18,21 @@ PImage[] chest_full_open_anim = new PImage[3];
 PImage[] chest_mimic_open_anim = new PImage[3];
 
 PImage[] floor_spikes_anim = new PImage[4];
-
 PImage[] coin_anim = new PImage[4];
 
+// misc. objects
 PImage edge;
 PImage hole;
 PImage skull;
 PImage crate;
 
+// hearts
 PImage ui_heart_full;
 PImage ui_heart_half;
 PImage ui_heart_empty;
 
+
+// more room elements
 PImage[] columns = new PImage[3];
 int columnc = 0;
 PImage[] floors = new PImage[9];
@@ -35,6 +42,7 @@ int doorc = 0;
 PImage[] flasks = new PImage[8];
 int flaskc = 0;
 
+// mobs
 PImage[] tiny_zombie_idle_anim = new PImage[4];
 PImage[] tiny_zombie_run_anim = new PImage[4];
 PImage[] goblin_idle_anim = new PImage[4];
@@ -71,6 +79,7 @@ PImage[] big_demon_idle_anim = new PImage[4];
 PImage[] big_demon_run_anim = new PImage[4];
 
 
+// players
 PImage[] elf_f_idle_anim = new PImage[4];
 PImage[] elf_f_run_anim = new PImage[4];
 PImage elf_f_hit_anim;
@@ -92,6 +101,8 @@ PImage[] wizzard_m_idle_anim = new PImage[4];
 PImage[] wizzard_m_run_anim = new PImage[4];
 PImage wizzard_m_hit_anim;
 
+
+// weapons
 PImage weapon_knife;
 PImage weapon_rusty_sword;
 PImage weapon_regular_sword;
@@ -113,5 +124,10 @@ PImage weapon_lavish_sword;
 PImage weapon_red_magic_staff;
 PImage weapon_green_magic_staff;
 
-
 PImage bullet_blue;
+
+// ui elements
+PImage startdefault;
+PImage starthover;
+PImage optionsdefault;
+PImage optionshover;
