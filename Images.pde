@@ -125,6 +125,7 @@ PImage weapon_red_magic_staff;
 PImage weapon_green_magic_staff;
 
 PImage circle_bullet_blue;
+PImage circle_bullet_red;
 
 PImage[] pixel_effects_fire = new PImage[61];
 

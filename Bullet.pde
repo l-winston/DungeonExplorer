@@ -1,4 +1,4 @@
-class Bullet extends Entity {
+abstract class Bullet extends Entity {
   Entity source;
 
   float radius;
@@ -12,13 +12,11 @@ class Bullet extends Entity {
   // r pixel scalar
   public Bullet(float x, float y, float vx, float vy, float r, Entity s) {
     radius = r;
-    run_anim = big_demon_run_anim;
     this.vx = vx;
     this.vy = vy;
     this.x = x;
     this.y = y;
     this.source = s;
-    //create();
   }
 
   void destroyBody() {
@@ -80,23 +78,7 @@ class Bullet extends Entity {
     // no need to do anything
   }
 
-  public void show() {
-
-    pushMatrix();
-    pushStyle();
-
-    Vec2 pos = box2d.getBodyPixelCoord(walkbox);
-
-    translate(pos.x, pos.y);
-    imageMode(CENTER);
-
-    //image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%run_anim.length], 0, 0, radius*2, radius*2);
-    image(circle_bullet_blue, 0, 0, radius*2, radius*2);
-
-
-    popMatrix();
-    popStyle();
-  }
+  abstract void show();
 
   // draws the player's movement hitbox as a green rectangle
   public void showHitbox() {
@@ -113,5 +95,58 @@ class Bullet extends Entity {
 
     popStyle();
     popMatrix();
+  }
+}
+
+class FireBullet extends Bullet {
+  public FireBullet(float x, float y, float vx, float vy, float r, Entity s) {
+    super(x, y, vx, vy, r, s);
+    run_anim = pixel_effects_fire;
+  }
+  void show() {
+
+    pushMatrix();
+    pushStyle();
+
+    Vec2 pos = box2d.getBodyPixelCoord(walkbox);
+    Vec2 vel = walkbox.getLinearVelocity();
+
+    translate(pos.x, pos.y);
+    imageMode(CENTER);
+
+    rotate(atan2(-vel.y, vel.x) - PI/2);
+
+    translate(0, -radius*20/4);
+
+    //image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%run_anim.length], 0, 0, radius*2, radius*2);
+    //image(circle_bullet_red, 0, 0, radius*2, radius*2);
+    image(run_anim[frameCount%run_anim.length], 0, 0, radius*20, radius*20);
+
+    popMatrix();
+    popStyle();
+  }
+}
+
+class BlueCircleBullet extends Bullet {
+  public BlueCircleBullet(float x, float y, float vx, float vy, float r, Entity s) {
+    super(x, y, vx, vy, r, s);
+    run_anim = new PImage[] {circle_bullet_blue};
+  }
+  void show() {
+
+    pushMatrix();
+    pushStyle();
+
+    Vec2 pos = box2d.getBodyPixelCoord(walkbox);
+
+    translate(pos.x, pos.y);
+    imageMode(CENTER);
+
+    //image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%run_anim.length], 0, 0, radius*2, radius*2);
+    //image(circle_bullet_red, 0, 0, radius*2, radius*2);
+    image(run_anim[frameCount%run_anim.length], 0, 0, radius*2, radius*2);
+
+    popMatrix();
+    popStyle();
   }
 }

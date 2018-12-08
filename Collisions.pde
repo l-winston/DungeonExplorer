@@ -25,7 +25,7 @@ class CustomListener implements ContactListener {
     if (data1 == null || data2 == null)
       return;
 
-    if (data1.o.getClass() == Bullet.class) {
+    if (data1.o instanceof Bullet) {
       if (((Bullet)data1.o).source != data2.o) {
         toDestroy.add((Bullet)data1.o);
         if (data2.o instanceof Entity)
@@ -33,7 +33,7 @@ class CustomListener implements ContactListener {
       }
     }
 
-    if (data2.o.getClass() == Bullet.class) {
+    if (data2.o instanceof Bullet) {
       if (((Bullet)data2.o).source != data1.o) {
         toDestroy.add((Bullet)data2.o);
         if (data1.o instanceof Entity)

@@ -221,17 +221,20 @@ void loadImages() {
       coords[0] += coords[2];
     }
   }
-  
-  
+
+
   sheet = loadImage("game/pixel_effects/11_fire_spritesheet.png");
   int frame_dimensions = sheet.width/8;
-  for(int c = 0; c < pixel_effects_fire.length; c++){
+  for (int c = 0; c < pixel_effects_fire.length; c++) {
     int i = c/8;
     int j = c%8;
     pixel_effects_fire[c] = sheet.get(j*frame_dimensions, i*frame_dimensions, frame_dimensions, frame_dimensions);
   }
 
   circle_bullet_blue = loadImage("game/circle_bullets/blue.png");
+  circle_bullet_red = loadImage("game/circle_bullets/red.png");
+
+
   startdefault = loadImage("ui/startdefault.png");
   starthover = loadImage("ui/starthover.png");
   optionsdefault = loadImage("ui/optionsdefault.png");
