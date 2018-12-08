@@ -220,7 +220,7 @@ void loadImages() {
       // shift over the position
       coords[0] += coords[2];
     }
-    bullet_blue = loadImage("game/bluebullet.png");
+    circle_bullet_blue = loadImage("game/circle_bullets/red.png");
 
     startdefault = loadImage("ui/startdefault.png");
     starthover = loadImage("ui/starthover.png");

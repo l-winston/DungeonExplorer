@@ -91,7 +91,7 @@ class Bullet extends Entity {
     imageMode(CENTER);
 
     //image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%run_anim.length], 0, 0, radius*2, radius*2);
-    image(bullet_blue, 0, 0, radius*2, radius*2);
+    image(circle_bullet_blue, 0, 0, radius*2, radius*2);
 
 
     popMatrix();
