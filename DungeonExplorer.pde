@@ -55,6 +55,14 @@ Phase phase;
 // initalize players
 Player main;
 
+// sample text
+String sampleText = "Lorem ipsum dolor sit amet, usu no audire dolores verterem. Qui cu euismod fabellas. Tritani deleniti qui ad. Et augue paulo duo." +
+  "Eu mea quot platonem sadipscing, eam discere suavitate ex. Eum id summo ullamcorper." +
+  "In vix eirmod gloriatur interesset, invenire intellegam vim eu, vix ei modus fugit. " +
+  "Qui erat nulla homero et, ferri utroque imperdiet vim et. Per at nobis referrentur consectetuer, facilisi euripidis ne vel." +
+  "Vix tempor sanctus sententiae eu, no his alia ridens, te dolore temporibus ius. " +
+  "Sale nominavi sensibus id est, at sit vero appetere repudiandae, et pri voluptaria deterruisset.";
+
 // library object
 Box2DProcessing box2d;
 
@@ -143,29 +151,56 @@ void draw() {
   case START:
 
     drawTitleBackground();
+    
+    
     fill(255);
     textSize(75);
     textAlign(CENTER, CENTER);
     rectMode(CENTER);
-    text("Dungeon Explorer", width/2, height/4, width/2, height/4);
+    text("Dungeon Explorer", width/2f, height/4f, width/2f, height/4f);
+    
+    
     startSession.draw();
     break;
   case HELP:
+  
     drawTitleBackground();
+    
+    
     fill(255);
     textSize(75);
     textAlign(CENTER, CENTER);
     rectMode(CENTER);
-    text("Help", width/2, height/8, width/2, height/4);
+    
+    
+    text("Help", width/2f, height/8f, width/2f, height/4f); 
+    
+    
+    fill(102, 89, 88);
+    rect(width/2f, height/2f, width*2f/3f, height/2f);
+    
+    
+    fill(255);
+    textSize(30);
+    text(sampleText, width/2f, height/2f, width*2f/3f, height/2f);
+    
+    
     helpSession.draw();
     break;
   case OPTIONS:
+  
     drawTitleBackground();
+    
+    
     fill(255);
     textSize(75);
     textAlign(CENTER, CENTER);
     rectMode(CENTER);
-    text("Options", width/2, height/8, width/2, height/4);
+
+
+    text("Options", width/2f, height/8f, width/2f, height/4f);
+
+
     optionsSession.draw();
     break;
   }
@@ -399,7 +434,7 @@ void addStartUi() {
 }
 
 void addHelpUi() {
-    helpSession.addButton("BACK")
+  helpSession.addButton("BACK")
     .setImages(backdefault, backhover, backhover)
     .setValue(0)
     .setPosition(0, height - backdefault.height)
@@ -419,7 +454,7 @@ void addHelpUi() {
 }
 
 void addOptionsUi() {
-    optionsSession.addButton("BACK")
+  optionsSession.addButton("BACK")
     .setImages(backdefault, backhover, backhover)
     .setValue(0)
     .setPosition(0, height - backdefault.height)
