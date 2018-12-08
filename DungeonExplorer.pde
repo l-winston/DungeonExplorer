@@ -202,10 +202,13 @@ void draw() {
     optionsSession.draw();
     break;
   case PAUSE: 
+    pushMatrix();
+    Vec2 pos = box2d.getBodyPixelCoord(main.walkbox);
+    translate(width/2 - pos.x, height/2 - pos.y);
     rooms[current].display_floors();
-
-    // show all entities on current floor
     rooms[current].display();
+    popMatrix();
+
     fill(color(0, 0, 0, 150));
     rectMode(CORNER);
     noStroke();
