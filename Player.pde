@@ -139,10 +139,10 @@ class Player extends Entity {
     Vec2 pixelpos = box2d.getBodyPixelCoord(main.walkbox);
 
     Bullet newBullet = null;
-    //if (random(1) > 0.5)
-      newBullet= new FireBullet(pixelpos.x + 20*cos(angle), pixelpos.y + 20*sin(angle) - 5, 0, 0, 15, main);
-    //else
-      //newBullet= new BlueCircleBullet(pixelpos.x + 20*cos(angle), pixelpos.y + 20*sin(angle) - 5, 0, 0, 20, main);
+    if (mouseButton == LEFT)
+      newBullet= new FireBullet(pixelpos.x + 20*cos(angle), pixelpos.y + 20*sin(angle) - 5, 0, 0, 10, main);
+    else
+      newBullet= new BlueCircleBullet(pixelpos.x + 20*cos(angle), pixelpos.y + 20*sin(angle) - 5, 0, 0, 20, main);
 
     newBullet.create();
 

@@ -49,7 +49,6 @@ abstract class Entity {
     strokeWeight(2);
     noFill();
     
-    println(walkbox==null);
     Vec2 pos = box2d.getBodyPixelCoord(walkbox);
 
 

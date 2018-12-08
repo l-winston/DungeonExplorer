@@ -24,7 +24,7 @@ import java.util.HashSet;
 
 // enum representing current phase of game
 enum Phase {
-  START, GAME, HELP, OPTIONS
+  START, GAME, HELP, OPTIONS, PAUSE
 }
 
 HashSet<Entity> toDestroy;
@@ -64,6 +64,7 @@ Box2DProcessing box2d;
 ControlP5 startSession;
 ControlP5 optionsSession;
 ControlP5 helpSession;
+ControlP5 pauseSession;
 
 void setup() {
   debug = false;
@@ -75,10 +76,12 @@ void setup() {
   startSession = new ControlP5(this);
   optionsSession = new ControlP5(this);
   helpSession = new ControlP5(this);
+  pauseSession = new ControlP5(this);
 
   startSession.setAutoDraw(false);
   optionsSession.setAutoDraw(false);
   helpSession.setAutoDraw(false);
+  pauseSession.setAutoDraw(false);
 
   // set inital phase
   phase = Phase.START;
@@ -198,6 +201,16 @@ void draw() {
 
     optionsSession.draw();
     break;
+  case PAUSE: 
+    rooms[current].display_floors();
+
+    // show all entities on current floor
+    rooms[current].display();
+    fill(color(0, 0, 0, 150));
+    rectMode(CORNER);
+    noStroke();
+    rect(0, 0, width, height);
+    pauseSession.draw();
   }
 }
 
@@ -250,7 +263,7 @@ void createWorld() {
 
 
   // randomly spawn columns
-  for (int i = 0; i < 10; i++)
+  for (int i = 0; i < 5; i++)
     rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
 
   rooms[1].createBox();
@@ -271,7 +284,7 @@ void createWorld() {
     }
   }
 
-  for (int i = 0; i < 50; i++)
+  for (int i = 0; i < 5; i++)
     rooms[1].setColumn(int(random(2, 23)), int(random(1, 23)));
 
   // create players
@@ -333,6 +346,11 @@ void keyPressed() {
         debug ^= true;
       }
     }
+
+    if (key == ESC) {
+      key = 0;
+      phase = Phase.PAUSE;
+    }
   }
 }
 
@@ -356,6 +374,7 @@ void addUi() {
   addStartUi();
   addHelpUi();
   addOptionsUi();
+  addPauseUi();
 }
 
 void addStartUi() {
@@ -453,6 +472,26 @@ void addOptionsUi() {
     .setImages(backdefault, backhover, backhover)
     .setValue(0)
     .setPosition(0, height - backdefault.height)
+    .setSize(backdefault.width, backdefault.height)
+    .setFont(font)
+    .addCallback(new CallbackListener() {
+    public void controlEvent(CallbackEvent event) {
+      if (event.getAction() == ControlP5.ACTION_RELEASED) {
+        phase = Phase.START;
+      }
+    }
+  } 
+  )
+  .getCaptionLabel()
+    .align(CENTER, CENTER)
+    ;
+}
+
+void addPauseUi() {
+  pauseSession.addButton("BACK")
+    .setImages(backdefault, backhover, backhover)
+    .setValue(0)
+    .setPosition(width/2 - backdefault.width/2, height/2 - backdefault.height/2)
     .setSize(backdefault.width, backdefault.height)
     .setFont(font)
     .addCallback(new CallbackListener() {
