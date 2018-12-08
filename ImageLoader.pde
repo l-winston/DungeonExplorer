@@ -226,6 +226,8 @@ void loadImages() {
     starthover = loadImage("ui/starthover.png");
     optionsdefault = loadImage("ui/optionsdefault.png");
     optionshover = loadImage("ui/optionshover.png");
+    helpdefault = loadImage("ui/helpdefault.png");
+    helphover = loadImage("ui/helphover.png");
   }
 }
 

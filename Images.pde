@@ -131,3 +131,5 @@ PImage startdefault;
 PImage starthover;
 PImage optionsdefault;
 PImage optionshover;
+PImage helpdefault;
+PImage helphover;
