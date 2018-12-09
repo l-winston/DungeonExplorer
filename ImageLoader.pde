@@ -243,6 +243,12 @@ void loadImages() {
   helphover = loadImage("ui/helphover.png");
   backdefault = loadImage("ui/backdefault.png");
   backhover = loadImage("ui/backhover.png");
+  exitdefault = loadImage("ui/exitdefault.png");
+  exithover = loadImage("ui/exithover.png");  
+  xdefault = loadImage("ui/xdefault.png");
+  xhover = loadImage("ui/xhover.png");
+  creditsdefault = loadImage("ui/creditsdefault.png");
+  creditshover = loadImage("ui/creditshover.png");
 }
 
 

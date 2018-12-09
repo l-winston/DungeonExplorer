@@ -24,7 +24,7 @@ import java.util.HashSet;
 
 // enum representing current phase of game
 enum Phase {
-  START, GAME, HELP, OPTIONS, PAUSE
+  START, GAME, HELP, OPTIONS, PAUSE, CREDITS
 }
 
 HashSet<Entity> toDestroy;
@@ -65,6 +65,7 @@ ControlP5 startSession;
 ControlP5 optionsSession;
 ControlP5 helpSession;
 ControlP5 pauseSession;
+ControlP5 creditsSession;
 
 void setup() {
   debug = false;
@@ -77,11 +78,13 @@ void setup() {
   optionsSession = new ControlP5(this);
   helpSession = new ControlP5(this);
   pauseSession = new ControlP5(this);
+  creditsSession = new ControlP5(this);
 
   startSession.setAutoDraw(false);
   optionsSession.setAutoDraw(false);
   helpSession.setAutoDraw(false);
   pauseSession.setAutoDraw(false);
+  creditsSession.setAutoDraw(false);
 
   // set inital phase
   phase = Phase.START;
@@ -202,18 +205,50 @@ void draw() {
     optionsSession.draw();
     break;
   case PAUSE: 
+
     pushMatrix();
+
     Vec2 pos = box2d.getBodyPixelCoord(main.walkbox);
     translate(width/2 - pos.x, height/2 - pos.y);
     rooms[current].display_floors();
     rooms[current].display();
+
     popMatrix();
 
     fill(color(0, 0, 0, 150));
     rectMode(CORNER);
     noStroke();
+
     rect(0, 0, width, height);
     pauseSession.draw();
+    break;
+  case CREDITS:
+
+    drawTitleBackground();
+
+
+    fill(255);
+    textSize(75);
+    textAlign(CENTER, CENTER);
+    rectMode(CENTER);
+
+    text("Credits!", width/2f, height/8f, width/2f, height/4f);
+
+    textSize(30);
+
+    String space = "          ";
+    StringBuilder sb = new StringBuilder();
+    sb.append("Producer" + space + "Winston Liu\n");
+    sb.append("Publisher" + space + "Winston Liu\n");
+    sb.append("Designer" + space + "Winston Liu\n");
+    sb.append("Artist" + space + "Winston Liu\n");
+    sb.append("Programmer" + space + "Winston Liu\n");
+    sb.append("Level Designer" + space + "Winston Liu\n");
+    sb.append("Tester" + space + "Winston Liu\n");
+
+    text(sb.toString(), width/2f, height/2f, width*7f/8f, height/2f);
+    creditsSession.draw();
+    break;
   }
 }
 
@@ -378,6 +413,7 @@ void addUi() {
   addHelpUi();
   addOptionsUi();
   addPauseUi();
+  addCreditsUi();
 }
 
 void addStartUi() {
@@ -448,6 +484,24 @@ void addStartUi() {
   .getCaptionLabel()
     .align(CENTER, CENTER)
     ;
+
+  startSession.addButton("CREDITS")
+    .setImages(creditsdefault, creditshover, creditshover)
+    .setValue(0)
+    .setPosition(width/2-creditsdefault.width/2, height/2+creditsdefault.height/2)
+    .setSize(creditsdefault.width, creditsdefault.height)
+    .setFont(font)
+    .addCallback(new CallbackListener() {
+    public void controlEvent(CallbackEvent event) {
+      if (event.getAction() == ControlP5.ACTION_RELEASED) {
+        phase = Phase.CREDITS;
+      }
+    }
+  } 
+  )
+  .getCaptionLabel()
+    .align(CENTER, CENTER)
+    ;
 }
 
 void addHelpUi() {
@@ -491,10 +545,30 @@ void addOptionsUi() {
 }
 
 void addPauseUi() {
-  pauseSession.addButton("BACK")
+  pauseSession.addButton("EXIT")
+    .setImages(exitdefault, exithover, exithover)
+    .setValue(0)
+    .setPosition(width/2 - exitdefault.width/2, height/2 - exitdefault.height/2)
+    .setSize(exitdefault.width, exitdefault.height)
+    .setFont(font)
+    .addCallback(new CallbackListener() {
+    public void controlEvent(CallbackEvent event) {
+      if (event.getAction() == ControlP5.ACTION_RELEASED) {
+        phase = Phase.START;
+      }
+    }
+  } 
+  )
+  .getCaptionLabel()
+    .align(CENTER, CENTER)
+    ;
+}
+
+void addCreditsUi() {
+  creditsSession.addButton("BACK")
     .setImages(backdefault, backhover, backhover)
     .setValue(0)
-    .setPosition(width/2 - backdefault.width/2, height/2 - backdefault.height/2)
+    .setPosition(0, height - backdefault.height)
     .setSize(backdefault.width, backdefault.height)
     .setFont(font)
     .addCallback(new CallbackListener() {
