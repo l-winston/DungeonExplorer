@@ -177,7 +177,7 @@ void draw() {
 
     text("Help", width/2f, height/8f, width/2f, height/4f); 
 
-    
+
     imageMode(CENTER);
     //fill(102, 89, 88);
     image(box, width/2f, height/2f, width*2f/3f, height/2f);
@@ -232,7 +232,7 @@ void draw() {
     textSize(75);
     rectMode(CENTER);
     textAlign(CENTER, CENTER);
-    
+
     text("Credits!", width/2f, height/8f, width/2f, height/4f);
 
     textSize(30);
@@ -383,6 +383,13 @@ void keyPressed() {
     if (key == ESC) {
       key = 0;
       phase = Phase.PAUSE;
+    }
+  }
+
+  if (phase == Phase.PAUSE) {
+    if (key == ESC) {
+      key = 0;
+      phase = Phase.GAME;
     }
   }
 }
