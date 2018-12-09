@@ -94,6 +94,7 @@ void setup() {
   loadSound();
   loadFont();
 
+  initalizeCredits();
   addUi();
 
   for (int i = 0; i < 10; i++) {
@@ -176,9 +177,10 @@ void draw() {
 
     text("Help", width/2f, height/8f, width/2f, height/4f); 
 
-
-    fill(102, 89, 88);
-    rect(width/2f, height/2f, width*2f/3f, height/2f);
+    
+    imageMode(CENTER);
+    //fill(102, 89, 88);
+    image(box, width/2f, height/2f, width*2f/3f, height/2f);
 
 
     fill(255);
@@ -226,27 +228,20 @@ void draw() {
 
     drawTitleBackground();
 
-
     fill(255);
     textSize(75);
-    textAlign(CENTER, CENTER);
     rectMode(CENTER);
-
+    textAlign(CENTER, CENTER);
+    
     text("Credits!", width/2f, height/8f, width/2f, height/4f);
 
     textSize(30);
 
-    String space = "          ";
-    StringBuilder sb = new StringBuilder();
-    sb.append("Producer" + space + "Winston Liu\n");
-    sb.append("Publisher" + space + "Winston Liu\n");
-    sb.append("Designer" + space + "Winston Liu\n");
-    sb.append("Artist" + space + "Winston Liu\n");
-    sb.append("Programmer" + space + "Winston Liu\n");
-    sb.append("Level Designer" + space + "Winston Liu\n");
-    sb.append("Tester" + space + "Winston Liu\n");
+    textAlign(LEFT, CENTER);
+    text(roles, width/4f, height/2f, width*7f/16f, height/2f);
+    textAlign(RIGHT, CENTER);
+    text(names, width*3f/4f, height/2f, width*7f/16f, height/2f);
 
-    text(sb.toString(), width/2f, height/2f, width*7f/8f, height/2f);
     creditsSession.draw();
     break;
   }
@@ -423,7 +418,6 @@ void addStartUi() {
     .setValue(0)
     .setPosition(width/2-startdefault.width/2, height/2-startdefault.height/2)
     .setSize(startdefault.width, startdefault.height)
-    .setFont(font)
     .addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent event) {
       if (event.getAction() == ControlP5.ACTION_RELEASED) {
@@ -453,7 +447,6 @@ void addStartUi() {
     .setValue(0)
     .setPosition(width/2+startdefault.width/2, height/2-startdefault.height/2)
     .setSize(optionsdefault.width, optionsdefault.height)
-    .setFont(font)
     .addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent event) {
       if (event.getAction() == ControlP5.ACTION_RELEASED) {
@@ -472,7 +465,6 @@ void addStartUi() {
     .setValue(0)
     .setPosition(width/2-startdefault.width, height/2-startdefault.height/2)
     .setSize(helpdefault.width, helpdefault.height)
-    .setFont(font)
     .addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent event) {
       if (event.getAction() == ControlP5.ACTION_RELEASED) {
@@ -490,7 +482,6 @@ void addStartUi() {
     .setValue(0)
     .setPosition(width/2-creditsdefault.width/2, height/2+creditsdefault.height/2)
     .setSize(creditsdefault.width, creditsdefault.height)
-    .setFont(font)
     .addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent event) {
       if (event.getAction() == ControlP5.ACTION_RELEASED) {
@@ -510,7 +501,6 @@ void addHelpUi() {
     .setValue(0)
     .setPosition(0, height - backdefault.height)
     .setSize(backdefault.width, backdefault.height)
-    .setFont(font)
     .addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent event) {
       if (event.getAction() == ControlP5.ACTION_RELEASED) {
@@ -530,7 +520,6 @@ void addOptionsUi() {
     .setValue(0)
     .setPosition(0, height - backdefault.height)
     .setSize(backdefault.width, backdefault.height)
-    .setFont(font)
     .addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent event) {
       if (event.getAction() == ControlP5.ACTION_RELEASED) {
@@ -548,13 +537,29 @@ void addPauseUi() {
   pauseSession.addButton("EXIT")
     .setImages(exitdefault, exithover, exithover)
     .setValue(0)
-    .setPosition(width/2 - exitdefault.width/2, height/2 - exitdefault.height/2)
+    .setPosition(width/2 - exitdefault.width, height/2 - exitdefault.height/2)
     .setSize(exitdefault.width, exitdefault.height)
-    .setFont(font)
     .addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent event) {
       if (event.getAction() == ControlP5.ACTION_RELEASED) {
         phase = Phase.START;
+      }
+    }
+  } 
+  )
+  .getCaptionLabel()
+    .align(CENTER, CENTER)
+    ;
+
+  pauseSession.addButton("RESUME")
+    .setImages(playdefault, playhover, playhover)
+    .setValue(0)
+    .setPosition(width/2 + playdefault.width/2, height/2 - playdefault.height/2)
+    .setSize(playdefault.width, playdefault.height)
+    .addCallback(new CallbackListener() {
+    public void controlEvent(CallbackEvent event) {
+      if (event.getAction() == ControlP5.ACTION_RELEASED) {
+        phase = Phase.GAME;
       }
     }
   } 

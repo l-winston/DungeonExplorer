@@ -249,6 +249,10 @@ void loadImages() {
   xhover = loadImage("ui/xhover.png");
   creditsdefault = loadImage("ui/creditsdefault.png");
   creditshover = loadImage("ui/creditshover.png");
+  playdefault = loadImage("ui/playdefault.png");
+  playhover = loadImage("ui/playhover.png");
+  
+  box = loadImage("ui/box.png");
 }
 
 
