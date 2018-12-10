@@ -330,6 +330,14 @@ void createWorld() {
   rooms[1].addEntity(new BigDemon(random(width)+100, random(height)+100));
   rooms[1].addEntity(new BigDemon(random(width)+100, random(height)+100));
   rooms[1].addEntity(new BigDemon(random(width)+100, random(height)+100));
+  rooms[1].addEntity(new Ogre(random(width)+100, random(height)+100));
+  rooms[1].addEntity(new Ogre(random(width)+100, random(height)+100));
+  rooms[1].addEntity(new Ogre(random(width)+100, random(height)+100));
+  rooms[1].addEntity(new Ogre(random(width)+100, random(height)+100));
+  rooms[1].addEntity(new BigZombie(random(width)+100, random(height)+100));
+  rooms[1].addEntity(new BigZombie(random(width)+100, random(height)+100));
+  rooms[1].addEntity(new BigZombie(random(width)+100, random(height)+100));
+  rooms[1].addEntity(new BigZombie(random(width)+100, random(height)+100));
 
   toDestroy = new HashSet<Entity>();
 }
