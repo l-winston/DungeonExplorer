@@ -283,4 +283,16 @@ void loadExplosionImages(){
   for(int i = 0; i < explosion_1.length; i++){
     explosion_1[i] = sheet.get(i*sheet.width/explosion_1.length, 0, sheet.width/explosion_1.length, sheet.height);
   }
+  
+  sheet = loadImage("game/explosions/explosion-2.png");
+  
+  for(int i = 0; i < explosion_2.length; i++){
+    explosion_2[i] = sheet.get(i*sheet.width/explosion_2.length, 0, sheet.width/explosion_2.length, sheet.height);
+  }
+  
+  sheet = loadImage("game/explosions/explosion-3.png");
+  
+  for(int i = 0; i < explosion_3.length; i++){
+    explosion_3[i] = sheet.get(i*sheet.width/explosion_3.length, 0, sheet.width/explosion_3.length, sheet.height);
+  }
 }
