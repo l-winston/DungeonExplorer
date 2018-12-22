@@ -11,7 +11,7 @@ enum PlayerType {
 
 class Player extends Entity {
   
-  
+  Weapon weapon;
   
   // the controls on the keyboard that map to this player's movement
   char[] controls;
@@ -31,6 +31,8 @@ class Player extends Entity {
     hitboxh = playerh / 2f;
     imgw = playerw;
     imgh = playerh;
+    
+    weapon = new FireStaff();
 
     this.x = x;
     this.y = y;
@@ -140,12 +142,8 @@ class Player extends Entity {
   void shoot(float angle) {
     Vec2 pixelpos = box2d.getBodyPixelCoord(main.walkbox);
 
-    Bullet newBullet = null;
-    if (mouseButton == LEFT)
-      newBullet= new FireBullet(pixelpos.x + 20*cos(angle), pixelpos.y + 20*sin(angle) - 5, 0, 0, 10, main);
-    else
-      newBullet= new BlueCircleBullet(pixelpos.x + 20*cos(angle), pixelpos.y + 20*sin(angle) - 5, 0, 0, 20, main);
-
+    Bullet newBullet = weapon.createBullet(pixelpos.x + 20*cos(angle), pixelpos.y + 20*sin(angle) - 5, 10, main);
+    
     newBullet.create();
 
     Vec2 dpos = new Vec2(box2d.scalarPixelsToWorld(cos(angle)), box2d.scalarPixelsToWorld(-sin(angle)));

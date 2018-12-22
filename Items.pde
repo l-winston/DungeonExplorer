@@ -1,12 +1,23 @@
-class Item {
+abstract class Item {
   PImage icon;
+  String name;
+  
+  
 }
 
-class Weapon extends Item {
+abstract class Weapon extends Item {
   PImage image;
+  
+  abstract Bullet makeBullet(float x, float y, float r, Entity source);
   
 }
 
 class FireStaff extends Weapon {
-
+  public FireStaff(){
+    image = weapon_red_magic_staff;
+  }
+  
+  Bullet makeBullet(float x, float y, float r, Entity source){
+    return new FireBullet(x, y, 0, 0, r, source);
+  }
 }
