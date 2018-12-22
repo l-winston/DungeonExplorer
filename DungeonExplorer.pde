@@ -385,6 +385,13 @@ void keyPressed() {
       key = 0;
       phase = Phase.PAUSE;
     }
+    
+    if (key == 'e'){
+      if(main.weapon instanceof FireStaff)
+        main.weapon = new NatureStaff();
+      else
+        main.weapon = new FireStaff();
+    }
   }
 
   if (phase == Phase.PAUSE) {

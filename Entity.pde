@@ -1,7 +1,9 @@
 
 // all entities will inherit this class
 abstract class Entity {
-  
+
+  Weapon weapon;
+
   // images/animations for drawing
   PImage[] idle_anim;
   PImage[] run_anim;
@@ -24,11 +26,11 @@ abstract class Entity {
   float y;
 
   void destroyBody() {
-    if(walkbox != null)
+    if (walkbox != null)
       box2d.destroyBody(walkbox);
     if (hitbox != null)
       box2d.destroyBody(hitbox);
-      
+
     Vec2 pos = box2d.getBodyPixelCoord(walkbox);
     x = pos.x;
     y = pos.y;
@@ -38,7 +40,7 @@ abstract class Entity {
     walkbox.setAwake(awake);
     hitbox.setAwake(awake);
   }
-  
+
   // draws the player's movement hitbox as a green rectangle
   public void showHitbox() {
     pushMatrix();
@@ -48,7 +50,7 @@ abstract class Entity {
     stroke(0, 0, 255);
     strokeWeight(2);
     noFill();
-    
+
     Vec2 pos = box2d.getBodyPixelCoord(walkbox);
 
 
@@ -181,8 +183,13 @@ abstract class Entity {
     } else {
       image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%idle_anim.length], 0, 0, imgw, imgh);
     }
+    
+    if (weapon != null){
+      translate(imgw/2, 0);
+      image(weapon.image, 0, 0, imgh*weapon.image.width/weapon.image.height, imgh);
+    }
 
-    popMatrix();
+      popMatrix();
     popStyle();
   }
 

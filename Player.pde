@@ -10,9 +10,7 @@ enum PlayerType {
 }
 
 class Player extends Entity {
-  
-  Weapon weapon;
-  
+    
   // the controls on the keyboard that map to this player's movement
   char[] controls;
 
@@ -142,7 +140,7 @@ class Player extends Entity {
   void shoot(float angle) {
     Vec2 pixelpos = box2d.getBodyPixelCoord(main.walkbox);
 
-    Bullet newBullet = weapon.createBullet(pixelpos.x + 20*cos(angle), pixelpos.y + 20*sin(angle) - 5, 10, main);
+    Bullet newBullet = weapon.makeBullet(pixelpos.x + 20*cos(angle), pixelpos.y + 20*sin(angle) - 5, 10, this);
     
     newBullet.create();
 
