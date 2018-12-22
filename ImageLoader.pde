@@ -221,20 +221,29 @@ void loadImages() {
       coords[0] += coords[2];
     }
   }
+  
+  loadExplosionImages();
+
+  loadBulletImages();
+
+  loadUiImages();
+}
 
 
-  sheet = loadImage("game/pixel_effects/11_fire_spritesheet.png");
-  int frame_dimensions = sheet.width/8;
-  for (int c = 0; c < pixel_effects_fire.length; c++) {
-    int i = c/8;
-    int j = c%8;
-    pixel_effects_fire[c] = sheet.get(j*frame_dimensions, i*frame_dimensions, frame_dimensions, frame_dimensions);
+//returns whether or not String a is a substring of String b
+boolean startsWith(String b, String a) {
+  if (a.length() > b.length())
+    return false;
+
+  for (int i = 0; i < a.length(); i++) {
+    if (a.charAt(i) != b.charAt(i))
+      return false;
   }
 
-  circle_bullet_blue = loadImage("game/circle_bullets/blue.png");
-  circle_bullet_red = loadImage("game/circle_bullets/red.png");
+  return true;
+}
 
-
+void loadUiImages() {
   startdefault = loadImage("ui/startdefault.png");
   starthover = loadImage("ui/starthover.png");
   optionsdefault = loadImage("ui/optionsdefault.png");
@@ -251,20 +260,27 @@ void loadImages() {
   creditshover = loadImage("ui/creditshover.png");
   playdefault = loadImage("ui/playdefault.png");
   playhover = loadImage("ui/playhover.png");
-  
+
   box = loadImage("ui/box.png");
 }
 
-
-//returns whether or not String a is a substring of String b
-boolean startsWith(String b, String a) {
-  if (a.length() > b.length())
-    return false;
-
-  for (int i = 0; i < a.length(); i++) {
-    if (a.charAt(i) != b.charAt(i))
-      return false;
+void loadBulletImages() {
+  sheet = loadImage("game/pixel_effects/11_fire_spritesheet.png");
+  int frame_dimensions = sheet.width/8;
+  for (int c = 0; c < pixel_effects_fire.length; c++) {
+    int i = c/8;
+    int j = c%8;
+    pixel_effects_fire[c] = sheet.get(j*frame_dimensions, i*frame_dimensions, frame_dimensions, frame_dimensions);
   }
 
-  return true;
+  circle_bullet_blue = loadImage("game/circle_bullets/blue.png");
+  circle_bullet_red = loadImage("game/circle_bullets/red.png");
+}
+
+void loadExplosionImages(){
+  sheet = loadImage("game/explosions/explosion-1.png");
+  
+  for(int i = 0; i < explosion_1.length; i++){
+    explosion_1[i] = sheet.get(i*sheet.width/explosion_1.length, 0, sheet.width/explosion_1.length, sheet.height);
+  }
 }

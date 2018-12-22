@@ -326,18 +326,11 @@ void createWorld() {
   // add players to the rooms
   rooms[0].addEntity(main);
   rooms[1].addEntity(main);
-  rooms[1].addEntity(new BigDemon(random(width)+100, random(height)+100));
-  rooms[1].addEntity(new BigDemon(random(width)+100, random(height)+100));
-  rooms[1].addEntity(new BigDemon(random(width)+100, random(height)+100));
-  rooms[1].addEntity(new BigDemon(random(width)+100, random(height)+100));
-  rooms[1].addEntity(new Ogre(random(width)+100, random(height)+100));
-  rooms[1].addEntity(new Ogre(random(width)+100, random(height)+100));
-  rooms[1].addEntity(new Ogre(random(width)+100, random(height)+100));
-  rooms[1].addEntity(new Ogre(random(width)+100, random(height)+100));
-  rooms[1].addEntity(new BigZombie(random(width)+100, random(height)+100));
-  rooms[1].addEntity(new BigZombie(random(width)+100, random(height)+100));
-  rooms[1].addEntity(new BigZombie(random(width)+100, random(height)+100));
-  rooms[1].addEntity(new BigZombie(random(width)+100, random(height)+100));
+  for (int i = 0; i < 10; i++) {
+    rooms[1].addEntity(new BigDemon(random(width)+100, random(height)+100));
+    rooms[1].addEntity(new Ogre(random(width)+100, random(height)+100));
+    rooms[1].addEntity(new BigZombie(random(width)+100, random(height)+100));
+  }
 
   toDestroy = new HashSet<Entity>();
 }

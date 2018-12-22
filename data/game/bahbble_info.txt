@@ -1,0 +1,2 @@
+bahbble_idle_anim 0 0 15 13 4
+bahbble_run_anim 0 60 15 13 5

@@ -124,10 +124,21 @@ PImage weapon_lavish_sword;
 PImage weapon_red_magic_staff;
 PImage weapon_green_magic_staff;
 
+
+// bullets
 PImage circle_bullet_blue;
 PImage circle_bullet_red;
 
 PImage[] pixel_effects_fire = new PImage[61];
+
+
+// explosions
+PImage[] explosion_1 = new PImage[7];
+PImage[] explosion_2 = new PImage[8];
+PImage[] explosion_3 = new PImage[10];
+PImage[] explosion_4 = new PImage[12];
+PImage[] explosion_5 = new PImage[22];
+PImage[] explosion_6 = new PImage[8];
 
 // ui elements
 PImage startdefault;
@@ -147,5 +158,5 @@ PImage creditshover;
 PImage playdefault;
 PImage playhover;
 
-
+// textbox
 PImage box;

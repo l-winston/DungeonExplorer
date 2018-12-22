@@ -25,19 +25,21 @@ class CustomListener implements ContactListener {
     if (data1 == null || data2 == null)
       return;
 
-    if (data1.o instanceof Bullet) {
-      if (((Bullet)data1.o).source != data2.o) {
-        toDestroy.add((Bullet)data1.o);
-        if (data2.o instanceof Entity)
-          toDestroy.add((Entity)data2.o);
+    if (data1.obj instanceof Bullet) {
+      if (((Bullet)data1.obj).source != data2.obj && data2.type != DataType.WALKBOX) {
+        ((Bullet)data1.obj).hit();
+        //toDestroy.add((Bullet)data1.o);
+        if (data2.obj instanceof Entity)
+          toDestroy.add((Entity)data2.obj);
       }
     }
 
-    if (data2.o instanceof Bullet) {
-      if (((Bullet)data2.o).source != data1.o) {
-        toDestroy.add((Bullet)data2.o);
-        if (data1.o instanceof Entity)
-          toDestroy.add((Entity)data1.o);
+    if (data2.obj instanceof Bullet) {
+      if (((Bullet)data2.obj).source != data1.obj && data1.type != DataType.WALKBOX) {
+        ((Bullet)data2.obj).hit();
+        //toDestroy.add((Bullet)data2.o);
+        if (data1.obj instanceof Entity)
+          toDestroy.add((Entity)data1.obj);
       }
     }
   }
@@ -60,11 +62,11 @@ enum DataType {
 }
 
 class UserData {
-  Object o;
-  DataType t;
+  Object obj;
+  DataType type;
 
   UserData(Object ob, DataType ty) {
-    o = ob;
-    t = ty;
+    obj = ob;
+    type = ty;
   }
 }

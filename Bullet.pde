@@ -6,6 +6,9 @@ abstract class Bullet extends Entity {
   float vx;
   float vy;
 
+  PImage[] dead_anim;
+
+  int frame_hit;
 
   // x/y pixel coords
   // vx/vy world scalars
@@ -17,6 +20,7 @@ abstract class Bullet extends Entity {
     this.x = x;
     this.y = y;
     this.source = s;
+    frame_hit = -1;
   }
 
   void destroyBody() {
@@ -96,15 +100,21 @@ abstract class Bullet extends Entity {
     popStyle();
     popMatrix();
   }
+
+  void hit() {
+    walkbox.setLinearVelocity(new Vec2(0, 0));
+    frame_hit = frameCount;
+  }
 }
 
 class FireBullet extends Bullet {
   public FireBullet(float x, float y, float vx, float vy, float r, Entity s) {
     super(x, y, vx, vy, r, s);
     run_anim = pixel_effects_fire;
+    dead_anim = explosion_1;
   }
-  void show() {
 
+  void show() {
     pushMatrix();
     pushStyle();
 
@@ -114,24 +124,29 @@ class FireBullet extends Bullet {
     translate(pos.x, pos.y);
     imageMode(CENTER);
 
-    rotate(atan2(-vel.y, vel.x) - PI/2);
-
-    translate(-radius/2, -radius*20/4);
-
-    //image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%run_anim.length], 0, 0, radius*2, radius*2);
-    //image(circle_bullet_red, 0, 0, radius*2, radius*2);
-    image(run_anim[frameCount%run_anim.length], 0, 0, radius*22, radius*22);
+    if (frame_hit == -1) {
+      rotate(atan2(-vel.y, vel.x) - PI/2);
+      translate(-radius/2, -radius*20/4);
+      image(run_anim[frameCount%run_anim.length], 0, 0, radius*22, radius*22);
+    } else {
+      image(dead_anim[((frameCount-frame_hit)/3)%dead_anim.length], 0, 0, radius*10, radius*10);
+    }
 
     popMatrix();
     popStyle();
+
+    if (frame_hit != -1 && (frameCount - frame_hit)/3 > dead_anim.length)
+      toDestroy.add(this);
   }
 }
 
 class BlueCircleBullet extends Bullet {
+
   public BlueCircleBullet(float x, float y, float vx, float vy, float r, Entity s) {
     super(x, y, vx, vy, r, s);
     run_anim = new PImage[] {circle_bullet_blue};
   }
+
   void show() {
 
     pushMatrix();
