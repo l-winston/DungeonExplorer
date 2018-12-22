@@ -221,7 +221,7 @@ void loadImages() {
       coords[0] += coords[2];
     }
   }
-  
+
   loadExplosionImages();
 
   loadBulletImages();
@@ -277,22 +277,40 @@ void loadBulletImages() {
   circle_bullet_red = loadImage("game/circle_bullets/red.png");
 }
 
-void loadExplosionImages(){
+void loadExplosionImages() {
   sheet = loadImage("game/explosions/explosion-1.png");
-  
-  for(int i = 0; i < explosion_1.length; i++){
+
+  for (int i = 0; i < explosion_1.length; i++) {
     explosion_1[i] = sheet.get(i*sheet.width/explosion_1.length, 0, sheet.width/explosion_1.length, sheet.height);
   }
-  
+
   sheet = loadImage("game/explosions/explosion-2.png");
-  
-  for(int i = 0; i < explosion_2.length; i++){
+
+  for (int i = 0; i < explosion_2.length; i++) {
     explosion_2[i] = sheet.get(i*sheet.width/explosion_2.length, 0, sheet.width/explosion_2.length, sheet.height);
   }
-  
+
   sheet = loadImage("game/explosions/explosion-3.png");
-  
-  for(int i = 0; i < explosion_3.length; i++){
+
+  for (int i = 0; i < explosion_3.length; i++) {
     explosion_3[i] = sheet.get(i*sheet.width/explosion_3.length, 0, sheet.width/explosion_3.length, sheet.height);
+  }
+
+  sheet = loadImage("game/explosions/explosion-4.png");
+
+  for (int i = 0; i < explosion_4.length; i++) {
+    explosion_4[i] = sheet.get(i*sheet.width/explosion_4.length, 0, sheet.width/explosion_4.length, sheet.height);
+  }
+
+  sheet = loadImage("game/explosions/explosion-5.png");
+
+  for (int i = 0; i < explosion_5.length; i++) {
+    explosion_5[i] = sheet.get(i*sheet.width/explosion_5.length, 0, sheet.width/explosion_5.length, sheet.height);
+  }
+
+  sheet = loadImage("game/explosions/explosion-6.png");
+
+  for (int i = 0; i < explosion_6.length; i++) {
+    explosion_6[i] = sheet.get(i*sheet.width/explosion_6.length, 0, sheet.width/explosion_6.length, sheet.height);
   }
 }

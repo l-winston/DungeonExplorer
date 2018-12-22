@@ -58,7 +58,7 @@ class Boundary {
       body.createFixture(ps, 1);
     }
     
-    body.setUserData(new UserData(this, DataType.WALKBOX));
+    body.setUserData(new UserData(this, DataType.HITBOX));
   }
   
   void destroyBody(){

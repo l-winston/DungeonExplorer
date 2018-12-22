@@ -10,7 +10,9 @@ enum PlayerType {
 }
 
 class Player extends Entity {
-
+  
+  
+  
   // the controls on the keyboard that map to this player's movement
   char[] controls;
 
