@@ -73,6 +73,8 @@ abstract class Bullet extends Entity {
 
     // can directly create fixture w/ shape & density:
     //   body.createFixture(ps, 1);
+    
+    walkbox.setLinearVelocity(new Vec2(vx, vy));
 
     walkbox.setUserData(new UserData(this, DataType.WALKBOX));
 

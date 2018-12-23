@@ -97,11 +97,16 @@ class BigDemon extends Enemy {
     run_anim = big_demon_run_anim;
 
     hp = 3;
+
+    weapon = new FireStaff();
   }
 
 
   void step() {
+
     super.step();
+
+    // movement
 
     Vec2 target = main.walkbox.getPosition();
     Vec2 current = walkbox.getPosition().mul(-1);
@@ -113,6 +118,11 @@ class BigDemon extends Enemy {
     dpos.mulLocal(5);
 
     walkbox.setLinearVelocity(dpos);
+
+
+    // shooting
+    if (frameCount%60==0)
+      shoot(atan2(dpos.x, dpos.y) - PI/2);
   }
 }
 

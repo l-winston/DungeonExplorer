@@ -136,21 +136,6 @@ class Player extends Entity {
     Vec2 newPos = new Vec2(pos.x, pos.y + box2d.scalarPixelsToWorld(playerh/4));
     hitbox.setTransform(newPos, 0);
   }
-
-  void shoot(float angle) {
-    Vec2 pixelpos = box2d.getBodyPixelCoord(main.walkbox);
-
-    Bullet newBullet = weapon.makeBullet(pixelpos.x + 20*cos(angle), pixelpos.y + 20*sin(angle) - 5, this);
-    
-    newBullet.create();
-
-    Vec2 dpos = new Vec2(box2d.scalarPixelsToWorld(cos(angle)), box2d.scalarPixelsToWorld(-sin(angle)));
-    dpos.mulLocal(300);
-
-    newBullet.walkbox.setLinearVelocity(dpos);
-
-    rooms[current].addEntity(newBullet);
-  }
   
   void hit(Bullet bullet){
   

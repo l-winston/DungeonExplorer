@@ -28,6 +28,7 @@ enum Phase {
 }
 
 HashSet<Entity> toDestroy;
+HashSet<Entity> toCreate;
 
 Train train;
 
@@ -118,9 +119,15 @@ void draw() {
       e.destroyBody();
       rooms[current].entities.remove(e);
     }
+    
+    for (Entity e : toCreate) {
+      e.create();
+      rooms[current].entities.add(e);
+    }
 
     toDestroy = new HashSet<Entity>();
-
+    toCreate = new HashSet<Entity>();
+    
     background(0);  
 
     // calculate physics on each entity (on the floor)
@@ -334,6 +341,7 @@ void createWorld() {
   }
 
   toDestroy = new HashSet<Entity>();
+  toCreate = new HashSet<Entity>();
 }
 
 void calculateDistances() {

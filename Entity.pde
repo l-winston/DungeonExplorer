@@ -207,4 +207,15 @@ abstract class Entity {
   }
 
   abstract void hit(Bullet bullet);
+
+  void shoot(float angle) {
+    Vec2 pixelpos = box2d.getBodyPixelCoord(walkbox);
+
+    Vec2 dpos = new Vec2(box2d.scalarPixelsToWorld(cos(angle)), box2d.scalarPixelsToWorld(-sin(angle)));
+    dpos.mulLocal(300);
+
+    Bullet newBullet = weapon.makeBullet(pixelpos.x + 20*cos(angle), pixelpos.y + 20*sin(angle) - 5, dpos.x, dpos.y, this);
+    toCreate.add(newBullet);
+
+  }
 }
