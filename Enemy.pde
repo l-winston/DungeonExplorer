@@ -9,13 +9,13 @@ final int hit_freeze_duration = 30;
 
 abstract class Enemy extends Entity {
   int frame_last_hit = -1;
-  int hp;
+  float hp;
 
   void hit() {
     frame_last_hit = frameCount;
     hp--;
 
-    if (hp == 0)
+    if (hp < 0)
       toDestroy.add(this);
   }
 

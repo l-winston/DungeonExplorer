@@ -5,6 +5,8 @@ abstract class Bullet extends Entity {
 
   float vx;
   float vy;
+  
+  float damage;
 
   PImage[] dead_anim;
 
