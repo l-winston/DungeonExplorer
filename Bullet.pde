@@ -103,7 +103,7 @@ abstract class Bullet extends Entity {
     popMatrix();
   }
 
-  void hit() {
+  void hit(Bullet bullet) {
     walkbox.setLinearVelocity(new Vec2(0, 0));
     frame_hit = frameCount;
   }
@@ -114,6 +114,7 @@ class FireBullet extends Bullet {
     super(x, y, vx, vy, r, s);
     run_anim = pixel_effects_fire;
     dead_anim = explosion_6;
+    damage = 1;
   }
 
   void show() {
@@ -148,6 +149,7 @@ class BlueCircleBullet extends Bullet {
     super(x, y, vx, vy, r, s);
     run_anim = new PImage[] {circle_bullet_blue};
     dead_anim = explosion_1;
+    damage = 0;
   }
 
   void show() {
@@ -180,6 +182,7 @@ class GreenCircleBullet extends Bullet {
     super(x, y, vx, vy, r, s);
     run_anim = new PImage[] {circle_bullet_green};
     dead_anim = explosion_1;
+    damage = 100;
   }
 
   void show() {

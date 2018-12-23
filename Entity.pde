@@ -206,5 +206,5 @@ abstract class Entity {
     hitbox.setTransform(newPos, 0);
   }
 
-  abstract void hit();
+  abstract void hit(Bullet bullet);
 }

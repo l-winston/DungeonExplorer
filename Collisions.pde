@@ -26,20 +26,21 @@ class CustomListener implements ContactListener {
       return;
 
     if (data1.obj instanceof Bullet) {
-      if (((Bullet)data1.obj).source != data2.obj && data2.type != DataType.WALKBOX) {
-        ((Bullet)data1.obj).hit();
-        //toDestroy.add((Bullet)data1.o);
+      Bullet bullet1 = (Bullet) data1.obj;
+      if (bullet1.source != data2.obj && data2.type != DataType.WALKBOX) {
+        bullet1.hit(null);
+        
         if (data2.obj instanceof Entity)
-          ((Entity)data2.obj).hit();
+          ((Entity)data2.obj).hit(bullet1);
       }
     }
 
     if (data2.obj instanceof Bullet) {
-      if (((Bullet)data2.obj).source != data1.obj && data1.type != DataType.WALKBOX) {
-        ((Bullet)data2.obj).hit();
-        //toDestroy.add((Bullet)data2.o);
+      Bullet bullet2 = (Bullet) data2.obj;
+      if (bullet2.source != data1.obj && data1.type != DataType.WALKBOX) {
+        bullet2.hit(null);
         if (data1.obj instanceof Entity)
-          ((Entity)data1.obj).hit();
+          ((Entity)data1.obj).hit(bullet2);
       }
     }
   }

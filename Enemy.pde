@@ -4,16 +4,16 @@ final float MEDIUM_SPRITE_WIDTH = 32;
 final float MEDIUM_SPRITE_HEIGHT = 34;
 
 // number of frames the hit animation shows
-final int hit_anim_duration = 30;
-final int hit_freeze_duration = 30;
+final int hit_anim_duration = 15;
+final int hit_freeze_duration = 15;
 
 abstract class Enemy extends Entity {
   int frame_last_hit = -1;
   float hp;
 
-  void hit() {
+  void hit(Bullet bullet) {
     frame_last_hit = frameCount;
-    hp--;
+    hp -= bullet.damage;
 
     if (hp < 0)
       toDestroy.add(this);

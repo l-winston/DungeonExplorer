@@ -152,7 +152,7 @@ class Player extends Entity {
     rooms[current].addEntity(newBullet);
   }
   
-  void hit(){
+  void hit(Bullet bullet){
   
   }
 }
