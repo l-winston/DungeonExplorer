@@ -129,7 +129,7 @@ class FireBullet extends Bullet {
       translate(-radius/2, -radius*20/4);
       image(run_anim[frameCount%run_anim.length], 0, 0, radius*22, radius*22);
     } else {
-      image(dead_anim[((frameCount-frame_hit)/3)%dead_anim.length], 0, 0, radius*10, radius*10);
+      image(dead_anim[((frameCount-frame_hit)/3)%dead_anim.length], 0, 0, radius*5, radius*5);
     }
 
     popMatrix();
@@ -145,7 +145,39 @@ class BlueCircleBullet extends Bullet {
   public BlueCircleBullet(float x, float y, float vx, float vy, float r, Entity s) {
     super(x, y, vx, vy, r, s);
     run_anim = new PImage[] {circle_bullet_blue};
-    dead_anim = explosion_6;
+    dead_anim = explosion_1;
+  }
+
+  void show() {
+
+    pushMatrix();
+    pushStyle();
+
+    Vec2 pos = box2d.getBodyPixelCoord(walkbox);
+
+    translate(pos.x, pos.y);
+    imageMode(CENTER);
+
+    if (frame_hit == -1) {
+      image(run_anim[frameCount%run_anim.length], 0, 0, radius*2, radius*2);
+    } else {
+      image(dead_anim[((frameCount-frame_hit)/3)%dead_anim.length], 0, 0, radius*2, radius*2);
+    }
+
+    popMatrix();
+    popStyle();
+
+    if (frame_hit != -1 && (frameCount + 1 - frame_hit)/3 >= dead_anim.length)
+      toDestroy.add(this);
+  }
+}
+
+class GreenCircleBullet extends Bullet {
+
+  public GreenCircleBullet(float x, float y, float vx, float vy, float r, Entity s) {
+    super(x, y, vx, vy, r, s);
+    run_anim = new PImage[] {circle_bullet_green};
+    dead_anim = explosion_1;
   }
 
   void show() {

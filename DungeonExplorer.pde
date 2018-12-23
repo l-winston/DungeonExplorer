@@ -69,7 +69,7 @@ ControlP5 creditsSession;
 
 void setup() {
   debug = false;
-  mute = true;
+  mute = false;
 
   noSmooth();
   size(700, 700);
@@ -104,6 +104,7 @@ void setup() {
   }
 
   train = new Train(-width/8f, height*3f/4f, 3, 3, 3, -width/8f, width + width/8f);
+  song.loop();
 }
 
 int[] poss = {0, 1, 2, 3, 4, 5, 6, 7, 8};
@@ -344,13 +345,6 @@ void calculateDistances() {
 }
 
 void keyPressed() {
-  if (key == 'm') {
-    mute ^= true;
-    if (mute)
-      song.pause();
-    else
-      song.loop();
-  }
 
   if (phase == Phase.GAME) {
 
@@ -385,9 +379,9 @@ void keyPressed() {
       key = 0;
       phase = Phase.PAUSE;
     }
-    
-    if (key == 'e'){
-      if(main.weapon instanceof FireStaff)
+
+    if (key == 'e') {
+      if (main.weapon instanceof FireStaff)
         main.weapon = new NatureStaff();
       else
         main.weapon = new FireStaff();
@@ -539,6 +533,34 @@ void addOptionsUi() {
     public void controlEvent(CallbackEvent event) {
       if (event.getAction() == ControlP5.ACTION_RELEASED) {
         phase = Phase.START;
+      }
+    }
+  } 
+  )
+  .getCaptionLabel()
+    .align(CENTER, CENTER)
+    ;
+
+  optionsSession.addButton("VOLUME")
+    .setImages(volumeondefault, volumeonhover, volumeonhover)
+    .setValue(0)
+    .setPosition(width/2 - volumeondefault.width/2, height/2 - volumeondefault.height/2)
+    .setSize(volumeondefault.width, volumeondefault.height)
+    .addCallback(new CallbackListener() {
+    public void controlEvent(CallbackEvent event) {
+      if (event.getAction() == ControlP5.ACTION_RELEASED) {
+        mute ^= true;
+        
+        if (mute)
+        song.pause();
+        else
+          song.loop();
+          
+        if (mute) {
+          optionsSession.getController("VOLUME").setImages(volumeoffdefault, volumeoffhover, volumeoffhover);
+        } else {
+          optionsSession.getController("VOLUME").setImages(volumeondefault, volumeonhover, volumeonhover);
+        }
       }
     }
   } 

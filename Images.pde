@@ -128,6 +128,7 @@ PImage weapon_green_magic_staff;
 // bullets
 PImage circle_bullet_blue;
 PImage circle_bullet_red;
+PImage circle_bullet_green;
 
 PImage[] pixel_effects_fire = new PImage[61];
 
@@ -157,6 +158,10 @@ PImage creditsdefault;
 PImage creditshover;
 PImage playdefault;
 PImage playhover;
+PImage volumeondefault;
+PImage volumeonhover;
+PImage volumeoffdefault;
+PImage volumeoffhover;
 
 // textbox
 PImage box;

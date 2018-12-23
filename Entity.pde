@@ -178,18 +178,20 @@ abstract class Entity {
       scale(-1, 1);
     }
 
+    if (weapon != null) {
+      pushMatrix();
+      translate(imgw/3, 0);
+      image(weapon.image, 0, 0, imgh*weapon.image.width/weapon.image.height, imgh);
+      popMatrix();
+    }
+
     if (vel.x==0 && vel.y== 0) {
       image(idle_anim[round(frameCount*ANIMATION_SPEED_SCALE)%idle_anim.length], 0, 0, imgw, imgh);
     } else {
       image(run_anim[round(frameCount*ANIMATION_SPEED_SCALE)%idle_anim.length], 0, 0, imgw, imgh);
     }
-    
-    if (weapon != null){
-      translate(imgw/2, 0);
-      image(weapon.image, 0, 0, imgh*weapon.image.width/weapon.image.height, imgh);
-    }
 
-      popMatrix();
+    popMatrix();
     popStyle();
   }
 
@@ -203,4 +205,6 @@ abstract class Entity {
     Vec2 newPos = new Vec2(pos.x, pos.y + box2d.scalarPixelsToWorld(hitboxh/2));
     hitbox.setTransform(newPos, 0);
   }
+
+  abstract void hit();
 }

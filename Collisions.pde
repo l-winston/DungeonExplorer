@@ -30,7 +30,7 @@ class CustomListener implements ContactListener {
         ((Bullet)data1.obj).hit();
         //toDestroy.add((Bullet)data1.o);
         if (data2.obj instanceof Entity)
-          toDestroy.add((Entity)data2.obj);
+          ((Entity)data2.obj).hit();
       }
     }
 
@@ -39,7 +39,7 @@ class CustomListener implements ContactListener {
         ((Bullet)data2.obj).hit();
         //toDestroy.add((Bullet)data2.o);
         if (data1.obj instanceof Entity)
-          toDestroy.add((Entity)data1.obj);
+          ((Entity)data1.obj).hit();
       }
     }
   }

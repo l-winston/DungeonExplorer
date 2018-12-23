@@ -246,20 +246,33 @@ boolean startsWith(String b, String a) {
 void loadUiImages() {
   startdefault = loadImage("ui/startdefault.png");
   starthover = loadImage("ui/starthover.png");
+  
   optionsdefault = loadImage("ui/optionsdefault.png");
   optionshover = loadImage("ui/optionshover.png");
+  
   helpdefault = loadImage("ui/helpdefault.png");
   helphover = loadImage("ui/helphover.png");
+  
   backdefault = loadImage("ui/backdefault.png");
   backhover = loadImage("ui/backhover.png");
+  
   exitdefault = loadImage("ui/exitdefault.png");
   exithover = loadImage("ui/exithover.png");  
+  
   xdefault = loadImage("ui/xdefault.png");
   xhover = loadImage("ui/xhover.png");
+  
   creditsdefault = loadImage("ui/creditsdefault.png");
   creditshover = loadImage("ui/creditshover.png");
+  
   playdefault = loadImage("ui/playdefault.png");
   playhover = loadImage("ui/playhover.png");
+
+  volumeondefault = loadImage("ui/volumeondefault.png");
+  volumeonhover = loadImage("ui/volumeonhover.png");
+
+  volumeoffdefault = loadImage("ui/volumeoffdefault.png");
+  volumeoffhover = loadImage("ui/volumeoffhover.png");
 
   box = loadImage("ui/box.png");
 }
@@ -275,6 +288,7 @@ void loadBulletImages() {
 
   circle_bullet_blue = loadImage("game/circle_bullets/blue.png");
   circle_bullet_red = loadImage("game/circle_bullets/red.png");
+  circle_bullet_green = loadImage("game/circle_bullets/green.png");
 }
 
 void loadExplosionImages() {

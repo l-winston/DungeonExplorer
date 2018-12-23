@@ -140,7 +140,7 @@ class Player extends Entity {
   void shoot(float angle) {
     Vec2 pixelpos = box2d.getBodyPixelCoord(main.walkbox);
 
-    Bullet newBullet = weapon.makeBullet(pixelpos.x + 20*cos(angle), pixelpos.y + 20*sin(angle) - 5, 10, this);
+    Bullet newBullet = weapon.makeBullet(pixelpos.x + 20*cos(angle), pixelpos.y + 20*sin(angle) - 5, this);
     
     newBullet.create();
 
@@ -150,5 +150,9 @@ class Player extends Entity {
     newBullet.walkbox.setLinearVelocity(dpos);
 
     rooms[current].addEntity(newBullet);
+  }
+  
+  void hit(){
+  
   }
 }

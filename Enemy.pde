@@ -3,7 +3,15 @@ final float SMALL_SPRITE_HEIGHT = 20;
 final float MEDIUM_SPRITE_WIDTH = 32;
 final float MEDIUM_SPRITE_HEIGHT = 34;
 
-class BigDemon extends Entity {
+abstract class Enemy extends Entity{
+  
+  void hit(){
+    toDestroy.add(this);
+  }
+  
+}
+
+class BigDemon extends Enemy {
   boolean facing_right;
 
   public BigDemon(float x, float y) {
@@ -49,7 +57,7 @@ class BigDemon extends Entity {
   }
 }
 
-class Ogre extends Entity {
+class Ogre extends Enemy {
   boolean facing_right;
 
   public Ogre(float x, float y) {
@@ -92,7 +100,7 @@ class Ogre extends Entity {
   }
 }
 
-class BigZombie extends Entity {
+class BigZombie extends Enemy {
   boolean facing_right;
 
   public BigZombie(float x, float y) {
