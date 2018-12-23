@@ -1,6 +1,9 @@
 
 // all entities will inherit this class
 abstract class Entity {
+  
+  float hp;
+  int frame_last_hit;
 
   Weapon weapon;
 

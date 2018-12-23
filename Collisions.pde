@@ -27,7 +27,10 @@ class CustomListener implements ContactListener {
 
     if (data1.obj instanceof Bullet) {
       Bullet bullet1 = (Bullet) data1.obj;
-      if (bullet1.source != data2.obj && data2.type != DataType.WALKBOX) {
+      // enemy bullet hits enemy
+      if(bullet1.source instanceof Enemy && data2.obj instanceof Enemy){
+        
+      } else if (bullet1.source != data2.obj && data2.type != DataType.WALKBOX) {
         bullet1.hit(null);
         
         if (data2.obj instanceof Entity)
@@ -37,7 +40,9 @@ class CustomListener implements ContactListener {
 
     if (data2.obj instanceof Bullet) {
       Bullet bullet2 = (Bullet) data2.obj;
-      if (bullet2.source != data1.obj && data1.type != DataType.WALKBOX) {
+      if(bullet2.source instanceof Enemy && data1.obj instanceof Enemy){
+        
+      } else if (bullet2.source != data1.obj && data1.type != DataType.WALKBOX) {
         bullet2.hit(null);
         if (data1.obj instanceof Entity)
           ((Entity)data1.obj).hit(bullet2);

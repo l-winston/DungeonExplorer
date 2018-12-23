@@ -10,8 +10,6 @@ abstract class Bullet extends Entity {
 
   PImage[] dead_anim;
 
-  int frame_hit;
-
   // x/y pixel coords
   // vx/vy world scalars
   // r pixel scalar
@@ -22,7 +20,7 @@ abstract class Bullet extends Entity {
     this.x = x;
     this.y = y;
     this.source = s;
-    frame_hit = -1;
+    frame_last_hit = -1;
   }
 
   void destroyBody() {
@@ -107,7 +105,7 @@ abstract class Bullet extends Entity {
 
   void hit(Bullet bullet) {
     walkbox.setLinearVelocity(new Vec2(0, 0));
-    frame_hit = frameCount;
+    frame_last_hit = frameCount;
   }
 }
 
@@ -129,18 +127,18 @@ class FireBullet extends Bullet {
     translate(pos.x, pos.y);
     imageMode(CENTER);
 
-    if (frame_hit == -1) {
+    if (frame_last_hit == -1) {
       rotate(atan2(-vel.y, vel.x) - PI/2);
       translate(-radius/2, -radius*20/4);
       image(run_anim[frameCount%run_anim.length], 0, 0, radius*22, radius*22);
     } else {
-      image(dead_anim[((frameCount-frame_hit)/3)%dead_anim.length], 0, 0, radius*5, radius*5);
+      image(dead_anim[((frameCount-frame_last_hit)/3)%dead_anim.length], 0, 0, radius*5, radius*5);
     }
 
     popMatrix();
     popStyle();
 
-    if (frame_hit != -1 && (frameCount + 1 - frame_hit)/3 >= dead_anim.length)
+    if (frame_last_hit != -1 && (frameCount + 1 - frame_last_hit)/3 >= dead_anim.length)
       toDestroy.add(this);
   }
 }
@@ -164,16 +162,16 @@ class BlueCircleBullet extends Bullet {
     translate(pos.x, pos.y);
     imageMode(CENTER);
 
-    if (frame_hit == -1) {
+    if (frame_last_hit == -1) {
       image(run_anim[frameCount%run_anim.length], 0, 0, radius*2, radius*2);
     } else {
-      image(dead_anim[((frameCount-frame_hit)/3)%dead_anim.length], 0, 0, radius*2, radius*2);
+      image(dead_anim[((frameCount-frame_last_hit)/3)%dead_anim.length], 0, 0, radius*2, radius*2);
     }
 
     popMatrix();
     popStyle();
 
-    if (frame_hit != -1 && (frameCount + 1 - frame_hit)/3 >= dead_anim.length)
+    if (frame_last_hit != -1 && (frameCount + 1 - frame_last_hit)/3 >= dead_anim.length)
       toDestroy.add(this);
   }
 }
@@ -197,16 +195,16 @@ class GreenCircleBullet extends Bullet {
     translate(pos.x, pos.y);
     imageMode(CENTER);
 
-    if (frame_hit == -1) {
+    if (frame_last_hit == -1) {
       image(run_anim[frameCount%run_anim.length], 0, 0, radius*2, radius*2);
     } else {
-      image(dead_anim[((frameCount-frame_hit)/3)%dead_anim.length], 0, 0, radius*2, radius*2);
+      image(dead_anim[((frameCount-frame_last_hit)/3)%dead_anim.length], 0, 0, radius*4, radius*4);
     }
 
     popMatrix();
     popStyle();
 
-    if (frame_hit != -1 && (frameCount + 1 - frame_hit)/3 >= dead_anim.length)
+    if (frame_last_hit != -1 && (frameCount + 1 - frame_last_hit)/3 >= dead_anim.length)
       toDestroy.add(this);
   }
 }

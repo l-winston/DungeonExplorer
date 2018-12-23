@@ -8,8 +8,6 @@ final int hit_anim_duration = 15;
 final int hit_freeze_duration = 15;
 
 abstract class Enemy extends Entity {
-  int frame_last_hit = -1;
-  float hp;
 
   void hit(Bullet bullet) {
     frame_last_hit = frameCount;
@@ -155,19 +153,30 @@ class Ogre extends Enemy {
     run_anim = ogre_run_anim;
 
     hp = 3;
+    weapon = new NatureStaff();
   }
 
 
   void step() {
     super.step();
 
+    // movement
+
     Vec2 target = main.walkbox.getPosition();
     Vec2 current = walkbox.getPosition().mul(-1);
 
     Vec2 dpos = target.add(current);
+
     dpos.normalize();
+
     dpos.mulLocal(5);
+
     walkbox.setLinearVelocity(dpos);
+
+
+    // shooting
+    if (frameCount%180==0)
+      shoot(atan2(dpos.x, dpos.y) - PI/2);
   }
 }
 
@@ -206,12 +215,17 @@ class BigZombie extends Enemy {
   void step() {
     super.step();
 
+    // movement
+
     Vec2 target = main.walkbox.getPosition();
     Vec2 current = walkbox.getPosition().mul(-1);
 
     Vec2 dpos = target.add(current);
+
     dpos.normalize();
+
     dpos.mulLocal(5);
+
     walkbox.setLinearVelocity(dpos);
   }
 }
