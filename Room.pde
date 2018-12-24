@@ -85,6 +85,14 @@ class Room {
     column = new boolean[r][c];
     entities = new ArrayList<Entity>();
     boundaries = new ArrayList<Boundary>();
+
+    for (Wall[] i : wall) {
+      Arrays.fill(i, Wall.NONE);
+    }
+
+    for (int[] i : floor) {
+      Arrays.fill(i, -1);
+    }
   }
 
   void addEntity(Entity e) {
@@ -99,15 +107,8 @@ class Room {
 
   void createBox() {
 
-    for (Wall[] i : wall) {
-      Arrays.fill(i, Wall.NONE);
-    }
-
-    for (int[] i : floor) {
-      Arrays.fill(i, -1);
-    }
     for (int j = 1; j < cols-1; j++) {
-      // fill first and second row (excluding corners)
+      // fill top and bottom rows
       wall[1][j] = Wall.FRONT;
       wall[rows-2][j] = Wall.FRONT;
     }
@@ -128,15 +129,10 @@ class Room {
       }
     }
 
-    boundaries.add(new Boundary(0.5*tilew, rows/2*tileh, tilew, (cols-2)*tileh));
-    boundaries.add(new Boundary((cols-0.5)*tilew, rows/2*tileh, tilew, (cols-2)*tileh));
+    boundaries.add(new Boundary(0.5*tilew, rows/2*tileh, tilew, (rows-2)*tileh));
+    boundaries.add(new Boundary((cols-0.5)*tilew, rows/2*tileh, tilew, (rows-2)*tileh));
     boundaries.add(new Boundary((cols/2)*tilew, (rows-1)*tileh, tilew*cols, tileh));
     boundaries.add(new Boundary((cols/2)*tilew, 1.5*tileh, tilew*cols, tileh));
-  }
-
-  void access(int r, int c) {
-    int actualr = r+2;
-    int actualc = c+1;
   }
 
   void display() {

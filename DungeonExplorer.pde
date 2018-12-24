@@ -119,7 +119,7 @@ void draw() {
       e.destroyBody();
       rooms[current].entities.remove(e);
     }
-    
+
     for (Entity e : toCreate) {
       e.create();
       rooms[current].entities.add(e);
@@ -127,7 +127,7 @@ void draw() {
 
     toDestroy = new HashSet<Entity>();
     toCreate = new HashSet<Entity>();
-    
+
     background(0);  
 
     // calculate physics on each entity (on the floor)
@@ -293,40 +293,53 @@ void createBox2dWorld() {
 void createWorld() {
 
   // create room array and set dimensions
-  rooms = new Room[2];
+  rooms = new Room[3];
   rooms[0] = new Room(10, 12);
   rooms[1] = new Room(20, 22);
+  rooms[2] = new Room(10, 20);
 
   // calculate scaling numbers
   calculateDistances();
 
   rooms[0].createBox();
 
-
-  // randomly spawn columns
   for (int i = 0; i < 5; i++)
     rooms[0].setColumn(int(random(2, 13)), int(random(1, 13)));
 
+
   rooms[1].createBox();
-
-  rooms[0].wall[rooms[0].rows-2][0] = Wall.FRONT_LEFT;
-  rooms[0].wall[rooms[0].rows-2][rooms[0].cols-1] = Wall.FRONT_RIGHT;
-  rooms[0].wall[0][0] = Wall.TOP_LEFT;
-  rooms[0].wall[0][rooms[0].cols-1] = Wall.TOP_RIGHT;
-
-  for (int i = 1; i < rooms[0].rows-2; i++) {
-    rooms[0].wall[i][0] = Wall.LEFT;
-    rooms[0].wall[i][rooms[0].cols-1] = Wall.RIGHT;
-  }
-
-  for (int i = 1; i < rooms[0].rows-2; i++) {
-    for (int j = 1; j < rooms[0].cols-1; j++) {
-      rooms[0].floor[i][j] = FLOOR_1;
-    }
-  }
 
   for (int i = 0; i < 5; i++)
     rooms[1].setColumn(int(random(2, 23)), int(random(1, 23)));
+
+
+  int[] fronti = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 6, 6, 6, 6, 6, 6, 6, 6, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8};
+  int[] frontj = {1, 2, 3, 4, 5, 14, 15, 16, 17, 18, 6, 7, 8, 9, 10, 11, 12, 13, 6, 7, 8, 9, 10, 11, 12, 13, 1, 2, 3, 4, 5, 14, 15, 16, 17, 18};
+
+  int[] lefti = {2, 2, 3, 4, 5, 6, 7, 7};
+  int[] leftj = {0, 13, 0, 0, 0, 0, 0, 13};
+
+  int[] righti = {2, 2, 3, 4, 5, 6, 7, 7};
+  int[] rightj = {6, 19, 19, 19, 19, 19, 6, 19};
+
+  int[] floori = {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7};
+  int[] floorj = {1, 2, 3, 4, 5, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 14, 15, 16, 17, 18};
+
+  for (int x = 0; x < fronti.length; x++) {
+    rooms[2].wall[fronti[x]][frontj[x]] = Wall.FRONT;
+  }
+
+  for (int x = 0; x < lefti.length; x++) {
+    rooms[2].wall[lefti[x]][leftj[x]] = Wall.LEFT;
+  }
+
+  for (int x = 0; x < righti.length; x++) {
+    rooms[2].wall[righti[x]][rightj[x]] = Wall.RIGHT;
+  }
+
+  for (int x = 0; x < floori.length; x++) {
+    rooms[2].floor[floori[x]][floorj[x]] = FLOOR_1;
+  }
 
   // create players
   main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.WIZZARD_M);  
@@ -334,7 +347,8 @@ void createWorld() {
   // add players to the rooms
   rooms[0].addEntity(main);
   rooms[1].addEntity(main);
-  for (int i = 0; i < 10; i++) {
+  rooms[2].addEntity(main);
+  for (int i = 0; i < 3; i++) {
     rooms[1].addEntity(new BigDemon(random(width)+100, random(height)+100));
     rooms[1].addEntity(new Ogre(random(width)+100, random(height)+100));
     rooms[1].addEntity(new BigZombie(random(width)+100, random(height)+100));
@@ -558,12 +572,12 @@ void addOptionsUi() {
     public void controlEvent(CallbackEvent event) {
       if (event.getAction() == ControlP5.ACTION_RELEASED) {
         mute ^= true;
-        
+
         if (mute)
         song.pause();
         else
           song.loop();
-          
+
         if (mute) {
           optionsSession.getController("VOLUME").setImages(volumeoffdefault, volumeoffhover, volumeoffhover);
         } else {

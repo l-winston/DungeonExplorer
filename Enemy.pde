@@ -113,7 +113,7 @@ class BigDemon extends Enemy {
 
     dpos.normalize();
 
-    dpos.mulLocal(5);
+    dpos.mulLocal(2);
 
     walkbox.setLinearVelocity(dpos);
 
@@ -169,7 +169,7 @@ class Ogre extends Enemy {
 
     dpos.normalize();
 
-    dpos.mulLocal(5);
+    dpos.mulLocal(2);
 
     walkbox.setLinearVelocity(dpos);
 
@@ -224,7 +224,7 @@ class BigZombie extends Enemy {
 
     dpos.normalize();
 
-    dpos.mulLocal(5);
+    dpos.mulLocal(15);
 
     walkbox.setLinearVelocity(dpos);
   }
