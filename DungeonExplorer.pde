@@ -296,7 +296,7 @@ void createWorld() {
   rooms = new Room[3];
   rooms[0] = new Room(10, 12);
   rooms[1] = new Room(20, 22);
-  rooms[2] = new Room(10, 20);
+  rooms[2] = loadRoom("world.txt");
 
   // calculate scaling numbers
   calculateDistances();
@@ -313,33 +313,8 @@ void createWorld() {
     rooms[1].setColumn(int(random(2, 23)), int(random(1, 23)));
 
 
-  int[] fronti = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 6, 6, 6, 6, 6, 6, 6, 6, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8};
-  int[] frontj = {1, 2, 3, 4, 5, 14, 15, 16, 17, 18, 6, 7, 8, 9, 10, 11, 12, 13, 6, 7, 8, 9, 10, 11, 12, 13, 1, 2, 3, 4, 5, 14, 15, 16, 17, 18};
 
-  int[] lefti = {2, 2, 3, 4, 5, 6, 7, 7};
-  int[] leftj = {0, 13, 0, 0, 0, 0, 0, 13};
 
-  int[] righti = {2, 2, 3, 4, 5, 6, 7, 7};
-  int[] rightj = {6, 19, 19, 19, 19, 19, 6, 19};
-
-  int[] floori = {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7};
-  int[] floorj = {1, 2, 3, 4, 5, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 14, 15, 16, 17, 18};
-
-  for (int x = 0; x < fronti.length; x++) {
-    rooms[2].wall[fronti[x]][frontj[x]] = Wall.FRONT;
-  }
-
-  for (int x = 0; x < lefti.length; x++) {
-    rooms[2].wall[lefti[x]][leftj[x]] = Wall.LEFT;
-  }
-
-  for (int x = 0; x < righti.length; x++) {
-    rooms[2].wall[righti[x]][rightj[x]] = Wall.RIGHT;
-  }
-
-  for (int x = 0; x < floori.length; x++) {
-    rooms[2].floor[floori[x]][floorj[x]] = FLOOR_1;
-  }
 
   // create players
   main = new Player(width/2, height/2, new char[]{'w', 'a', 's', 'd'}, PlayerType.WIZZARD_M);  
@@ -360,8 +335,8 @@ void createWorld() {
 
 void calculateDistances() {
   // arbitrary way to choose how to scale tiles
-  tilew = width / 15f;
-  tileh = height / 15f;
+  tilew = width / 15;
+  tileh = height / 15;
   playerw = tilew;
   playerh = tilew * PLAYER_SPRITE_HEIGHT/PLAYER_SPRITE_WIDTH;
 }

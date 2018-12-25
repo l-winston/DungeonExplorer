@@ -86,9 +86,6 @@ class Room {
     entities = new ArrayList<Entity>();
     boundaries = new ArrayList<Boundary>();
 
-    for (Wall[] i : wall) {
-      Arrays.fill(i, Wall.NONE);
-    }
 
     for (int[] i : floor) {
       Arrays.fill(i, -1);
@@ -110,7 +107,9 @@ class Room {
     for (int j = 1; j < cols-1; j++) {
       // fill top and bottom rows
       wall[1][j] = Wall.FRONT;
+      wall[0][j] = Wall.TOP_2;
       wall[rows-2][j] = Wall.FRONT;
+      wall[rows-3][j] = Wall.TOP_2;
     }
 
     wall[rows-2][0] = Wall.FRONT_LEFT;
@@ -167,9 +166,14 @@ class Room {
         float tilex = j * tilew;
         float tiley = i * tileh;
 
-        if (wall[i][j] != Wall.NONE) {
+        if (wall[i][j] != null && !isTopPiece(wall[i][j])) {
           showWall(tilex, tiley, wall[i][j]);
         } 
+        if (i-1 >= 0) {
+          if (isTopPiece(wall[i-1][j])) {
+            showWall(tilex, tiley-tileh, wall[i-1][j]);
+          }
+        }
         if (column[i][j]) {
           showColumn(tilex, tiley);
         }
@@ -202,4 +206,48 @@ class Room {
     column[i-1][j] = true;
     this.boundaries.add(new Boundary((j+0.5)*tilew, i * tileh, tilew / 5f));
   }
+}
+
+boolean isTopPiece(Wall w) {
+  return w == Wall.TOP_1 || 
+    w == Wall.TOP_2 ||
+    w == Wall.TOP_3 ||
+    w == Wall.INNER_CORNER_L_TOP_LEFT ||
+    w == Wall.INNER_CORNER_L_TOP_RIGHT || 
+    w == Wall.TOP_RIGHT ||
+    w == Wall.TOP_LEFT ||
+    w == Wall.LEFT;
+}
+
+Room loadRoom(String fileName) {
+  String[] strings = loadStrings(fileName);
+  Scanner scan = new Scanner(strings[0]);
+  int rows = scan.nextInt();
+  int cols = scan.nextInt();
+  scan.close();
+
+  Room room = new Room(rows, cols);
+
+  for (int i = 0; i < rows; i++) {
+    scan = new Scanner(strings[i+1]);
+    for (int j = 0; j < cols; j++) {
+      int elem = scan.nextInt();
+      if (elem == -1)
+        room.wall[i][j] = null;
+      else
+        room.wall[i][j] = types[elem];
+    }
+    scan.close();
+  }
+
+  for (int i = 0; i < rows; i++) {
+    scan = new Scanner(strings[i+1+rows]);
+    for (int j = 0; j < cols; j++) {
+      int elem = scan.nextInt();
+      room.floor[i][j] = elem;
+    }
+    scan.close();
+  }
+
+  return room;
 }
