@@ -292,15 +292,17 @@ void createBox2dWorld() {
 
 void createWorld() {
 
+  // calculate scaling numbers
+  calculateDistances();
+
+
   // create room array and set dimensions
   rooms = new Room[3];
   rooms[0] = new Room(10, 12);
   rooms[1] = new Room(20, 22);
   rooms[2] = loadRoom("world.txt");
-
-  // calculate scaling numbers
-  calculateDistances();
-
+  
+  
   rooms[0].createBox();
 
   for (int i = 0; i < 5; i++)

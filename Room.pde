@@ -212,11 +212,17 @@ boolean isTopPiece(Wall w) {
   return w == Wall.TOP_1 || 
     w == Wall.TOP_2 ||
     w == Wall.TOP_3 ||
-    w == Wall.INNER_CORNER_L_TOP_LEFT ||
-    w == Wall.INNER_CORNER_L_TOP_RIGHT || 
     w == Wall.TOP_RIGHT ||
     w == Wall.TOP_LEFT ||
-    w == Wall.LEFT;
+    w == Wall.CORNER_TOP_LEFT ||
+    w == Wall.CORNER_TOP_RIGHT ||
+    w == Wall.CORNER_BOTTOM_LEFT ||
+    w == Wall.CORNER_BOTTOM_RIGHT ||
+
+    w == Wall.INNER_CORNER_L_TOP_LEFT ||
+    w == Wall.INNER_CORNER_L_TOP_RIGHT ||
+    w == Wall.INNER_CORNER_T_TOP_LEFT ||
+    w == Wall.INNER_CORNER_T_TOP_RIGHT;
 }
 
 Room loadRoom(String fileName) {
@@ -246,6 +252,15 @@ Room loadRoom(String fileName) {
       int elem = scan.nextInt();
       room.floor[i][j] = elem;
     }
+    scan.close();
+  }
+
+  scan = new Scanner(strings[2*rows+1]);
+  int num_boundaries = scan.nextInt();
+  scan.close();
+  for (int i = 0; i < num_boundaries; i++) {
+    scan = new Scanner(strings[2*rows+1+1+i]);
+    room.boundaries.add(new Boundary(scan.nextFloat()*tilew, scan.nextFloat()*tileh, scan.nextFloat()*tilew, scan.nextFloat()*tileh));
     scan.close();
   }
 
