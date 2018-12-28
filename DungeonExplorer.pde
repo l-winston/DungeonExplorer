@@ -297,12 +297,13 @@ void createWorld() {
 
 
   // create room array and set dimensions
-  rooms = new Room[3];
+  rooms = new Room[4];
   rooms[0] = new Room(10, 12);
   rooms[1] = new Room(20, 22);
-  rooms[2] = loadRoom("world.txt");
-  
-  
+  rooms[2] = loadRoom("world1.txt");
+  rooms[3] = loadRoom("world2.txt");
+
+
   rooms[0].createBox();
 
   for (int i = 0; i < 5; i++)
@@ -325,6 +326,8 @@ void createWorld() {
   rooms[0].addEntity(main);
   rooms[1].addEntity(main);
   rooms[2].addEntity(main);
+  rooms[3].addEntity(main);
+
   for (int i = 0; i < 3; i++) {
     rooms[1].addEntity(new BigDemon(random(width)+100, random(height)+100));
     rooms[1].addEntity(new Ogre(random(width)+100, random(height)+100));
