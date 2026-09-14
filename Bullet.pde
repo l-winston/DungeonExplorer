@@ -24,11 +24,12 @@ abstract class Bullet extends Entity {
   }
 
   void destroyBody() {
+    if (walkbox != null) {
+      Vec2 vel = walkbox.getLinearVelocity();
+      vx = vel.x;
+      vy = vel.y;
+    }
     super.destroyBody();
-
-    Vec2 vel = walkbox.getLinearVelocity();
-    vx = vel.x;
-    vy = vel.y;
   }
 
   void create() {

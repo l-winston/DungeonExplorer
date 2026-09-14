@@ -3,7 +3,7 @@
 abstract class Entity {
   
   float hp;
-  int frame_last_hit;
+  int frame_last_hit = -1;
 
   Weapon weapon;
 
@@ -29,14 +29,17 @@ abstract class Entity {
   float y;
 
   void destroyBody() {
-    if (walkbox != null)
+    if (walkbox != null) {
+      Vec2 pos = box2d.getBodyPixelCoord(walkbox);
+      x = pos.x;
+      y = pos.y;
       box2d.destroyBody(walkbox);
-    if (hitbox != null)
+      walkbox = null;
+    }
+    if (hitbox != null) {
       box2d.destroyBody(hitbox);
-
-    Vec2 pos = box2d.getBodyPixelCoord(walkbox);
-    x = pos.x;
-    y = pos.y;
+      hitbox = null;
+    }
   }
 
   void setAwake(boolean awake) {
