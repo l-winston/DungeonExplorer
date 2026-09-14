@@ -13,7 +13,7 @@ abstract class Enemy extends Entity {
     frame_last_hit = frameCount;
     hp -= bullet.damage;
 
-    if (hp < 0)
+    if (hp <= 0)
       toDestroy.add(this);
   }
 

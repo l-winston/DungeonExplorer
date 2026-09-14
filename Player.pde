@@ -1,3 +1,4 @@
+final float PLAYER_MAX_HP = 5;
 final float PLAYER_SPEED = 30; // px/frame
 final float PLAYER_SPRITE_WIDTH = 16; // original image dimensions
 final float PLAYER_SPRITE_HEIGHT = 28; // original image dimensions
@@ -31,6 +32,7 @@ class Player extends Entity {
     imgh = playerh;
     
     weapon = new FireStaff();
+    hp = PLAYER_MAX_HP;
 
     this.x = x;
     this.y = y;
@@ -137,7 +139,17 @@ class Player extends Entity {
     hitbox.setTransform(newPos, 0);
   }
   
-  void hit(Bullet bullet){
-  
+  void clearMovement() {
+    Arrays.fill(keysdown, false);
+    if (walkbox != null) walkbox.setLinearVelocity(new Vec2(0, 0));
+  }
+
+  void hit(Bullet bullet) {
+    if (hp <= 0) return;
+    hp = max(0, hp - bullet.damage);
+    if (hp == 0) {
+      clearMovement();
+      phase = Phase.GAME_OVER;
+    }
   }
 }

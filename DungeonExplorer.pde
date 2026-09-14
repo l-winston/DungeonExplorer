@@ -24,7 +24,7 @@ import java.util.HashSet;
 
 // enum representing current phase of game
 enum Phase {
-  START, GAME, HELP, OPTIONS, PAUSE, CREDITS
+  START, GAME, HELP, OPTIONS, PAUSE, CREDITS, GAME_OVER
 }
 
 HashSet<Entity> toDestroy;
@@ -57,7 +57,7 @@ Phase phase;
 Player main;
 
 // sample text
-String sampleText = "Welcome to Dungeon Explorer!";
+String sampleText = "WASD to move\nClick to cast • E to switch staff\nSpace to change rooms\nEsc to pause • B for hitboxes";
 
 // library object
 Box2DProcessing box2d;
@@ -115,18 +115,8 @@ void draw() {
   switch (phase) {
   case GAME:
 
-    for (Entity e : toDestroy) {
-      e.destroyBody();
-      rooms[current].entities.remove(e);
-    }
-
-    for (Entity e : toCreate) {
-      e.create();
-      rooms[current].entities.add(e);
-    }
-
-    toDestroy = new HashSet<Entity>();
-    toCreate = new HashSet<Entity>();
+    applyEntityChanges();
+    if (!focused) main.clearMovement();
 
     background(0);  
 
@@ -140,6 +130,7 @@ void draw() {
     Vec2 mainpos = box2d.getBodyPixelCoord(main.walkbox);
 
     // move camera to follow players
+    pushMatrix();
     translate(width/2 - mainpos.x, height/2 - mainpos.y);
 
 
@@ -157,6 +148,8 @@ void draw() {
         e.showHitbox();
     }
 
+    popMatrix();
+    drawHud();
     break;
   case START:
 
@@ -214,7 +207,8 @@ void draw() {
 
     optionsSession.draw();
     break;
-  case PAUSE: 
+  case PAUSE:
+  case GAME_OVER:
 
     pushMatrix();
 
@@ -230,7 +224,16 @@ void draw() {
     noStroke();
 
     rect(0, 0, width, height);
-    pauseSession.draw();
+    if (phase == Phase.GAME_OVER) {
+      fill(255);
+      textAlign(CENTER, CENTER);
+      textSize(48);
+      text("You fell in the dungeon", width/2, height/2 - 40);
+      textSize(24);
+      text("Press R to try again", width/2, height/2 + 30);
+    } else {
+      pauseSession.draw();
+    }
     break;
   case CREDITS:
 
@@ -279,6 +282,7 @@ void drawTitleBackground() {
     float xf = (train.xi);
     train = new Train(x, y, vx, sx, 3, x, xf);
   }
+  popStyle();
 }
 
 void createBox2dWorld() {
@@ -350,62 +354,86 @@ void calculateDistances() {
   playerh = tilew * PLAYER_SPRITE_HEIGHT/PLAYER_SPRITE_WIDTH;
 }
 
-void keyPressed() {
-
-  if (phase == Phase.GAME) {
-
-    main.keyPressUpdate();
-
-    if (key == ' ') {
-      for (Boundary b : rooms[current].boundaries) {
-        b.destroyBody();
-      }
-
-      for (Entity e : rooms[current].entities) {
-        e.destroyBody();
-      }
-
-      current = (current+1)%rooms.length;
-
-      for (Boundary b : rooms[current].boundaries) {
-        b.createBody();
-      }
-      for (Entity e : rooms[current].entities) {
-        e.create();
-      }
-    }
-
-    if (key == 'b') {
-      if (phase == Phase.GAME) {
-        debug ^= true;
-      }
-    }
-
-    if (key == ESC) {
-      key = 0;
-      phase = Phase.PAUSE;
-    }
-
-    if (key == 'e') {
-      if (main.weapon instanceof FireStaff)
-        main.weapon = new NatureStaff();
-      else
-        main.weapon = new FireStaff();
-    }
+void applyEntityChanges() {
+  for (Entity e : toDestroy) {
+    e.destroyBody();
+    rooms[current].entities.remove(e);
   }
+  for (Entity e : toCreate) {
+    e.create();
+    rooms[current].entities.add(e);
+  }
+  toDestroy.clear();
+  toCreate.clear();
+}
 
-  if (phase == Phase.PAUSE) {
-    if (key == ESC) {
-      key = 0;
+void startGame() {
+  createBox2dWorld();
+  createWorld();
+  current = 0;
+  for (Boundary b : rooms[current].boundaries) b.createBody();
+  for (Entity e : rooms[current].entities) e.create();
+  phase = Phase.GAME;
+}
+
+void nextRoom() {
+  // Finish pending changes in the room that owns them before switching.
+  applyEntityChanges();
+  for (Boundary b : rooms[current].boundaries) b.destroyBody();
+  for (Entity e : rooms[current].entities) e.destroyBody();
+  current = (current + 1) % rooms.length;
+  for (Boundary b : rooms[current].boundaries) b.createBody();
+  for (Entity e : rooms[current].entities) e.create();
+}
+
+void drawHud() {
+  pushStyle();
+  rectMode(CORNER);
+  noStroke();
+  fill(17, 15, 27, 220);
+  rect(12, 12, width - 24, 42, 6);
+  fill(255);
+  textAlign(LEFT, CENTER);
+  textSize(20);
+  text("HP " + int(main.hp) + "/" + int(PLAYER_MAX_HP) + "   ROOM " + (current + 1) + "/" + rooms.length, 24, 32);
+  textAlign(RIGHT, CENTER);
+  text(main.weapon instanceof FireStaff ? "FIRE STAFF  [E]" : "NATURE STAFF  [E]", width - 24, 32);
+  popStyle();
+}
+
+void keyPressed() {
+  if (key == 'p' || key == 'P') {
+    saveFrame("screenshots/capture-####.png");
+    return;
+  }
+  if (key == ESC) {
+    key = 0; // Prevent Processing from closing the sketch.
+    if (phase == Phase.GAME) {
+      main.clearMovement();
+      phase = Phase.PAUSE;
+    } else if (phase == Phase.PAUSE) {
       phase = Phase.GAME;
     }
+    return;
+  }
+  if (phase == Phase.GAME_OVER && (key == 'r' || key == 'R')) {
+    startGame();
+    return;
+  }
+  if (phase != Phase.GAME) return;
+
+  main.keyPressUpdate();
+  if (key == ' ') nextRoom();
+  if (key == 'b') debug ^= true;
+  if (key == 'e') {
+    if (main.weapon instanceof FireStaff) main.weapon = new NatureStaff();
+    else main.weapon = new FireStaff();
   }
 }
 
 void keyReleased() {
-  if (phase == Phase.GAME) {
-    main.keyReleaseUpdate();
-  }
+  // Releases still count while paused or after defeat.
+  if (main != null) main.keyReleaseUpdate();
 }
 
 // conversion method 
@@ -436,18 +464,7 @@ void addStartUi() {
     .addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent event) {
       if (event.getAction() == ControlP5.ACTION_RELEASED) {
-        phase = Phase.GAME;
-        createBox2dWorld();
-        createWorld();
-
-        current = 0;
-        for (Boundary b : rooms[current].boundaries) {
-          b.createBody();
-        }
-
-        for (Entity e : rooms[current].entities) {
-          e.create();
-        }
+        startGame();
       }
     }
   } 
