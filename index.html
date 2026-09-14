@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151417">
+  <meta name="description" content="Dungeon Explorer — a pixel-art dungeon shooter by Winston Liu. Explore the game, see it in action, and run it locally with Processing.">
+  <meta property="og:title" content="Dungeon Explorer">
+  <meta property="og:description" content="Two staffs. Four rooms. A dungeon full of trouble.">
+  <meta property="og:image" content="https://l-winston.github.io/DungeonExplorer/screenshots/nature-staff.png">
+  <title>Dungeon Explorer — Winston Liu</title>
+  <link rel="icon" href="data/icons/icon20x20.png">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header wrap">
+    <a class="wordmark" href="#" aria-label="Dungeon Explorer home"><span class="sigil" aria-hidden="true">✦</span> DE<span class="wordmark-sub"> / WINSTON LIU</span></a>
+    <nav aria-label="Main navigation"><a href="#gameplay">The game</a><a href="#play">Play locally</a><a href="https://github.com/l-winston/DungeonExplorer">GitHub <span aria-hidden="true">↗</span></a></nav>
+  </header>
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot"></span> A PERSONAL GAME PROJECT · 2018–2019</p>
+        <h1 id="title">Dungeon<br><span>Explorer</span><span class="title-star" aria-hidden="true">✦</span></h1>
+        <p class="hero-deck">Two staffs. Four rooms.<br>A dungeon full of trouble.</p>
+        <p class="muted intro">A little wizard, some very big monsters, and just enough magic to get by. A pixel-art dungeon shooter built from scratch in Processing and Java.</p>
+        <div class="actions"><a class="button primary" href="#play">Enter the dungeon <span aria-hidden="true">↓</span></a><a class="text-link" href="https://github.com/l-winston/DungeonExplorer">Explore the code ↗</a></div>
+        <p class="platform">DESKTOP PROTOTYPE <span>·</span> PROCESSING / JAVA</p>
+      </div>
+      <figure class="hero-art">
+        <div class="window-bar"><span><i></i> IN-GAME CAPTURE</span><span>ROOM 02 / 04</span></div>
+        <a href="screenshots/nature-staff.png" aria-label="View full-size nature staff gameplay screenshot"><img src="screenshots/nature-staff.png" alt="A wizard casting green magic among demons, ogres, and zombies in a stone dungeon" width="700" height="700" fetchpriority="high"></a>
+        <figcaption><span class="caption-marker">01</span> A small wizard. An unreasonable number of monsters.</figcaption>
+      </figure>
+    </section>
+    <div class="controls-strip"><div class="wrap controls-inner"><span class="eyebrow">YOUR SURVIVAL KIT</span><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> Move</span><span><kbd>CLICK</kbd> Cast</span><span><kbd>E</kbd> Switch staff</span><span><kbd>SPACE</kbd> Next room</span><span><kbd>ESC</kbd> Breathe</span></div></div>
+    <section id="gameplay" class="wrap section" aria-labelledby="gameplay-title">
+      <div class="section-heading"><div><p class="eyebrow">SMALL WORLD. BIG PERSONALITY.</p><h2 id="gameplay-title">Magic meets mayhem.</h2></div><p class="muted">Chasing monsters, flying spells, and a world made one tile at a time.</p></div>
+      <div class="feature-grid">
+        <article><span class="feature-number">01 / THE MAGIC</span><h3>Pick your staff.</h3><p>Throw a streak of fire or send a green nature orb through the room. Swap spells on the fly and watch the impact effects unfold.</p><span class="feature-tag fire">FIRE + NATURE</span></article>
+        <article><span class="feature-number">02 / THE COMPANY</span><h3>Expect a crowd.</h3><p>Demons and ogres chase you down and cast back. Faster zombies close the distance. Your five health points won't last forever.</p><span class="feature-tag green">THREE ENEMY TYPES</span></article>
+        <article><span class="feature-number">03 / THE WORLD</span><h3>Mind the walls.</h3><p>Explore two arenas and two authored maps, with Box2D collisions and sprites layered around the dungeon's walls and columns.</p><span class="feature-tag purple">FOUR ROOMS</span></article>
+      </div>
+      <div class="gallery">
+        <figure><a href="screenshots/fire-staff.png" aria-label="View full-size fire staff gameplay screenshot"><img src="screenshots/fire-staff.png" alt="The wizard casting an animated fire spell across a room of monsters" width="700" height="700" loading="lazy"></a><figcaption><span class="caption-marker">02</span> When in doubt, try a little fire.</figcaption></figure>
+        <figure><a href="screenshots/title-screen.png" aria-label="View full-size title screen screenshot"><img src="screenshots/title-screen.png" alt="Dungeon Explorer's title screen with a parade of pixel-art characters" width="700" height="700" loading="lazy"></a><figcaption><span class="caption-marker">03</span> Everyone gets a place in the parade.</figcaption></figure>
+      </div>
+      <p class="gallery-note">Actual frames from the running game. <a href="https://github.com/l-winston/DungeonExplorer/tree/master/demos">See the original development recordings ↗</a></p>
+    </section>
+    <section class="about-band"><div class="wrap about-inner"><p class="eyebrow">BEHIND THE PIXELS</p><div><h2>A whole world,<br>one sketch at a time.</h2><p>Created by Winston Liu, Dungeon Explorer brings a 2D world to life through sprite animation, physics, enemy behavior, projectiles, sound, and menus, all connected in a Processing sketch.</p><p class="muted">It's a combat prototype, with room switching by shortcut and wonderfully unbalanced staffs. There’s no save system or campaign yet—just the core of a dungeon adventure.</p></div><div class="stack"><span>BUILT WITH</span><a href="https://processing.org/">Processing / Java ↗</a><a href="https://github.com/shiffman/Box2D-for-Processing">Box2D physics ↗</a><a href="https://github.com/sojamo/controlp5">ControlP5 menus ↗</a><a href="https://github.com/ddf/Minim">Minim audio ↗</a></div></div></section>
+    <section id="play" class="wrap section play-section" aria-labelledby="play-title">
+      <div class="section-heading"><div><p class="eyebrow">YOUR TURN</p><h2 id="play-title">Bring your own magic.</h2></div><p class="muted">Run the game on your desktop with Processing. This page is the field guide.</p></div>
+      <ol class="setup-steps"><li><span class="step-number">1</span><div><h3>Get Processing.</h3><p>Install <a href="https://processing.org/download">Processing</a> and use Java mode. Tested on Apple silicon macOS with Processing 4.3 and 4.5.6.</p></div></li><li><span class="step-number">2</span><div><h3>Add three libraries.</h3><p>Install <a href="https://github.com/sojamo/controlp5/releases/tag/v2.2.6">ControlP5 2.2.6</a>, <a href="https://github.com/shiffman/Box2D-for-Processing">Box2D for Processing 0.4</a>, and <a href="https://github.com/ddf/Minim">Minim 2.2.2</a> in your sketchbook.</p></div></li><li><span class="step-number">3</span><div><h3>Open. Run. Explore.</h3><p>Download the source, name the folder <code>DungeonExplorer</code>, open <code>DungeonExplorer.pde</code>, and hit Run.</p></div></li></ol>
+      <div class="play-actions"><a class="button primary" href="https://github.com/l-winston/DungeonExplorer/archive/refs/heads/master.zip">Download source <span aria-hidden="true">↓</span></a><a class="text-link" href="https://github.com/l-winston/DungeonExplorer#run-locally">Full setup instructions ↗</a></div>
+      <details class="extra-controls"><summary>The rest of the spellbook <span>More controls + developer tools</span></summary><div><p><kbd>R</kbd> Restart after defeat <span>·</span> <kbd>B</kbd> Show collision outlines <span>·</span> <kbd>P</kbd> Save a screenshot</p><p>Toggle music from the title screen's gear button. The repository includes regression checks and a repeatable screenshot capture script.</p><a href="https://github.com/l-winston/DungeonExplorer#development-checks">Development instructions ↗</a></div></details>
+    </section>
+  </main>
+  <footer class="wrap footer"><a class="wordmark" href="#">✦ DUNGEON EXPLORER</a><p>A project by Winston Liu.</p><a href="https://github.com/l-winston/DungeonExplorer#credits">Code & asset credits ↗</a></footer>
+</body>
+</html>

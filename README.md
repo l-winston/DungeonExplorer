@@ -100,7 +100,7 @@ Pass `--libraries /path/to/sketchbook/libraries` if your sketchbook is elsewhere
 
 This is a playable **combat prototype**. Room changes use a debug-style shortcut, weapon damage is not balanced, and there is no save system or campaign progression. The current maintenance pass fixes zero-HP enemy deaths, player damage and defeat, stuck movement after pausing, room-transition cleanup, and exported map loading.
 
-The [existing GitHub Pages site](https://l-winston.github.io/DungeonExplorer/) publishes this README from the repository's `master` branch using the Cayman theme.
+The [existing GitHub Pages site](https://l-winston.github.io/DungeonExplorer/) publishes a custom landing page from the repository's `master` branch. Edit `index.html` and `assets/site.css` to update the website; this README remains the setup and code guide.
 
 ## Credits
 
